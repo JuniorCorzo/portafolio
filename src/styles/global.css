@@ -83,11 +83,11 @@ body {
 	background: var(--maroon-dark);
 }
 main {
-	width: 720px;
-	max-width: calc(100% - 2em);
+	width: 100%;
 	margin: auto;
-	padding: 3em 1em;
+	padding: 0;
 }
+
 h1,
 h2,
 h3,
@@ -95,23 +95,39 @@ h4,
 h5,
 h6 {
 	margin: 0 0 0.5rem 0;
-	color: rgb(var(--black));
+	color: var(--text);
 	line-height: 1.2;
+	font-weight: 600;
 }
+
 h1 {
-	font-size: 3.052em;
+	font-size: 3.5rem;
+	font-weight: 700;
 }
+
 h2 {
-	font-size: 2.441em;
+	font-size: 2.5rem;
+	font-weight: 700;
 }
+
 h3 {
-	font-size: 1.953em;
+	font-size: 1.875rem;
+	font-weight: 600;
 }
+
 h4 {
-	font-size: 1.563em;
+	font-size: 1.5rem;
+	font-weight: 600;
 }
+
 h5 {
-	font-size: 1.25em;
+	font-size: 1.25rem;
+	font-weight: 600;
+}
+
+h6 {
+	font-size: 1rem;
+	font-weight: 600;
 }
 strong,
 b {
