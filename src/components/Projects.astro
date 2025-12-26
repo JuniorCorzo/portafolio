@@ -1,0 +1,295 @@
+---
+import { PROJECTS } from '../consts';
+---
+
+<section class="projects-section">
+	<div class="projects-container">
+		<h2 class="section-title">Mis Proyectos</h2>
+		<div class="projects-grid">
+			{PROJECTS.map((project) => (
+				<div class="project-card">
+					<div class="project-header">
+						<div class="project-image-placeholder"></div>
+					</div>
+					<div class="project-body">
+						<h3 class="project-title">{project.title}</h3>
+						<p class="project-description">{project.description}</p>
+						
+						<div class="learning-section">
+							<h4 class="learning-title">Lo que aprendí</h4>
+							<ul class="learning-list">
+								{project.learning.map((item) => (
+									<li class="learning-item">
+										<span class="bulb-icon">💡</span>{item}
+									</li>
+								))}
+							</ul>
+						</div>
+
+						<div class="tech-stack">
+							{project.tech.map((tech) => (
+								<span class="tech-chip">{tech}</span>
+							))}
+						</div>
+
+						<div class="project-links">
+							<a href={project.demoUrl} class="project-link demo-link">Demo</a>
+							<a href={project.githubUrl} class="project-link github-link">GitHub</a>
+						</div>
+
+						<a href={project.caseStudyUrl} class="case-study-link">Case Study →</a>
+					</div>
+				</div>
+			))}
+		</div>
+	</div>
+</section>
+
+<style>
+	.projects-section {
+		padding: 80px 24px;
+		background: linear-gradient(180deg, var(--crust) 0%, var(--base) 100%);
+		border-top: 1px solid var(--overlay0);
+	}
+
+	.projects-container {
+		max-width: 1400px;
+		margin: 0 auto;
+	}
+
+	.section-title {
+		text-align: center;
+		margin-bottom: 60px;
+		color: var(--text);
+		font-size: 2.5rem;
+		font-weight: 700;
+	}
+
+	.projects-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 32px;
+	}
+
+	.project-card {
+		background: var(--surface1);
+		border-radius: 8px;
+		overflow: hidden;
+		border: 1px solid var(--overlay0);
+		transition: all 0.3s ease-in-out;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.project-card:hover {
+		transform: translateY(-8px);
+		box-shadow: 0 12px 32px rgba(186, 194, 222, 0.15);
+		border-color: var(--accent);
+	}
+
+	.project-header {
+		height: 200px;
+		background: linear-gradient(135deg, var(--base) 0%, var(--surface2) 100%);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.project-image-placeholder {
+		width: 100%;
+		height: 100%;
+		background: radial-gradient(circle at 30% 30%, rgba(183, 50, 63, 0.1) 0%, transparent 50%),
+		            radial-gradient(circle at 70% 70%, rgba(137, 220, 235, 0.05) 0%, transparent 50%);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.project-body {
+		padding: 28px;
+		flex-grow: 1;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.project-title {
+		color: var(--text);
+		font-size: 1.375rem;
+		font-weight: 700;
+		margin: 0 0 12px 0;
+	}
+
+	.project-description {
+		color: var(--subtext);
+		font-size: 0.95rem;
+		line-height: 1.6;
+		margin: 0 0 20px 0;
+	}
+
+	.learning-section {
+		margin-bottom: 24px;
+	}
+
+	.learning-title {
+		color: var(--sky);
+		font-size: 0.9rem;
+		font-weight: 600;
+		margin: 0 0 12px 0;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	.learning-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.learning-item {
+		color: var(--subtext);
+		font-size: 0.9rem;
+		line-height: 1.6;
+		margin-bottom: 8px;
+		display: flex;
+		align-items: flex-start;
+		gap: 8px;
+	}
+
+	.bulb-icon {
+		flex-shrink: 0;
+		margin-top: 1px;
+	}
+
+	.tech-stack {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-bottom: 24px;
+	}
+
+	.tech-chip {
+		display: inline-block;
+		background: var(--base);
+		color: var(--sky);
+		padding: 6px 12px;
+		border-radius: 16px;
+		font-size: 0.8rem;
+		font-weight: 500;
+		border: 1px solid var(--overlay0);
+	}
+
+	.project-links {
+		display: flex;
+		gap: 12px;
+		margin-bottom: 16px;
+		margin-top: auto;
+	}
+
+	.project-link {
+		flex: 1;
+		padding: 10px 16px;
+		border-radius: 6px;
+		font-size: 0.9rem;
+		font-weight: 600;
+		text-align: center;
+		text-decoration: none;
+		transition: all 0.3s ease-in-out;
+		display: block;
+	}
+
+	.demo-link {
+		background: var(--accent);
+		color: #1e1e2e;
+		border: 2px solid var(--accent);
+		font-weight: 600;
+	}
+
+	.demo-link:hover {
+		background: var(--accent-dark);
+		border-color: var(--accent-dark);
+	}
+
+	.github-link {
+		background: transparent;
+		color: var(--text);
+		border: 2px solid var(--overlay0);
+	}
+
+	.github-link:hover {
+		border-color: var(--sky);
+		color: var(--sky);
+	}
+
+	.case-study-link {
+		color: var(--accent);
+		text-decoration: none;
+		font-weight: 600;
+		font-size: 0.95rem;
+		transition: all 0.3s ease-in-out;
+		border-bottom: 2px solid transparent;
+	}
+
+	.case-study-link:hover {
+		border-bottom-color: var(--accent);
+		color: var(--sky);
+	}
+
+	@media (max-width: 1024px) {
+		.projects-section {
+			padding: 60px 24px;
+		}
+
+		.section-title {
+			font-size: 2rem;
+			margin-bottom: 40px;
+		}
+
+		.projects-grid {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 24px;
+		}
+
+		.project-header {
+			height: 180px;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.projects-section {
+			padding: 40px 24px;
+		}
+
+		.section-title {
+			font-size: 1.5rem;
+		}
+
+		.projects-grid {
+			grid-template-columns: 1fr;
+			gap: 20px;
+		}
+
+		.project-body {
+			padding: 20px;
+		}
+
+		.project-header {
+			height: 160px;
+		}
+
+		.project-title {
+			font-size: 1.25rem;
+		}
+
+		.project-description {
+			font-size: 0.9rem;
+		}
+
+		.project-links {
+			gap: 10px;
+		}
+
+		.project-link {
+			padding: 8px 12px;
+			font-size: 0.85rem;
+		}
+	}
+</style>

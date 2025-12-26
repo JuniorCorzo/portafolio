@@ -1,0 +1,191 @@
+---
+import { SKILLS } from '../consts';
+---
+
+<section class="skills-section">
+	<div class="skills-container">
+		<div class="skills-header">
+			<h2 class="section-title">
+				<span class="title-icon">&lt;/&gt;</span> Mis Habilidades
+			</h2>
+		</div>
+
+		<div class="skills-grid">
+			<div class="skill-category">
+				<h3 class="category-title">Frontend</h3>
+				<div class="chips-container">
+					{SKILLS.frontend.map((skill) => (
+						<span class="skill-chip">{skill}</span>
+					))}
+				</div>
+			</div>
+
+			<div class="skill-category">
+				<h3 class="category-title">Backend</h3>
+				<div class="chips-container">
+					{SKILLS.backend.map((skill) => (
+						<span class="skill-chip">{skill}</span>
+					))}
+				</div>
+			</div>
+
+			<div class="skill-category">
+				<h3 class="category-title">DevOps</h3>
+				<div class="chips-container">
+					{SKILLS.devops.map((skill) => (
+						<span class="skill-chip">{skill}</span>
+					))}
+				</div>
+			</div>
+
+			<div class="skill-category">
+				<h3 class="category-title">Testing</h3>
+				<div class="chips-container">
+					{SKILLS.testing.map((skill) => (
+						<span class="skill-chip">{skill}</span>
+					))}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.skills-section {
+		padding: 80px 24px;
+		background: linear-gradient(180deg, var(--crust) 0%, var(--base) 100%);
+		border-top: 1px solid var(--overlay0);
+	}
+
+	.skills-container {
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+
+	.skills-header {
+		margin-bottom: 60px;
+		text-align: center;
+	}
+
+	.section-title {
+		color: var(--text);
+		font-size: 2.5rem;
+		font-weight: 700;
+		margin: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 16px;
+	}
+
+	.title-icon {
+		color: var(--accent);
+		font-size: 2.2rem;
+	}
+
+	.skills-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 40px;
+	}
+
+	.skill-category {
+		background: var(--surface1);
+		padding: 32px;
+		border-radius: 8px;
+		border: 1px solid var(--overlay0);
+		transition: border-color 0.3s ease-in-out;
+	}
+
+	.skill-category:hover {
+		border-color: var(--accent);
+	}
+
+	.category-title {
+		color: var(--text);
+		font-size: 1.25rem;
+		font-weight: 600;
+		margin: 0 0 20px 0;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.category-title::before {
+		content: '';
+		width: 4px;
+		height: 20px;
+		background: var(--accent);
+		border-radius: 2px;
+	}
+
+	.chips-container {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+	}
+
+	.skill-chip {
+		display: inline-block;
+		background: var(--base);
+		color: var(--sky);
+		padding: 8px 16px;
+		border-radius: 20px;
+		font-size: 0.9rem;
+		font-weight: 500;
+		border: 1px solid var(--overlay0);
+		transition: all 0.3s ease-in-out;
+		cursor: default;
+	}
+
+	.skill-chip:hover {
+		background: var(--accent);
+		color: #1e1e2e;
+		border-color: var(--accent);
+		transform: translateY(-2px);
+		font-weight: 600;
+	}
+
+	@media (max-width: 1024px) {
+		.skills-section {
+			padding: 60px 24px;
+		}
+
+		.section-title {
+			font-size: 2rem;
+		}
+
+		.skills-grid {
+			gap: 30px;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.skills-section {
+			padding: 40px 24px;
+		}
+
+		.section-title {
+			font-size: 1.5rem;
+			flex-direction: column;
+		}
+
+		.skills-grid {
+			grid-template-columns: 1fr;
+			gap: 20px;
+		}
+
+		.skill-category {
+			padding: 24px;
+		}
+
+		.category-title {
+			font-size: 1.125rem;
+		}
+
+		.skill-chip {
+			font-size: 0.85rem;
+			padding: 6px 12px;
+		}
+	}
+</style>
