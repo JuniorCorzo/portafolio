@@ -75,12 +75,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-	background: var(--maroon);
+	background: var(--peach);
 	border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: var(--maroon-dark);
+	background: var(--peach-dark);
 }
 main {
 	width: 100%;
