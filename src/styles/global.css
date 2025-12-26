@@ -73,12 +73,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-	background: var(--peach);
+	background: var(--accent);
 	border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: var(--peach-dark);
+	background: var(--accent-dark);
 }
 main {
 	width: 100%;
