@@ -181,7 +181,7 @@ textarea:focus,
 input:focus,
 select:focus {
 	outline: none;
-	border-bottom-color: var(--maroon);
+	border-bottom-color: var(--peach);
 	color: var(--sky);
 }
 
