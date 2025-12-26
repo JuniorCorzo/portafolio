@@ -62,7 +62,7 @@ body {
 }
 
 ::selection {
-	background-color: var(--maroon);
+	background-color: var(--peach);
 	color: var(--text);
 }
 
