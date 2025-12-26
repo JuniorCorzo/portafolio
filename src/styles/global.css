@@ -60,8 +60,8 @@ body {
 }
 
 ::selection {
-	background-color: var(--peach);
-	color: var(--text);
+	background-color: var(--accent);
+	color: #1e1e2e;
 }
 
 ::-webkit-scrollbar {
