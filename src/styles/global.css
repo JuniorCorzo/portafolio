@@ -246,12 +246,36 @@ hr {
 	border-top: 1px solid var(--overlay0);
 	margin: 2em 0;
 }
-@media (max-width: 720px) {
-	body {
-		font-size: 18px;
+/* Responsive Design */
+@media (max-width: 1024px) {
+	h1 {
+		font-size: 2.5rem;
 	}
-	main {
-		padding: 1em;
+
+	h2 {
+		font-size: 2rem;
+	}
+
+	h3 {
+		font-size: 1.5rem;
+	}
+}
+
+@media (max-width: 640px) {
+	h1 {
+		font-size: 2rem;
+	}
+
+	h2 {
+		font-size: 1.5rem;
+	}
+
+	h3 {
+		font-size: 1.25rem;
+	}
+
+	body {
+		font-size: 15px;
 	}
 }
 
