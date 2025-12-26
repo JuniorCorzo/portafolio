@@ -133,54 +133,118 @@ strong,
 b {
 	font-weight: 700;
 }
+
 a {
-	color: var(--accent);
+	color: var(--sky);
+	text-decoration: none;
+	transition: color 0.3s ease-in-out;
 }
+
 a:hover {
-	color: var(--accent);
+	color: var(--text);
 }
+
+a:focus-visible {
+	outline: 2px solid var(--maroon);
+	outline-offset: 2px;
+	border-radius: 2px;
+}
+
 p {
 	margin-bottom: 1em;
+	color: var(--text);
 }
+
 .prose p {
 	margin-bottom: 2em;
 }
-textarea {
-	width: 100%;
-	font-size: 16px;
+
+textarea,
+input,
+select {
+	background-color: transparent;
+	color: var(--text);
+	border: none;
+	border-bottom: 1px solid var(--overlay0);
+	padding: 0.5em 0;
+	font-size: 1rem;
+	font-family: inherit;
+	transition: border-color 0.3s ease-in-out;
 }
-input {
-	font-size: 16px;
+
+textarea::placeholder,
+input::placeholder {
+	color: var(--subtext);
 }
+
+textarea:focus,
+input:focus,
+select:focus {
+	outline: none;
+	border-bottom-color: var(--maroon);
+	color: var(--sky);
+}
+
 table {
 	width: 100%;
+	border-collapse: collapse;
 }
+
+table td,
+table th {
+	border-bottom: 1px solid var(--overlay0);
+	padding: 0.75em;
+	text-align: left;
+}
+
+table th {
+	background-color: var(--surface1);
+	font-weight: 600;
+}
+
 img {
 	max-width: 100%;
 	height: auto;
 	border-radius: 8px;
+	display: block;
 }
+
 code {
-	padding: 2px 5px;
-	background-color: rgb(var(--gray-light));
-	border-radius: 2px;
+	padding: 2px 6px;
+	background-color: var(--surface1);
+	border-radius: 4px;
+	font-family: "JetBrains Mono", "Fira Code", monospace;
+	font-size: 0.875em;
+	color: var(--sky);
 }
+
 pre {
 	padding: 1.5em;
 	border-radius: 8px;
+	background-color: var(--surface1);
+	overflow-x: auto;
+	border: 1px solid var(--overlay0);
 }
+
 pre > code {
 	all: unset;
+	color: var(--text);
+	font-family: "JetBrains Mono", "Fira Code", monospace;
 }
+
 blockquote {
-	border-left: 4px solid var(--accent);
+	border-left: 3px solid var(--maroon);
 	padding: 0 0 0 20px;
-	margin: 0px;
-	font-size: 1.333em;
+	margin: 1.5em 0;
+	font-size: 1.125em;
+	color: var(--subtext);
+	font-style: italic;
 }
+
 hr {
 	border: none;
-	border-top: 1px solid rgb(var(--gray-light));
+	border-top: 1px solid var(--overlay0);
+	margin: 2em 0;
 }
 @media (max-width: 720px) {
 	body {
