@@ -63,7 +63,7 @@ import { EXPERIENCE } from '../consts';
 		top: 0;
 		bottom: 0;
 		width: 2px;
-		background: linear-gradient(180deg, var(--peach) 0%, var(--overlay0) 100%);
+		background: linear-gradient(180deg, var(--accent) 0%, var(--overlay0) 100%);
 		transform: translateX(-1px);
 	}
 
@@ -83,7 +83,7 @@ import { EXPERIENCE } from '../consts';
 		top: 8px;
 		width: 20px;
 		height: 20px;
-		background: var(--peach);
+		background: var(--accent);
 		border-radius: 50%;
 		border: 3px solid var(--base);
 		transition: all 0.3s ease-in-out;
@@ -102,7 +102,7 @@ import { EXPERIENCE } from '../consts';
 		background: var(--surface1);
 		padding: 28px;
 		border-radius: 8px;
-		border-left: 3px solid var(--peach);
+		border-left: 3px solid var(--accent);
 		transition: all 0.3s ease-in-out;
 	}
 
@@ -158,14 +158,14 @@ import { EXPERIENCE } from '../consts';
 	}
 
 	.experience-metric {
-		background: rgba(245, 169, 127, 0.1);
-		color: var(--peach);
+		background: rgba(186, 194, 222, 0.08);
+		color: var(--accent);
 		padding: 12px 16px;
 		border-radius: 6px;
 		margin: 16px 0;
 		font-weight: 600;
 		font-size: 0.95rem;
-		border-left: 3px solid var(--peach);
+		border-left: 3px solid var(--accent);
 	}
 
 	.tech-stack {
@@ -188,9 +188,10 @@ import { EXPERIENCE } from '../consts';
 	}
 
 	.tech-chip:hover {
-		background: var(--peach);
-		color: var(--text);
-		border-color: var(--peach);
+		background: var(--accent);
+		color: #1e1e2e;
+		border-color: var(--accent);
+		font-weight: 600;
 	}
 
 	@media (max-width: 768px) {
