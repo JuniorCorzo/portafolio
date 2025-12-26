@@ -1,4 +1,4 @@
-/* Catppuccin Maroon Color Palette */
+/* Catppuccin Peach Color Palette */
 :root {
 	/* Catppuccin Colors */
 	--crust: #1e1e2e;
@@ -7,15 +7,15 @@
 	--surface2: #585b70;
 	--overlay0: #6c7086;
 	--overlay1: #7f849c;
-	--maroon: #b7323f;
-	--maroon-dark: #a02836;
+	--peach: #f5a97f;
+	--peach-dark: #f39c6b;
 	--sky: #89dceb;
 	--text: #cdd6f4;
 	--subtext: #a6adc8;
 
 	/* Legacy variables for compatibility */
-	--accent: #b7323f;
-	--accent-dark: #a02836;
+	--accent: #f5a97f;
+	--accent-dark: #f39c6b;
 	--black: 30, 30, 46;
 	--gray: 166, 173, 200;
 	--gray-light: 69, 71, 90;
