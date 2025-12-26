@@ -1,0 +1,173 @@
+---
+import { HERO_HEADLINE_1, HERO_HEADLINE_2, HERO_SUBTITLE } from '../consts';
+---
+
+<section class="hero-section">
+	<div class="hero-container">
+		<div class="hero-content">
+			<h1 class="hero-title">
+				<span class="headline-primary">{HERO_HEADLINE_1}</span>
+				<span class="headline-accent">{HERO_HEADLINE_2}</span>
+			</h1>
+			<p class="hero-subtitle">{HERO_SUBTITLE}</p>
+			<div class="hero-cta">
+				<a href="#contact" class="cta-button cta-primary">Descargar CV</a>
+				<a href="#contact" class="cta-button cta-secondary">Contactar</a>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero-section {
+		padding: 120px 24px;
+		background: linear-gradient(135deg, var(--crust) 0%, var(--base) 100%);
+		position: relative;
+		overflow: hidden;
+		min-height: 80vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.hero-section::before {
+		content: '';
+		position: absolute;
+		top: -50%;
+		right: -10%;
+		width: 600px;
+		height: 600px;
+		background: radial-gradient(circle, rgba(183, 50, 63, 0.1) 0%, transparent 70%);
+		border-radius: 50%;
+		pointer-events: none;
+	}
+
+	.hero-container {
+		max-width: 900px;
+		width: 100%;
+		position: relative;
+		z-index: 1;
+	}
+
+	.hero-content {
+		text-align: center;
+	}
+
+	.hero-title {
+		margin: 0 0 24px 0;
+		line-height: 1.1;
+	}
+
+	.headline-primary {
+		display: block;
+		color: var(--text);
+		font-size: 4rem;
+		font-weight: 700;
+		margin-bottom: 8px;
+	}
+
+	.headline-accent {
+		display: block;
+		font-size: 4rem;
+		font-weight: 700;
+		background: linear-gradient(135deg, var(--maroon) 0%, #ff6b6b 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.hero-subtitle {
+		font-size: 1.125rem;
+		color: var(--subtext);
+		margin-bottom: 48px;
+		max-width: 600px;
+		margin-left: auto;
+		margin-right: auto;
+		line-height: 1.8;
+	}
+
+	.hero-cta {
+		display: flex;
+		gap: 16px;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+
+	.cta-button {
+		padding: 14px 32px;
+		border-radius: 6px;
+		font-size: 1rem;
+		font-weight: 600;
+		text-decoration: none;
+		transition: all 0.3s ease-in-out;
+		cursor: pointer;
+		display: inline-block;
+	}
+
+	.cta-primary {
+		background-color: var(--maroon);
+		color: var(--text);
+		border: 2px solid var(--maroon);
+	}
+
+	.cta-primary:hover {
+		background-color: var(--maroon-dark);
+		border-color: var(--maroon-dark);
+		transform: translateY(-2px);
+		box-shadow: 0 8px 16px rgba(183, 50, 63, 0.3);
+	}
+
+	.cta-secondary {
+		background-color: transparent;
+		color: var(--text);
+		border: 2px solid var(--maroon);
+	}
+
+	.cta-secondary:hover {
+		background-color: var(--maroon);
+		color: var(--text);
+		transform: translateY(-2px);
+		box-shadow: 0 8px 16px rgba(183, 50, 63, 0.3);
+	}
+
+	@media (max-width: 1024px) {
+		.hero-section {
+			padding: 80px 24px;
+			min-height: 70vh;
+		}
+
+		.headline-primary,
+		.headline-accent {
+			font-size: 3rem;
+		}
+
+		.hero-subtitle {
+			font-size: 1rem;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.hero-section {
+			padding: 60px 24px;
+			min-height: auto;
+		}
+
+		.headline-primary,
+		.headline-accent {
+			font-size: 2rem;
+		}
+
+		.hero-subtitle {
+			font-size: 0.95rem;
+			margin-bottom: 32px;
+		}
+
+		.hero-cta {
+			flex-direction: column;
+		}
+
+		.cta-button {
+			width: 100%;
+		}
+	}
+</style>
