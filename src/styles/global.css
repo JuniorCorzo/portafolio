@@ -1,89 +1,104 @@
 /* Catppuccin Dark Theme with Elegant Gray Accent */
 :root {
-	/* Catppuccin Colors */
-	--crust: #1e1e2e;
-	--base: #313244;
-	--surface1: #45475a;
-	--surface2: #585b70;
-	--overlay0: #6c7086;
-	--overlay1: #7f849c;
-	--accent: #bac2de;
-	--accent-dark: #a6adc8;
-	--sky: #89dceb;
-	--text: #cdd6f4;
-	--subtext: #a6adc8;
+  /* Define los colores base en formato RGB */
+  --crust-rgb: 30, 30, 46;
+  --base-rgb: 49, 50, 68;
+  --surface1-rgb: 56, 58, 77;
+  --surface2-rgb: 68, 70, 90;
+  --overlay0-rgb: 108, 112, 134;
+  --overlay1-rgb: 127, 132, 156;
+  --accent-rgb: 186, 194, 222;
+  --accent-dark-rgb: 166, 173, 200;
+  --sky-rgb: 137, 220, 235;
+  --text-rgb: 205, 214, 244;
+  --subtext-rgb: 166, 173, 200;
 
-	/* Legacy variables for compatibility */
-	--black: 30, 30, 46;
-	--gray: 166, 173, 200;
-	--gray-light: 69, 71, 90;
-	--gray-dark: 49, 50, 68;
-	--gray-gradient: rgba(69, 71, 90, 50%), #313244;
-	--box-shadow:
-		0 2px 6px rgba(49, 50, 68, 25%), 0 8px 24px rgba(49, 50, 68, 33%),
-		0 16px 32px rgba(49, 50, 68, 33%);
+  /* Versiones sólidas para uso directo */
+  --crust: rgb(var(--crust-rgb));
+  --base: rgb(var(--base-rgb));
+  --surface1: rgb(var(--surface1-rgb));
+  --surface2: rgb(var(--surface2-rgb));
+  --overlay0: rgb(var(--overlay0-rgb));
+  --overlay1: rgb(var(--overlay1-rgb));
+  --accent: rgb(var(--accent-rgb));
+  --accent-dark: rgb(var(--accent-dark-rgb));
+  --sky: rgb(var(--sky-rgb));
+  --text: rgb(var(--text-rgb));
+  --subtext: rgb(var(--subtext-rgb));
+
+  /* Legacy variables for compatibility */
+  --black: 30, 30, 46;
+  --gray: 166, 173, 200;
+  --gray-light: 69, 71, 90;
+  --gray-dark: 49, 50, 68;
+  --gray-gradient: rgba(69, 71, 90, 50%), #313244;
+  --box-shadow:
+    0 2px 6px rgba(49, 50, 68, 25%), 0 8px 24px rgba(49, 50, 68, 33%),
+    0 16px 32px rgba(49, 50, 68, 33%);
 }
 @font-face {
-	font-family: "Atkinson";
-	src: url("/fonts/atkinson-regular.woff") format("woff");
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
+  font-family: "Atkinson";
+  src: url("/fonts/atkinson-regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 @font-face {
-	font-family: "Atkinson";
-	src: url("/fonts/atkinson-bold.woff") format("woff");
-	font-weight: 700;
-	font-style: normal;
-	font-display: swap;
+  font-family: "Atkinson";
+  src: url("/fonts/atkinson-bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
-	scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 body {
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-	margin: 0;
-	padding: 0;
-	text-align: left;
-	background: var(--crust);
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	color: var(--text);
-	font-size: 16px;
-	line-height: 1.6;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  background: var(--crust);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.6;
 }
 
 ::selection {
-	background-color: var(--accent);
-	color: #1e1e2e;
+  background-color: var(--accent);
+  color: #1e1e2e;
 }
 
 ::-webkit-scrollbar {
-	width: 10px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-	background: var(--base);
+  background: var(--base);
 }
 
 ::-webkit-scrollbar-thumb {
-	background: var(--accent);
-	border-radius: 5px;
+  background: var(--accent);
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: var(--accent-dark);
+  background: var(--accent-dark);
 }
 main {
-	width: 100%;
-	margin: auto;
-	padding: 0;
+  width: 100%;
+  margin: auto;
+  padding: 0;
 }
 
 h1,
@@ -92,205 +107,205 @@ h3,
 h4,
 h5,
 h6 {
-	margin: 0 0 0.5rem 0;
-	color: var(--text);
-	line-height: 1.2;
-	font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--text);
+  line-height: 1.2;
+  font-weight: 600;
 }
 
 h1 {
-	font-size: 3.5rem;
-	font-weight: 700;
+  font-size: 3.5rem;
+  font-weight: 700;
 }
 
 h2 {
-	font-size: 2.5rem;
-	font-weight: 700;
+  font-size: 2.5rem;
+  font-weight: 700;
 }
 
 h3 {
-	font-size: 1.875rem;
-	font-weight: 600;
+  font-size: 1.875rem;
+  font-weight: 600;
 }
 
 h4 {
-	font-size: 1.5rem;
-	font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 h5 {
-	font-size: 1.25rem;
-	font-weight: 600;
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 
 h6 {
-	font-size: 1rem;
-	font-weight: 600;
+  font-size: 1rem;
+  font-weight: 600;
 }
 strong,
 b {
-	font-weight: 700;
+  font-weight: 700;
 }
 
 a {
-	color: var(--sky);
-	text-decoration: none;
-	transition: color 0.3s ease-in-out;
+  color: var(--sky);
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
 }
 
 a:hover {
-	color: var(--text);
+  color: var(--text);
 }
 
 a:focus-visible {
-	outline: 2px solid var(--accent);
-	outline-offset: 2px;
-	border-radius: 2px;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 p {
-	margin-bottom: 1em;
-	color: var(--text);
+  margin-bottom: 1em;
+  color: var(--text);
 }
 
 .prose p {
-	margin-bottom: 2em;
+  margin-bottom: 2em;
 }
 
 textarea,
 input,
 select {
-	background-color: transparent;
-	color: var(--text);
-	border: none;
-	border-bottom: 1px solid var(--overlay0);
-	padding: 0.5em 0;
-	font-size: 1rem;
-	font-family: inherit;
-	transition: border-color 0.3s ease-in-out;
+  background-color: transparent;
+  color: var(--text);
+  border: none;
+  border-bottom: 1px solid var(--overlay0);
+  padding: 0.5em 0;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.3s ease-in-out;
 }
 
 textarea::placeholder,
 input::placeholder {
-	color: var(--subtext);
+  color: var(--subtext);
 }
 
 textarea:focus,
 input:focus,
 select:focus {
-	outline: none;
-	border-bottom-color: var(--accent);
-	color: var(--accent);
+  outline: none;
+  border-bottom-color: var(--accent);
+  color: var(--accent);
 }
 
 table {
-	width: 100%;
-	border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 table td,
 table th {
-	border-bottom: 1px solid var(--overlay0);
-	padding: 0.75em;
-	text-align: left;
+  border-bottom: 1px solid var(--overlay0);
+  padding: 0.75em;
+  text-align: left;
 }
 
 table th {
-	background-color: var(--surface1);
-	font-weight: 600;
+  background-color: var(--surface1);
+  font-weight: 600;
 }
 
 img {
-	max-width: 100%;
-	height: auto;
-	border-radius: 8px;
-	display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
 }
 
 code {
-	padding: 2px 6px;
-	background-color: var(--surface1);
-	border-radius: 4px;
-	font-family: "JetBrains Mono", "Fira Code", monospace;
-	font-size: 0.875em;
-	color: var(--sky);
+  padding: 2px 6px;
+  background-color: var(--surface1);
+  border-radius: 4px;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 0.875em;
+  color: var(--sky);
 }
 
 pre {
-	padding: 1.5em;
-	border-radius: 8px;
-	background-color: var(--surface1);
-	overflow-x: auto;
-	border: 1px solid var(--overlay0);
+  padding: 1.5em;
+  border-radius: 8px;
+  background-color: var(--surface1);
+  overflow-x: auto;
+  border: 1px solid var(--overlay0);
 }
 
 pre > code {
-	all: unset;
-	color: var(--text);
-	font-family: "JetBrains Mono", "Fira Code", monospace;
+  all: unset;
+  color: var(--text);
+  font-family: "JetBrains Mono", "Fira Code", monospace;
 }
 
 blockquote {
-	border-left: 3px solid var(--accent);
-	padding: 0 0 0 20px;
-	margin: 1.5em 0;
-	font-size: 1.125em;
-	color: var(--subtext);
-	font-style: italic;
+  border-left: 3px solid var(--accent);
+  padding: 0 0 0 20px;
+  margin: 1.5em 0;
+  font-size: 1.125em;
+  color: var(--subtext);
+  font-style: italic;
 }
 
 hr {
-	border: none;
-	border-top: 1px solid var(--overlay0);
-	margin: 2em 0;
+  border: none;
+  border-top: 1px solid var(--overlay0);
+  margin: 2em 0;
 }
 /* Responsive Design */
 @media (max-width: 1024px) {
-	h1 {
-		font-size: 2.5rem;
-	}
+  h1 {
+    font-size: 2.5rem;
+  }
 
-	h2 {
-		font-size: 2rem;
-	}
+  h2 {
+    font-size: 2rem;
+  }
 
-	h3 {
-		font-size: 1.5rem;
-	}
+  h3 {
+    font-size: 1.5rem;
+  }
 }
 
 @media (max-width: 640px) {
-	h1 {
-		font-size: 2rem;
-	}
+  h1 {
+    font-size: 2rem;
+  }
 
-	h2 {
-		font-size: 1.5rem;
-	}
+  h2 {
+    font-size: 1.5rem;
+  }
 
-	h3 {
-		font-size: 1.25rem;
-	}
+  h3 {
+    font-size: 1.25rem;
+  }
 
-	body {
-		font-size: 15px;
-	}
+  body {
+    font-size: 15px;
+  }
 }
 
 .sr-only {
-	border: 0;
-	padding: 0;
-	margin: 0;
-	position: absolute !important;
-	height: 1px;
-	width: 1px;
-	overflow: hidden;
-	/* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
-	clip: rect(1px 1px 1px 1px);
-	/* maybe deprecated but we need to support legacy browsers */
-	clip: rect(1px, 1px, 1px, 1px);
-	/* modern browsers, clip-path works inwards from each corner */
-	clip-path: inset(50%);
-	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
-	white-space: nowrap;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  /* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
+  clip: rect(1px 1px 1px 1px);
+  /* maybe deprecated but we need to support legacy browsers */
+  clip: rect(1px, 1px, 1px, 1px);
+  /* modern browsers, clip-path works inwards from each corner */
+  clip-path: inset(50%);
+  /* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
+  white-space: nowrap;
 }

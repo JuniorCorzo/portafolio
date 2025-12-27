@@ -1,119 +1,119 @@
 ---
-import { SITE_TITLE } from '../consts';
+import { SITE_TITLE } from "../consts";
 ---
 
 <header class="header">
-	<nav class="navbar">
-		<h2 class="logo"><a href="/">{SITE_TITLE}</a></h2>
-		<div class="nav-links">
-			<a href="#projects" class="nav-link">Proyectos</a>
-			<a href="#experience" class="nav-link">Experiencia</a>
-			<a href="#contact" class="nav-link">Contacto</a>
-		</div>
-	</nav>
+  <nav class="navbar">
+    <h2 class="logo"><a href="/">{SITE_TITLE}</a></h2>
+    <div class="nav-links">
+      <a href="#experience" class="nav-link">Experiencia</a>
+      <a href="#projects" class="nav-link">Proyectos</a>
+      <a href="#contact" class="nav-link">Contacto</a>
+    </div>
+  </nav>
 </header>
 
 <style>
-	.header {
-		position: sticky;
-		top: 0;
-		z-index: 100;
-		background: rgba(30, 30, 46, 0.95);
-		backdrop-filter: blur(10px);
-		border-bottom: 1px solid rgba(108, 112, 134, 0.2);
-	}
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(30, 30, 46, 0.7);
+    backdrop-filter: blur(5px);
+    border-bottom: 1px solid rgba(108, 112, 134, 0.2);
+  }
 
-	.navbar {
-		max-width: 1400px;
-		margin: 0 auto;
-		padding: 0 24px;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		height: 70px;
-	}
+  .navbar {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+  }
 
-	.logo {
-		margin: 0;
-		font-size: 1.25rem;
-		font-weight: 700;
-	}
+  .logo {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
 
-	.logo a {
-		color: var(--text);
-		text-decoration: none;
-		transition: color 0.3s ease-in-out;
-	}
+  .logo a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+  }
 
-	.logo a:hover {
-		color: var(--accent);
-	}
+  .logo a:hover {
+    color: var(--accent);
+  }
 
-	.nav-links {
-		display: flex;
-		gap: 32px;
-		align-items: center;
-	}
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
 
-	.nav-link {
-		color: var(--subtext);
-		text-decoration: none;
-		font-weight: 500;
-		font-size: 0.95rem;
-		transition: all 0.3s ease-in-out;
-		position: relative;
-	}
+  .nav-link {
+    color: var(--subtext);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+  }
 
-	.nav-link::after {
-		content: '';
-		position: absolute;
-		bottom: -4px;
-		left: 0;
-		width: 0;
-		height: 2px;
-		background: var(--accent);
-		transition: width 0.3s ease-in-out;
-	}
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.3s ease-in-out;
+  }
 
-	.nav-link:hover {
-		color: var(--text);
-	}
+  .nav-link:hover {
+    color: var(--text);
+  }
 
-	.nav-link:hover::after {
-		width: 100%;
-	}
+  .nav-link:hover::after {
+    width: 100%;
+  }
 
-	@media (max-width: 768px) {
-		.navbar {
-			padding: 0 20px;
-			height: 60px;
-		}
+  @media (max-width: 768px) {
+    .navbar {
+      padding: 0 20px;
+      height: 60px;
+    }
 
-		.nav-links {
-			gap: 20px;
-		}
+    .nav-links {
+      gap: 20px;
+    }
 
-		.nav-link {
-			font-size: 0.9rem;
-		}
-	}
+    .nav-link {
+      font-size: 0.9rem;
+    }
+  }
 
-	@media (max-width: 640px) {
-		.navbar {
-			padding: 0 16px;
-			height: 56px;
-		}
+  @media (max-width: 640px) {
+    .navbar {
+      padding: 0 16px;
+      height: 56px;
+    }
 
-		.logo {
-			font-size: 1.1rem;
-		}
+    .logo {
+      font-size: 1.1rem;
+    }
 
-		.nav-links {
-			gap: 16px;
-		}
+    .nav-links {
+      gap: 16px;
+    }
 
-		.nav-link {
-			font-size: 0.85rem;
-		}
-	}
+    .nav-link {
+      font-size: 0.85rem;
+    }
+  }
 </style>

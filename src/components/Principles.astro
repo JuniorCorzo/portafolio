@@ -1,145 +1,151 @@
 ---
-import { PRINCIPLES } from '../consts';
+import { PRINCIPLES } from "../consts";
 ---
 
 <section class="principles-section">
-	<div class="principles-container">
-		<h2 class="section-title">Mis Principios de Desarrollo</h2>
-		<div class="principles-grid">
-			{PRINCIPLES.map((principle) => (
-				<div class="principle-card">
-					<div class="card-icon">{principle.icon}</div>
-					<h3 class="card-title">{principle.title}</h3>
-					<p class="card-description">{principle.description}</p>
-				</div>
-			))}
-		</div>
-	</div>
+  <div class="principles-container">
+    <h2 class="section-title">Mis Principios de Desarrollo</h2>
+    <div class="principles-grid">
+      {
+        PRINCIPLES.map((principle) => (
+          <div class="principle-card">
+            <principle.icon class="card-icon" />
+            <h3 class="card-title">{principle.title}</h3>
+            <p class="card-description">{principle.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
 </section>
 
 <style>
-	.principles-section {
-		padding: 80px 24px;
-		background: var(--crust);
-		border-top: 1px solid var(--overlay0);
-	}
+  .principles-section {
+    padding: 80px 24px;
+    background: var(--crust);
+    border-top: 1px solid var(--overlay0);
+  }
 
-	.principles-container {
-		max-width: 1200px;
-		margin: 0 auto;
-	}
+  .principles-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 
-	.section-title {
-		text-align: center;
-		margin-bottom: 60px;
-		color: var(--text);
-		font-size: 2.5rem;
-		font-weight: 700;
-	}
+  .section-title {
+    text-align: center;
+    margin-bottom: 60px;
+    color: var(--text);
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
 
-	.principles-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 32px;
-	}
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
 
-	.principle-card {
-		background: var(--surface1);
-		padding: 32px;
-		border-radius: 8px;
-		border-top: 3px solid var(--accent);
-		transition: all 0.3s ease-in-out;
-		position: relative;
-		overflow: hidden;
-	}
+  .principle-card {
+    background: var(--surface1);
+    padding: 32px;
+    border-radius: 8px;
+    border-top: 3px solid var(--accent);
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+  }
 
-	.principle-card::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		right: 0;
-		width: 200px;
-		height: 200px;
-		background: radial-gradient(circle, rgba(183, 50, 63, 0.05) 0%, transparent 70%);
-		border-radius: 50%;
-		pointer-events: none;
-	}
+  .principle-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(
+      circle,
+      rgba(183, 50, 63, 0.05) 0%,
+      transparent 70%
+    );
+    border-radius: 50%;
+    pointer-events: none;
+  }
 
-	.principle-card:hover {
-		transform: scale(1.02);
-		box-shadow: 0 0 20px rgba(183, 50, 63, 0.3);
-		border-top-color: var(--sky);
-	}
+  .principle-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 3px 10px rgba(var(--accent-rgb), 0.2);
+    border-top-color: var(--sky);
+  }
 
-	.card-icon {
-		font-size: 32px;
-		margin-bottom: 16px;
-		display: inline-block;
-	}
+  .card-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+    display: inline-block;
+  }
 
-	.card-title {
-		color: var(--text);
-		font-size: 1.25rem;
-		font-weight: 600;
-		margin: 16px 0 12px 0;
-		position: relative;
-		z-index: 1;
-	}
+  .card-title {
+    color: var(--text);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 16px 0 12px 0;
+    position: relative;
+    z-index: 1;
+  }
 
-	.card-description {
-		color: var(--subtext);
-		font-size: 0.95rem;
-		line-height: 1.6;
-		margin: 0;
-		position: relative;
-		z-index: 1;
-	}
+  .card-description {
+    color: var(--subtext);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+  }
 
-	@media (max-width: 1024px) {
-		.principles-section {
-			padding: 60px 24px;
-		}
+  @media (max-width: 1024px) {
+    .principles-section {
+      padding: 60px 24px;
+    }
 
-		.section-title {
-			font-size: 2rem;
-			margin-bottom: 40px;
-		}
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 40px;
+    }
 
-		.principles-grid {
-			grid-template-columns: repeat(2, 1fr);
-			gap: 24px;
-		}
-	}
+    .principles-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+  }
 
-	@media (max-width: 640px) {
-		.principles-section {
-			padding: 40px 24px;
-		}
+  @media (max-width: 640px) {
+    .principles-section {
+      padding: 40px 24px;
+    }
 
-		.section-title {
-			font-size: 1.5rem;
-			margin-bottom: 32px;
-		}
+    .section-title {
+      font-size: 1.5rem;
+      margin-bottom: 32px;
+    }
 
-		.principles-grid {
-			grid-template-columns: 1fr;
-			gap: 20px;
-		}
+    .principles-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
 
-		.principle-card {
-			padding: 24px;
-		}
+    .principle-card {
+      padding: 24px;
+    }
 
-		.card-icon {
-			font-size: 28px;
-		}
+    .card-icon {
+      font-size: 28px;
+    }
 
-		.card-title {
-			font-size: 1.125rem;
-		}
+    .card-title {
+      font-size: 1.125rem;
+    }
 
-		.card-description {
-			font-size: 0.9rem;
-		}
-	}
+    .card-description {
+      font-size: 0.9rem;
+    }
+  }
 </style>
