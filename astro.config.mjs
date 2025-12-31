@@ -6,17 +6,17 @@ import sitemap from "@astrojs/sitemap";
 import cloudflare from "@astrojs/cloudflare";
 
 import tailwindcss from "@tailwindcss/vite";
+import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://example.com",
-  integrations: [mdx(), sitemap()],
-
+  integrations: [mdx(), sitemap(), icon()],
   adapter: cloudflare({
-      platformProxy: {
-          enabled: true,
-      },
-	}),
+    platformProxy: {
+      enabled: true,
+    },
+  }),
 
   vite: {
     plugins: [tailwindcss()],

@@ -1,14 +1,13 @@
-import { Server, Brush, Gauge } from "@lucide/astro";
-
 // Portfolio Configuration
 export const SITE_TITLE = "Angel Corzo";
 export const SITE_DESCRIPTION =
-  "Professional portfolio showcasing Full Stack development expertise in React, Node.js, and DevOps";
+  "Programador Backend en Cúcuta con experiencia en Ecopetrol. Java, Spring Boot, microservicios y React. Desarrollador certificado SENA. Descubre mis proyectos.";
 
 // Developer Information
 export const DEVELOPER_NAME = "Angel Corzo";
-export const DEVELOPER_EMAIL = "hello@angelcorzo.dev";
+export const DEVELOPER_EMAIL = "contact@angelcorzo.dev";
 export const DEVELOPER_LOCATION = "Remote";
+export const DEVELOPER_CV = "https://files.angelcorzo.dev/CV_Angel_Corzo.pdf";
 
 // Hero Section
 export const HERO_HEADLINE_1 = "Hola, soy";
@@ -20,19 +19,19 @@ export const HERO_IMAGE = "/images/hero.webp";
 // Development Principles
 export const PRINCIPLES = [
   {
-    icon: Server,
+    icon: "lucide:server",
     title: "Arquitectura Escalable",
     description:
       "Diseño sistemas pensados para crecer. Desde la estructura de base de datos hasta la modularidad del frontend, cada línea de código tiene un propósito a largo plazo.",
   },
   {
-    icon: Brush,
+    icon: "lucide:brush",
     title: "Diseño Pixel Perfect",
     description:
       "La belleza está en los detalles. Me aseguro de que la implementación final respete la visión del diseño, cuidando la tipografía, el espaciado y las micro-interacciones.",
   },
   {
-    icon: Gauge,
+    icon: "lucide:gauge",
     title: "Alto Rendimiento",
     description:
       'La velocidad es una "feature". Optimizo assets, gestiono el estado de manera eficiente y priorizo las Core Web Vitals para tiempos de carga mínimos.',
@@ -59,7 +58,7 @@ export const EXPERIENCE = [
       "Mejoré la rapidez en el análisis de tendencias operativas de la planta",
     ],
     metric: "30% mejora en rapidez de análisis de tendencias",
-    tech: ["React", "SheetJS", "VictoryChart", "JavaScript"],
+    tech: ["React", "SheetJS", "VictoryChart", "TypeScript"],
   },
 ];
 
@@ -83,8 +82,7 @@ export const PROJECTS = [
       "Docker",
       "Cloudflare R2",
     ],
-    demoUrl: "#",
-    githubUrl: "https://github.com/JuniorCorzo",
+    githubUrl: "https://github.com/JuniorCorzo/UrbanStyle",
     caseStudyUrl: "#",
   },
   {
@@ -105,8 +103,7 @@ export const PROJECTS = [
       "Bootstrap 5",
       "DataTables",
     ],
-    demoUrl: "#",
-    githubUrl: "https://github.com/JuniorCorzo",
+    githubUrl: "https://github.com/JuniorCorzo/Dayen",
     caseStudyUrl: "#",
   },
   {
@@ -119,8 +116,7 @@ export const PROJECTS = [
       "Integración de MongoDB para trazabilidad de datos",
     ],
     tech: ["Spring Boot", "NestJS", "React", "Redux", "Axios", "MongoDB"],
-    demoUrl: "#",
-    githubUrl: "https://github.com/JuniorCorzo",
+    githubUrl: "https://github.com/JuniorCorzo/InstrumentsManage",
     caseStudyUrl: "#",
   },
   {
@@ -133,27 +129,38 @@ export const PROJECTS = [
       "Optimización con multihilos para procesamiento concurrente",
     ],
     tech: ["Java", "Gradle", "Multithreading", "API DIAN"],
-    demoUrl: "#",
-    githubUrl: "https://github.com/JuniorCorzo",
+
+    githubUrl: "https://github.com/JuniorCorzo/FactusDependency",
     caseStudyUrl: "#",
   },
 ];
 
 // Social Links
-export const SOCIAL_LINKS = [
-  {
-    name: "GitHub",
-    url: "https://github.com/JuniorCorzo",
-    icon: "github",
+export const CONTACT_DETAILS = {
+  email: {
+    title: "Correo",
+    icon: "simple-icons:gmail",
+    mail: DEVELOPER_EMAIL,
   },
-  {
-    name: "LinkedIn",
-    url: "https://linkedin.com/in/angel-corzo",
-    icon: "linkedin",
+  ubication: {
+    title: "Ubicación",
+    icon: "lucide:map-pin",
+    text: "Cucúta / Colombia",
   },
-  {
-    name: "Email",
-    url: "mailto:josedanielmmf@gmail.com",
-    icon: "email",
+  social: {
+    title: "Redes Sociales",
+    icon: "lucide:share-2",
+    content: [
+      {
+        name: "GitHub",
+        url: "https://github.com/JuniorCorzo",
+        icon: "simple-icons:github",
+      },
+      {
+        name: "LinkedIn",
+        url: "https://linkedin.com/in/angel-corzo",
+        icon: "simple-icons:linkedin",
+      },
+    ],
   },
-];
+};

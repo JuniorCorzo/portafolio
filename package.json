@@ -16,13 +16,16 @@
 		"@astrojs/mdx": "4.3.12",
 		"@astrojs/rss": "4.0.14",
 		"@astrojs/sitemap": "3.6.0",
-		"@lucide/astro": "^0.562.0",
 		"@tailwindcss/vite": "^4.1.18",
 		"astro": "5.16.2",
 		"tailwindcss": "^4.1.18",
 		"typescript": "5.9.3"
 	},
 	"devDependencies": {
+		"@iconify-json/heroicons": "^1.2.3",
+		"@iconify-json/lucide": "^1.2.82",
+		"@iconify-json/simple-icons": "^1.2.63",
+		"astro-icon": "^1.1.5",
 		"wrangler": "4.56.0"
 	},
 	"private": true,

@@ -1,5 +1,6 @@
 ---
 import { PROJECTS } from "../consts";
+import { Icon } from "astro-icon/components";
 ---
 
 <section class="projects-section">
@@ -35,17 +36,17 @@ import { PROJECTS } from "../consts";
               </div>
 
               <div class="project-links">
-                <a href={project.demoUrl} class="project-link demo-link">
-                  Demo
-                </a>
                 <a href={project.githubUrl} class="project-link github-link">
+                  <Icon name="simple-icons:github" />
                   GitHub
                 </a>
+                <a
+                  href={project.caseStudyUrl}
+                  class="project-link case-study-link"
+                >
+                  Caso de Estudio
+                </a>
               </div>
-
-              <a href={project.caseStudyUrl} class="case-study-link">
-                Case Study →
-              </a>
             </div>
           </div>
         ))
@@ -203,51 +204,46 @@ import { PROJECTS } from "../consts";
   }
 
   .project-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     flex: 1;
     padding: 10px 16px;
     border-radius: 6px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 600;
     text-align: center;
     text-decoration: none;
     transition: all 0.3s ease-in-out;
-    display: block;
+
+    & svg {
+      width: 1.25rem;
+      height: 1.25rem;
+      aspect-ratio: 1 / 1;
+    }
   }
 
-  .demo-link {
+  .github-link {
     background: var(--accent);
     color: #1e1e2e;
     border: 2px solid var(--accent);
     font-weight: 600;
   }
 
-  .demo-link:hover {
+  .github-link:hover {
     background: var(--accent-dark);
     border-color: var(--accent-dark);
   }
 
-  .github-link {
+  .case-study-link {
     background: transparent;
     color: var(--text);
     border: 2px solid var(--overlay0);
   }
 
-  .github-link:hover {
-    border-color: var(--sky);
-    color: var(--sky);
-  }
-
-  .case-study-link {
-    color: var(--accent);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: all 0.3s ease-in-out;
-    border-bottom: 2px solid transparent;
-  }
-
   .case-study-link:hover {
-    border-bottom-color: var(--accent);
+    border-color: var(--sky);
     color: var(--sky);
   }
 

@@ -1,73 +1,79 @@
 ---
-import { DEVELOPER_NAME } from '../consts';
+import { DEVELOPER_NAME } from "../consts";
 const today = new Date();
 ---
 
 <footer class="footer">
-	<div class="footer-container">
-		<div class="footer-content">
-			<p class="footer-text">© {today.getFullYear()} {DEVELOPER_NAME}. Todos los derechos reservados.</p>
-			<p class="footer-subtitle">Crafted with <span class="heart">❤️</span> passion for code and design.</p>
-		</div>
-	</div>
+  <div class="footer-container">
+    <div class="footer-content">
+      <p class="footer-text">
+        © {today.getFullYear()}
+        {DEVELOPER_NAME}. Todos los derechos reservados.
+      </p>
+      <p class="footer-subtitle">
+        Creado con <span class="heart">❤️</span> pasión por el código y diseño.
+      </p>
+    </div>
+  </div>
 </footer>
 
 <style>
-	.footer {
-		background: var(--base);
-		border-top: 1px solid var(--overlay0);
-		padding: 48px 24px;
-		margin-top: 80px;
-	}
+  .footer {
+    background: var(--base);
+    border-top: 1px solid var(--overlay0);
+    padding: 48px 24px;
+    margin-top: 80px;
+  }
 
-	.footer-container {
-		max-width: 1400px;
-		margin: 0 auto;
-	}
+  .footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
 
-	.footer-content {
-		text-align: center;
-	}
+  .footer-content {
+    text-align: center;
+  }
 
-	.footer-text {
-		color: var(--subtext);
-		font-size: 0.95rem;
-		margin: 0 0 8px 0;
-		font-weight: 500;
-	}
+  .footer-text {
+    color: var(--subtext);
+    font-size: 0.95rem;
+    margin: 0 0 8px 0;
+    font-weight: 500;
+  }
 
-	.footer-subtitle {
-		color: var(--overlay1);
-		font-size: 0.85rem;
-		margin: 0;
-	}
+  .footer-subtitle {
+    color: var(--overlay1);
+    font-size: 0.85rem;
+    margin: 0;
+  }
 
-	.heart {
-		color: var(--accent);
-		animation: heart-beat 1.5s infinite;
-	}
+  .heart {
+    color: var(--accent);
+    animation: heart-beat 1.5s infinite;
+  }
 
-	@keyframes heart-beat {
-		0%, 100% {
-			transform: scale(1);
-		}
-		50% {
-			transform: scale(1.2);
-		}
-	}
+  @keyframes heart-beat {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+  }
 
-	@media (max-width: 640px) {
-		.footer {
-			padding: 32px 16px;
-			margin-top: 60px;
-		}
+  @media (max-width: 640px) {
+    .footer {
+      padding: 32px 16px;
+      margin-top: 60px;
+    }
 
-		.footer-text {
-			font-size: 0.9rem;
-		}
+    .footer-text {
+      font-size: 0.9rem;
+    }
 
-		.footer-subtitle {
-			font-size: 0.8rem;
-		}
-	}
+    .footer-subtitle {
+      font-size: 0.8rem;
+    }
+  }
 </style>

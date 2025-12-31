@@ -1,5 +1,7 @@
 ---
 import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+
 import {
   HERO_HEADLINE_1,
   HERO_HEADLINE_2,
@@ -21,8 +23,14 @@ import { DEVELOPER_NAME } from "../consts";
       </h1>
       <p class="hero-description">{HERO_DESCRIPTION}</p>
       <div class="hero-cta">
-        <a href="#contact" class="cta-button cta-primary">Descargar CV</a>
-        <a href="#contact" class="cta-button cta-secondary">Contactar</a>
+        <a href="#projects" class="cta-button cta-primary">
+          Proyectos
+          <Icon name="heroicons:arrow-long-right" size={20} />
+        </a>
+        <a href="#contact" class="cta-button cta-secondary">
+          Contactar
+          <Icon name="lucide:send-horizontal" size={20} />
+        </a>
       </div>
     </div>
     <div class="hero-image-container">
@@ -113,11 +121,17 @@ import { DEVELOPER_NAME } from "../consts";
     text-wrap: pretty;
   }
 
+  .hero-image-container {
+    position: relative;
+  }
+
   .hero-image {
     aspect-ratio: 4 / 5;
     max-height: 600px;
     width: fit-content;
-    object-fit: fill;
+    object-fit: cover;
+    border: 1px solid var(--accent);
+    box-shadow: 0 0 20px var(--accent-dark);
   }
 
   .hero-cta {
@@ -128,6 +142,9 @@ import { DEVELOPER_NAME } from "../consts";
   }
 
   .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     padding: 10px 32px;
     border-radius: 6px;
     font-size: 1rem;
@@ -135,7 +152,6 @@ import { DEVELOPER_NAME } from "../consts";
     text-decoration: none;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
-    display: inline-block;
   }
 
   .cta-primary {
@@ -150,6 +166,11 @@ import { DEVELOPER_NAME } from "../consts";
     border-color: var(--accent-dark);
     transform: translateY(-2px);
     box-shadow: 0 3px 10px rgba(var(--sky-rgb), 0.2);
+
+    & svg {
+      transform: translateX(4px);
+      transition: all 0.3s ease-in-out;
+    }
   }
 
   .cta-secondary {
@@ -164,6 +185,11 @@ import { DEVELOPER_NAME } from "../consts";
     font-weight: 700;
     transform: translateY(-2px);
     box-shadow: 0 3px 10px rgba(var(--sky-rgb), 0.2);
+
+    & svg {
+      transform: rotate(-25deg);
+      transition: all 0.3s ease-in-out;
+    }
   }
 
   @media (max-width: 1024px) {
@@ -179,6 +205,18 @@ import { DEVELOPER_NAME } from "../consts";
 
     .hero-subtitle {
       font-size: 1rem;
+    }
+
+    .hero-container {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-image {
+      aspect-ratio: 1/1;
+      object-position: top;
     }
   }
 
@@ -200,13 +238,6 @@ import { DEVELOPER_NAME } from "../consts";
 
     .hero-cta {
       flex-direction: column;
-    }
-
-    .hero-container {
-      display: flex;
-      flex-direction: column-reverse;
-      align-items: center;
-      justify-content: center;
     }
 
     .cta-button {

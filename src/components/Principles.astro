@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import { PRINCIPLES } from "../consts";
 ---
 
@@ -9,7 +10,7 @@ import { PRINCIPLES } from "../consts";
       {
         PRINCIPLES.map((principle) => (
           <div class="principle-card">
-            <principle.icon class="card-icon" />
+            <Icon name={principle.icon} class="card-icon" />
             <h3 class="card-title">{principle.title}</h3>
             <p class="card-description">{principle.description}</p>
           </div>

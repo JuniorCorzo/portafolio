@@ -1,280 +1,282 @@
 ---
-import { EXPERIENCE } from '../consts';
+import { EXPERIENCE } from "../consts";
 ---
 
 <section class="experience-section">
-	<div class="experience-container">
-		<h2 class="section-title">Mi Experiencia</h2>
-		<div class="timeline">
-			{EXPERIENCE.map((exp, index) => (
-				<div class="timeline-item">
-					<div class="timeline-marker"></div>
-					<div class="timeline-content">
-						<div class="experience-period">{exp.period}</div>
-						<h3 class="experience-title">{exp.title}</h3>
-						<div class="experience-company">{exp.company}</div>
-						<ul class="experience-highlights">
-							{exp.highlights.map((highlight) => (
-								<li class="highlight-item">{highlight}</li>
-							))}
-						</ul>
-						<div class="experience-metric">{exp.metric}</div>
-						<div class="tech-stack">
-							{exp.tech.map((tech) => (
-								<span class="tech-chip">{tech}</span>
-							))}
-						</div>
-					</div>
-				</div>
-			))}
-		</div>
-	</div>
+  <div class="experience-container">
+    <h2 class="section-title">Mi Experiencia</h2>
+    <div class="timeline">
+      {
+        EXPERIENCE.map((exp, index) => (
+          <div class="timeline-item">
+            <div class="timeline-marker" />
+            <div class="timeline-content">
+              <div class="experience-period">{exp.period}</div>
+              <h3 class="experience-title">{exp.title}</h3>
+              <div class="experience-company">{exp.company}</div>
+              <ul class="experience-highlights">
+                {exp.highlights.map((highlight) => (
+                  <li class="highlight-item">{highlight}</li>
+                ))}
+              </ul>
+              <div class="experience-metric">{exp.metric}</div>
+              <div class="tech-stack">
+                {exp.tech.map((tech) => (
+                  <span class="tech-chip">{tech}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
 </section>
 
 <style>
-	.experience-section {
-		padding: 80px 24px;
-		background: var(--crust);
-		border-top: 1px solid var(--overlay0);
-	}
+  .experience-section {
+    padding: 80px 24px;
+    background: var(--crust);
+    border-top: 1px solid var(--overlay0);
+  }
 
-	.experience-container {
-		max-width: 1000px;
-		margin: 0 auto;
-	}
+  .experience-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
 
-	.section-title {
-		text-align: center;
-		margin-bottom: 60px;
-		color: var(--text);
-		font-size: 2.5rem;
-		font-weight: 700;
-	}
+  .section-title {
+    text-align: center;
+    margin-bottom: 60px;
+    color: var(--text);
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
 
-	.timeline {
-		position: relative;
-		padding: 20px 0;
-	}
+  .timeline {
+    position: relative;
+    padding: 20px 0;
+  }
 
-	.timeline::before {
-		content: '';
-		position: absolute;
-		left: 0;
-		top: 0;
-		bottom: 0;
-		width: 2px;
-		background: linear-gradient(180deg, var(--accent) 0%, var(--overlay0) 100%);
-		transform: translateX(-1px);
-	}
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--accent) 0%, var(--overlay0) 100%);
+    transform: translateX(-1px);
+  }
 
-	.timeline-item {
-		position: relative;
-		margin-bottom: 40px;
-		padding-left: 60px;
-	}
+  .timeline-item {
+    position: relative;
+    margin-bottom: 40px;
+    padding-left: 60px;
+  }
 
-	.timeline-item:last-child {
-		margin-bottom: 0;
-	}
+  .timeline-item:last-child {
+    margin-bottom: 0;
+  }
 
-	.timeline-marker {
-		position: absolute;
-		left: -10px;
-		top: 8px;
-		width: 20px;
-		height: 20px;
-		background: var(--accent);
-		border-radius: 50%;
-		border: 3px solid var(--base);
-		transition: all 0.3s ease-in-out;
-	}
+  .timeline-marker {
+    position: absolute;
+    left: -10px;
+    top: 8px;
+    width: 20px;
+    height: 20px;
+    background: var(--accent);
+    border-radius: 50%;
+    border: 3px solid var(--base);
+    transition: all 0.3s ease-in-out;
+  }
 
-	.timeline-item:hover .timeline-marker {
-		width: 28px;
-		height: 28px;
-		left: -14px;
-		top: 4px;
-		background: var(--sky);
-		box-shadow: 0 0 20px rgba(137, 220, 235, 0.5);
-	}
+  .timeline-item:hover .timeline-marker {
+    width: 28px;
+    height: 28px;
+    left: -14px;
+    top: 4px;
+    background: var(--sky);
+    box-shadow: 0 0 20px rgba(var(--sky-rgb), 0.5);
+  }
 
-	.timeline-content {
-		background: var(--surface1);
-		padding: 28px;
-		border-radius: 8px;
-		border-left: 3px solid var(--accent);
-		transition: all 0.3s ease-in-out;
-	}
+  .timeline-content {
+    background: var(--surface1);
+    padding: 28px;
+    border-radius: 8px;
+    border-left: 3px solid var(--accent);
+    transition: all 0.3s ease-in-out;
+  }
 
-	.timeline-item:hover .timeline-content {
-		background: var(--surface2);
-		box-shadow: 0 8px 24px rgba(183, 50, 63, 0.15);
-	}
+  .timeline-item:hover .timeline-content {
+    background: var(--surface1);
+    box-shadow: 0 8px 24px rgba(var(--surface2-rgb), 0.3);
+  }
 
-	.experience-period {
-		color: var(--subtext);
-		font-size: 0.9rem;
-		font-weight: 500;
-		margin-bottom: 8px;
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
-	}
+  .experience-period {
+    color: var(--subtext);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
 
-	.experience-title {
-		color: var(--text);
-		font-size: 1.5rem;
-		font-weight: 700;
-		margin: 0 0 8px 0;
-	}
+  .experience-title {
+    color: var(--text);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+  }
 
-	.experience-company {
-		color: var(--sky);
-		font-size: 1.1rem;
-		margin-bottom: 16px;
-		font-weight: 500;
-	}
+  .experience-company {
+    color: var(--sky);
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
 
-	.experience-highlights {
-		list-style: none;
-		padding: 0;
-		margin: 16px 0;
-	}
+  .experience-highlights {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0;
+  }
 
-	.highlight-item {
-		color: var(--subtext);
-		font-size: 0.95rem;
-		line-height: 1.8;
-		margin-bottom: 10px;
-		padding-left: 20px;
-		position: relative;
-	}
+  .highlight-item {
+    color: var(--subtext);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+  }
 
-	.highlight-item::before {
-		content: '✓';
-		position: absolute;
-		left: 0;
-		color: var(--sky);
-		font-weight: 700;
-	}
+  .highlight-item::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--sky);
+    font-weight: 700;
+  }
 
-	.experience-metric {
-		background: rgba(186, 194, 222, 0.08);
-		color: var(--accent);
-		padding: 12px 16px;
-		border-radius: 6px;
-		margin: 16px 0;
-		font-weight: 600;
-		font-size: 0.95rem;
-		border-left: 3px solid var(--accent);
-	}
+  .experience-metric {
+    background: rgba(186, 194, 222, 0.08);
+    color: var(--accent);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 16px 0;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-left: 3px solid var(--accent);
+  }
 
-	.tech-stack {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 8px;
-		margin-top: 16px;
-	}
+  .tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
 
-	.tech-chip {
-		display: inline-block;
-		background: var(--base);
-		color: var(--sky);
-		padding: 6px 12px;
-		border-radius: 16px;
-		font-size: 0.8rem;
-		font-weight: 500;
-		border: 1px solid var(--overlay0);
-		transition: all 0.3s ease-in-out;
-	}
+  .tech-chip {
+    display: inline-block;
+    background: var(--base);
+    color: var(--sky);
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid var(--overlay0);
+    transition: all 0.3s ease-in-out;
+  }
 
-	.tech-chip:hover {
-		background: var(--accent);
-		color: #1e1e2e;
-		border-color: var(--accent);
-		font-weight: 600;
-	}
+  .tech-chip:hover {
+    background: var(--accent);
+    color: #1e1e2e;
+    border-color: var(--accent);
+    font-weight: 600;
+  }
 
-	@media (max-width: 768px) {
-		.experience-section {
-			padding: 60px 24px;
-		}
+  @media (max-width: 768px) {
+    .experience-section {
+      padding: 60px 24px;
+    }
 
-		.section-title {
-			font-size: 2rem;
-			margin-bottom: 40px;
-		}
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 40px;
+    }
 
-		.timeline::before {
-			left: -12px;
-		}
+    .timeline::before {
+      left: -12px;
+    }
 
-		.timeline-item {
-			padding-left: 40px;
-		}
+    .timeline-item {
+      padding-left: 40px;
+    }
 
-		.timeline-marker {
-			left: -19px;
-		}
+    .timeline-marker {
+      left: -19px;
+    }
 
-		.timeline-content {
-			padding: 20px;
-		}
+    .timeline-content {
+      padding: 20px;
+    }
 
-		.experience-title {
-			font-size: 1.25rem;
-		}
-	}
+    .experience-title {
+      font-size: 1.25rem;
+    }
+  }
 
-	@media (max-width: 640px) {
-		.experience-section {
-			padding: 40px 24px;
-		}
+  @media (max-width: 640px) {
+    .experience-section {
+      padding: 40px 24px;
+    }
 
-		.section-title {
-			font-size: 1.5rem;
-		}
+    .section-title {
+      font-size: 1.5rem;
+    }
 
-		.timeline-item {
-			padding-left: 36px;
-			margin-bottom: 32px;
-		}
+    .timeline-item {
+      padding-left: 36px;
+      margin-bottom: 32px;
+    }
 
-		.timeline::before {
-			left: -16px;
-		}
+    .timeline::before {
+      left: -16px;
+    }
 
-		.timeline-marker {
-			left: -22px;
-			width: 16px;
-			height: 16px;
-			top: 10px;
-		}
+    .timeline-marker {
+      left: -22px;
+      width: 16px;
+      height: 16px;
+      top: 10px;
+    }
 
-		.timeline-content {
-			padding: 16px;
-			border-left-width: 2px;
-		}
+    .timeline-content {
+      padding: 16px;
+      border-left-width: 2px;
+    }
 
-		.experience-period {
-			font-size: 0.85rem;
-		}
+    .experience-period {
+      font-size: 0.85rem;
+    }
 
-		.experience-title {
-			font-size: 1.125rem;
-			margin-bottom: 4px;
-		}
+    .experience-title {
+      font-size: 1.125rem;
+      margin-bottom: 4px;
+    }
 
-		.experience-company {
-			font-size: 1rem;
-		}
+    .experience-company {
+      font-size: 1rem;
+    }
 
-		.highlight-item {
-			font-size: 0.9rem;
-		}
+    .highlight-item {
+      font-size: 0.9rem;
+    }
 
-		.tech-chip {
-			font-size: 0.75rem;
-			padding: 4px 10px;
-		}
-	}
+    .tech-chip {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+    }
+  }
 </style>

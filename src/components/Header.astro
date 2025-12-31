@@ -1,15 +1,39 @@
 ---
-import { SITE_TITLE } from "../consts";
+import { Icon } from "astro-icon/components";
+import { SITE_TITLE, DEVELOPER_CV } from "../consts";
 ---
 
 <header class="header">
   <nav class="navbar">
     <h2 class="logo"><a href="/">{SITE_TITLE}</a></h2>
-    <div class="nav-links">
+
+    <div class="nav-links" id="navLinks">
+      <a href="#skills" class="nav-link">Habilidades</a>
       <a href="#experience" class="nav-link">Experiencia</a>
       <a href="#projects" class="nav-link">Proyectos</a>
       <a href="#contact" class="nav-link">Contacto</a>
+
+      <!-- versión de escritorio del botón CV -->
+      <div class="mobile-cv">
+        <a href={DEVELOPER_CV} target="_blank" class="cv">
+          <Icon name="lucide:download" size={20} />
+          Curriculum
+        </a>
+      </div>
     </div>
+
+    <div class="desktop-cv">
+      <a href={DEVELOPER_CV} target="_blank" class="cv">
+        <Icon name="lucide:download" size={20} />
+        Curriculum
+      </a>
+    </div>
+
+    <button class="menu-toggle" aria-expanded="false" aria-label="Abrir menú">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
   </nav>
 </header>
 
@@ -18,7 +42,7 @@ import { SITE_TITLE } from "../consts";
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(30, 30, 46, 0.7);
+    background: rgba(var(--crust-rgb), 0.96);
     backdrop-filter: blur(5px);
     border-bottom: 1px solid rgba(108, 112, 134, 0.2);
   }
@@ -31,6 +55,38 @@ import { SITE_TITLE } from "../consts";
     align-items: center;
     justify-content: space-between;
     height: 70px;
+  }
+
+  /* botón CV (estilo compartido) */
+  .navbar div .cv {
+    display: flex;
+    background-color: rgba(var(--accent-rgb), 0.1);
+    color: var(--accent);
+    align-items: center;
+    border: 2px solid rgba(var(--accent-rgb), 0.1);
+    padding: 6px 10px;
+    gap: 8px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .mobile-cv {
+    display: none;
+  }
+
+  .desktop-cv {
+    display: inline-flex;
+  }
+
+  .navbar div .cv:hover {
+    background-color: var(--accent-dark);
+    color: var(--crust);
+    border: 2px solid var(--accent-dark);
+    font-weight: 700;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(var(--accent-rgb), 0.5);
   }
 
   .logo {
@@ -83,10 +139,91 @@ import { SITE_TITLE } from "../consts";
     width: 100%;
   }
 
+  /* Hamburger button */
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+  }
+
+  .menu-toggle .bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text);
+    margin: 4px 0;
+    transition:
+      transform 0.25s ease,
+      opacity 0.25s ease;
+  }
+
+  .menu-toggle[aria-expanded="true"] .bar:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .menu-toggle[aria-expanded="true"] .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle[aria-expanded="true"] .bar:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  .cv-container {
+    display: block;
+  }
+
+  /* Mobile menu behavior */
+  .nav-links.open {
+    display: flex;
+  }
+
   @media (max-width: 768px) {
     .navbar {
       padding: 0 20px;
       height: 60px;
+    }
+
+    .menu-toggle {
+      display: block;
+    }
+
+    .desktop-cv {
+      display: none;
+    }
+
+    .mobile-cv {
+      display: flex;
+      width: 100%;
+    }
+
+    /* transform the menu into a dropdown panel */
+    .nav-links {
+      background: rgba(var(--crust-rgb), 0.96);
+      backdrop-filter: blur(5px);
+      display: none;
+      position: absolute;
+      width: 100vw;
+      align-items: start;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      flex-direction: column;
+      padding: 12px;
+      gap: 12px;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+      z-index: 9999;
+    }
+
+    .nav-links a {
+      padding: 8px 6px;
+    }
+
+    .nav-links.open {
+      display: flex;
     }
 
     .nav-links {
@@ -94,7 +231,14 @@ import { SITE_TITLE } from "../consts";
     }
 
     .nav-link {
-      font-size: 0.9rem;
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    .navbar div .cv {
+      width: 100%;
+      justify-content: center;
+      align-items: center;
     }
   }
 
@@ -115,5 +259,36 @@ import { SITE_TITLE } from "../consts";
     .nav-link {
       font-size: 0.85rem;
     }
+
+    /* adjust dropdown position for smaller screens */
+    .nav-links {
+      top: 56px;
+      min-width: 160px;
+    }
   }
 </style>
+
+<script>
+  // Script mínimo para alternar la visibilidad del menú en móviles
+  (function () {
+    const btn = document.querySelector(".menu-toggle");
+    const nav = document.getElementById("navLinks");
+    if (!btn || !nav) return;
+
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!expanded));
+      btn.classList.toggle("open");
+      nav.classList.toggle("open");
+    });
+
+    // Cerrar menú al hacer clic en un enlace (mejora UX en móviles)
+    nav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        btn.setAttribute("aria-expanded", "false");
+        btn.classList.remove("open");
+        nav.classList.remove("open");
+      });
+    });
+  })();
+</script>
