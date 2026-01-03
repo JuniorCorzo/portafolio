@@ -1,6 +1,7 @@
 ---
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
+import { baseService } from "astro/assets";
 import { DEVELOPER_NAME } from "../consts";
 import "../styles/global.css";
 
@@ -84,5 +85,5 @@ const schemaData = {
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
-<script type="application/ld+json" set:html={schemaData}>
+<script type="application/ld+json" set:html={JSON.stringify(schemaData)}>
 </script>
