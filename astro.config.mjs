@@ -20,5 +20,14 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      rollupOptions: {
+        output: {
+          entryFileNames: "public/[name].[hash].js",
+          chunkFileNames: "public/[name].[hash].js",
+          assetFileNames: "public/[name].[hash].[ext]",
+        },
+      },
+    },
   },
 });

@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
+import { DEVELOPER_NAME } from "../consts";
 
 import {
   HERO_HEADLINE_1,
@@ -8,7 +9,6 @@ import {
   HERO_IMAGE,
   HERO_DESCRIPTION,
 } from "../consts";
-import { DEVELOPER_NAME } from "../consts";
 ---
 
 <section class="hero-section">
@@ -38,6 +38,8 @@ import { DEVELOPER_NAME } from "../consts";
         src={HERO_IMAGE}
         class="hero-image"
         alt="Hero Image"
+        loading="eager"
+        fetchpriority="high"
         width={580}
         height={720}
       />
