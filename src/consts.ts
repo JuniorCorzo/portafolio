@@ -1,5 +1,6 @@
 // Portfolio Configuration
-export const SITE_TITLE = "Angel Corzo";
+export const SITE_TITLE =
+  "Angel Corzo | Desarrollador Full Stack | Backend & APIs";
 export const SITE_DESCRIPTION =
   "Programador Backend en Cúcuta con experiencia en Ecopetrol. Java, Spring Boot, microservicios y React. Desarrollador certificado SENA. Descubre mis proyectos.";
 
