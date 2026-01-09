@@ -84,7 +84,7 @@ export const PROJECTS = [
       "Cloudflare R2",
     ],
     githubUrl: "https://github.com/JuniorCorzo/UrbanStyle",
-    caseStudyUrl: "#",
+    caseStudyUrl: "/study-case/urban-style",
   },
   {
     title: "DAYEN - Trazabilidad Agroindustrial",
@@ -105,7 +105,7 @@ export const PROJECTS = [
       "DataTables",
     ],
     githubUrl: "https://github.com/JuniorCorzo/Dayen",
-    caseStudyUrl: "#",
+    caseStudyUrl: "/study-case/dayen",
   },
   {
     title: "Instruments Management - Microservices",
@@ -118,7 +118,7 @@ export const PROJECTS = [
     ],
     tech: ["Spring Boot", "NestJS", "React", "Redux", "Axios", "MongoDB"],
     githubUrl: "https://github.com/JuniorCorzo/InstrumentsManage",
-    caseStudyUrl: "#",
+    caseStudyUrl: "/study-case/instruments-manage",
   },
   {
     title: "Factus Dependency - Java Library",
@@ -132,7 +132,7 @@ export const PROJECTS = [
     tech: ["Java", "Gradle", "Multithreading", "API DIAN"],
 
     githubUrl: "https://github.com/JuniorCorzo/FactusDependency",
-    caseStudyUrl: "#",
+    caseStudyUrl: "/study-case/factus-dependency",
   },
 ];
 

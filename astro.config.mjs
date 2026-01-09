@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
+import mermaid from "astro-mermaid";
 import sitemap from "@astrojs/sitemap";
 
 import cloudflare from "@astrojs/cloudflare";
@@ -11,7 +12,12 @@ import icon from "astro-icon";
 // https://astro.build/config
 export default defineConfig({
   site: "https://angelcorzo.dev",
-  integrations: [mdx(), sitemap(), icon()],
+  integrations: [
+    mdx(),
+    sitemap(),
+    icon(),
+    mermaid({ autoTheme: true, theme: "dark", mermaidConfig: {} }),
+  ],
   adapter: cloudflare({
     platformProxy: {
       enabled: true,
