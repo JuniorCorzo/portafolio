@@ -1,7 +1,7 @@
 ---
 title: "Caso de Estudio: InstrumentsManage"
 description: "Sistema de Gestión de Instrumentación Industrial con Arquitectura de Microservicios"
-pubDate: "2023-09-15"
+pubDate: "2026-01-07"
 ---
 ## 1. 📋 Resumen Ejecutivo
 
