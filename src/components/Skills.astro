@@ -1,5 +1,6 @@
 ---
 import { SKILLS } from "../consts";
+import Chip from "./Chip.astro";
 ---
 
 <section id="skills" class="skills-section">
@@ -15,8 +16,8 @@ import { SKILLS } from "../consts";
         <h3 class="category-title">Frontend</h3>
         <div class="chips-container">
           {
-            SKILLS.frontend.map((skill) => (
-              <span class="skill-chip">{skill}</span>
+            SKILLS.frontend.map(({ title, icon }) => (
+              <Chip title={title} icon={icon} />
             ))
           }
         </div>
@@ -26,8 +27,8 @@ import { SKILLS } from "../consts";
         <h3 class="category-title">Backend</h3>
         <div class="chips-container">
           {
-            SKILLS.backend.map((skill) => (
-              <span class="skill-chip">{skill}</span>
+            SKILLS.backend.map(({ title, icon }) => (
+              <Chip title={title} icon={icon} />
             ))
           }
         </div>
@@ -37,8 +38,8 @@ import { SKILLS } from "../consts";
         <h3 class="category-title">DevOps</h3>
         <div class="chips-container">
           {
-            SKILLS.devops.map((skill) => (
-              <span class="skill-chip">{skill}</span>
+            SKILLS.devops.map(({ title, icon }) => (
+              <Chip title={title} icon={icon} />
             ))
           }
         </div>
@@ -48,8 +49,8 @@ import { SKILLS } from "../consts";
         <h3 class="category-title">Testing</h3>
         <div class="chips-container">
           {
-            SKILLS.testing.map((skill) => (
-              <span class="skill-chip">{skill}</span>
+            SKILLS.testing.map(({ title, icon }) => (
+              <Chip title={title} icon={icon} />
             ))
           }
         </div>
@@ -189,11 +190,6 @@ import { SKILLS } from "../consts";
 
     .category-title {
       font-size: 1.125rem;
-    }
-
-    .skill-chip {
-      font-size: 0.85rem;
-      padding: 6px 12px;
     }
   }
 </style>

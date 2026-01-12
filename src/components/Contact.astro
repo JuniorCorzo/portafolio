@@ -67,11 +67,19 @@ const { email, social, ubication } = CONTACT_DETAILS;
             <Icon name={email.icon} size="20" />
           </div>
           <div class="contact-details-item-content">
-            <span>{email.title}</span>
+            <span class="contact-details__label">{email.title}</span>
             <div>
-              <a href={`mailto:${email.mail}`}>
-                <span>
+              <a class="contact-email" href={`mailto:${email.mail}`}>
+                <span
+                  class="contact-email__mail contact-details__text--primary"
+                >
                   {email.mail}
+                </span>
+                <span
+                  class="contact-email__cta contact-details__text--secondary icons"
+                >
+                  {email.cta}
+                  <Icon name="lucide:arrow-right" size={14} />
                 </span>
               </a>
             </div>
@@ -82,9 +90,19 @@ const { email, social, ubication } = CONTACT_DETAILS;
             <Icon name={ubication.icon} size="20" />
           </div>
           <div class="contact-details-item-content">
-            <span>{ubication.title}</span>
-            <div>
-              {ubication.text}
+            <span class="contact-details__label">{ubication.title}</span>
+            <div class="contact-ubication">
+              <span
+                class="contact-ubication__title contact-details__text--primary"
+              >
+                {ubication.text}
+              </span>
+              <span
+                class="contact-ubication__remote contact-details__text--secondary icons"
+              >
+                <Icon name="material-symbols:circle" size={14} />
+                {ubication.remote}
+              </span>
             </div>
           </div>
         </div>
@@ -93,17 +111,31 @@ const { email, social, ubication } = CONTACT_DETAILS;
             <Icon name={social.icon} size="20" />
           </div>
           <div class="contact-details-item-content">
-            <span>{social.title}</span>
-            <div>
+            <span class="contact-details__label">{social.title}</span>
+            <div class="contact-socials">
               {
-                social.content.map(({ icon, url, name }) => (
+                social.content.map(({ icon, url, name, subtitle, color }) => (
                   <a
+                    class="contact-socials__link"
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
                     title={name}
                   >
-                    <Icon name={icon} class="contact-details-icon" size={24} />
+                    <Icon
+                      name={icon}
+                      class="contact-details-icon"
+                      style={{ color }}
+                      size={28}
+                    />
+                    <span class="contact-socials__info">
+                      <span class="contact-socials__name contact-details__text--primary">
+                        {name}
+                      </span>
+                      <span class="contact-socials__subtitle contact-details__text--small">
+                        {subtitle}
+                      </span>
+                    </span>
                   </a>
                 ))
               }
@@ -120,11 +152,6 @@ const { email, social, ubication } = CONTACT_DETAILS;
     padding: 80px 24px;
     background: var(--crust);
     border-top: 1px solid var(--overlay0);
-  }
-
-  .contact-container {
-    max-width: 1128px;
-    margin: 0 auto;
   }
 
   .section-title {
@@ -148,8 +175,8 @@ const { email, social, ubication } = CONTACT_DETAILS;
 
   .contact-content {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 60px;
+    grid-template-columns: 3fr 2fr;
+    gap: 3rem;
     align-items: start;
   }
 
@@ -219,7 +246,7 @@ const { email, social, ubication } = CONTACT_DETAILS;
     background: var(--accent);
     color: #1e1e2e;
     border: 2px solid var(--accent);
-    padding: 14px 20px;
+    padding: 12px 16px;
     border-radius: 6px;
     font-size: 1rem;
     font-weight: 700;
@@ -253,7 +280,6 @@ const { email, social, ubication } = CONTACT_DETAILS;
     align-items: start;
     border: 1px solid var(--accent);
     border-radius: 8px;
-
     gap: 1rem;
   }
 
@@ -267,15 +293,10 @@ const { email, social, ubication } = CONTACT_DETAILS;
   .contact-details-item {
     display: flex;
     gap: 1rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     transition: all 0.3s ease;
-  }
-
-  .contact-details-item:hover {
-    color: var(--sky);
-    transform: translateY(-4px);
   }
 
   .contact-details-item-icon {
@@ -285,6 +306,7 @@ const { email, social, ubication } = CONTACT_DETAILS;
     justify-content: center;
     width: 40px;
     height: 40px;
+    aspect-ratio: 1/1;
     border-radius: 6px;
     color: var(--sky);
     transition: all 0.3s ease-in-out;
@@ -296,29 +318,98 @@ const { email, social, ubication } = CONTACT_DETAILS;
     flex-direction: column;
     align-items: start;
     font-size: 0.9rem;
+    text-align: start;
 
-    & span {
-      color: rgba(var(--text-rgb), 0.8);
+    & .contact-details__label {
+      color: var(--subtext);
+      font-weight: 600;
+      user-select: none;
     }
 
     & div {
       display: flex;
-      gap: 12px;
-      font-size: 1.05rem;
+      flex-direction: column;
 
       & a {
         width: fit-content;
-        height: 24px;
         color: var(--text);
-
-        & :hover {
-          color: var(--sky);
-        }
-
-        & svg {
-          margin-top: 3px;
-        }
       }
+    }
+  }
+
+  .contact-details__text {
+    font-weight: 600;
+    user-select: none;
+  }
+
+  .contact-details__text--primary {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .contact-details__text--secondary {
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .contact-details__text--small {
+    font-size: 0.8rem;
+  }
+
+  .icons {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .contact-email {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    align-items: stretch;
+    gap: 0.25rem;
+
+    & .contact-email__mail {
+      color: var(--text);
+    }
+
+    & .contact-email__cta {
+      color: var(--blue);
+    }
+  }
+
+  .contact-ubication {
+    & .contact-ubication__title {
+      color: var(--text);
+    }
+    & .contact-ubication__remote {
+      color: var(--green);
+    }
+  }
+
+  .contact-socials {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 0.5rem;
+
+    & .contact-socials__link {
+      display: inline-flex;
+      gap: 0.875rem;
+      align-items: center;
+    }
+
+    & .contact-socials__info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    & .contact-socials__name {
+      color: var(--text);
+    }
+
+    & .contact-socials__subtitle {
+      color: var(--subtext);
     }
   }
 
@@ -355,13 +446,16 @@ const { email, social, ubication } = CONTACT_DETAILS;
       gap: 32px;
     }
 
-    .form-input,
-    .form-textarea {
-      padding: 10px 0;
+    .form-group {
+      flex-direction: column;
     }
 
     .submit-button {
       width: 100%;
+    }
+
+    .contact-details-section {
+      padding: 12px 16px;
     }
 
     .contact-details-links {

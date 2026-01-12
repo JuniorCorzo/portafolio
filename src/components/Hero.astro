@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
-import { DEVELOPER_NAME } from "../consts";
+import { DEVELOPER_NAME, HERO_CHIPS } from "../consts";
 
 import {
   HERO_HEADLINE_1,
@@ -9,52 +9,71 @@ import {
   HERO_IMAGE,
   HERO_DESCRIPTION,
 } from "../consts";
+import Chip from "./Chip.astro";
 ---
 
 <section class="hero-section">
   <div class="hero-container">
-    <div class="hero-content">
-      <h1 class="hero-title">
-        <span class="headline-primary"
-          >{HERO_HEADLINE_1}
-          <span style="color: var(--sky);">{`[${DEVELOPER_NAME}]`}</span>
-        </span>
-        <span class="headline-accent">{HERO_HEADLINE_2}</span>
-      </h1>
-      <p class="hero-description">{HERO_DESCRIPTION}</p>
-      <div class="hero-cta">
-        <a href="#projects" class="cta-button cta-primary">
-          Proyectos
-          <Icon name="heroicons:arrow-long-right" size={20} />
-        </a>
-        <a href="#contact" class="cta-button cta-secondary">
-          Contactar
-          <Icon name="lucide:send-horizontal" size={20} />
-        </a>
-      </div>
+    <div class="hero-header">
+      {
+        HERO_CHIPS.map(({ title, icon, color, background }) => (
+          <Chip
+            title={title}
+            icon={icon}
+            class="hero-chip"
+            style={{
+              color: `var(${color})`,
+              backgroundColor: `rgba(var(${background}), 0.1)`,
+              borderColor: `var(${color})`,
+            }}
+          />
+        ))
+      }
     </div>
-    <div class="hero-image-container">
-      <Image
-        src={HERO_IMAGE}
-        class="hero-image"
-        alt="Hero Image"
-        loading="eager"
-        fetchpriority="high"
-        width={580}
-        height={720}
-      />
+    <div class="hero-body">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="headline-primary"
+            >{HERO_HEADLINE_1}
+            <span style="color: var(--sky);">{`[${DEVELOPER_NAME}]`}</span>
+          </span>
+        </h1>
+        <h2 class="headline-accent">{HERO_HEADLINE_2}</h2>
+        <p class="hero-description">{HERO_DESCRIPTION}</p>
+        <div class="hero-cta">
+          <a href="#projects" class="cta-button cta-primary">
+            Proyectos
+            <Icon name="heroicons:arrow-long-right" size={20} />
+          </a>
+          <a href="#contact" class="cta-button cta-secondary">
+            Contactar
+            <Icon name="lucide:send-horizontal" size={20} />
+          </a>
+        </div>
+      </div>
+      <div class="hero-image-container">
+        <Image
+          src={HERO_IMAGE}
+          class="hero-image"
+          alt="Hero Image"
+          loading="eager"
+          fetchpriority="high"
+          width={480}
+          height={600}
+        />
+      </div>
     </div>
   </div>
 </section>
 
 <style>
   .hero-section {
-    padding: 52px 24px;
+    padding: 3rem 24px;
     background: linear-gradient(135deg, var(--crust) 0%, var(--base) 100%);
     position: relative;
     overflow: hidden;
-    min-height: 80vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
   }
@@ -76,64 +95,66 @@ import {
   }
 
   .hero-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    gap: 2rem;
     width: 100%;
     position: relative;
     z-index: 1;
   }
 
+  .hero-body {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    box-sizing: border-box;
+  }
+
   .hero-content {
     text-align: left;
+    grid-column: span 7;
+    padding-right: 1.8rem;
   }
 
   .hero-title {
     margin: 0 0 24px 0;
     line-height: 1.1;
-    max-width: 30rem;
   }
 
   .headline-primary {
     display: block;
     color: var(--text);
-    font-size: 4rem;
+    font-size: 4.5rem;
     font-weight: 700;
     margin-bottom: 8px;
   }
 
   .headline-accent {
     display: block;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    background: linear-gradient(135deg, var(--accent) 0%, #e0e6f6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--text);
+    margin-top: 2rem;
   }
 
   .hero-description {
     font-size: 1.125rem;
     color: var(--subtext);
-    margin-bottom: 48px;
-    max-width: 600px;
+    margin-top: 1rem;
     line-height: 1.8;
     text-wrap: pretty;
   }
 
   .hero-image-container {
     position: relative;
+    grid-column: span 5;
   }
 
   .hero-image {
     aspect-ratio: 4 / 5;
-    max-height: 600px;
-    width: fit-content;
+    max-width: 460px;
+    width: 100%;
     object-fit: cover;
     border: 1px solid var(--accent);
     box-shadow: 0 0 20px var(--accent-dark);
+    margin: 0 auto;
   }
 
   .hero-cta {
@@ -141,6 +162,19 @@ import {
     gap: 16px;
     justify-content: start;
     flex-wrap: wrap;
+  }
+
+  .hero-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 2em;
+    gap: 12px;
+  }
+
+  .hero-chip {
+    backdrop-filter: blur(8px);
+    font-weight: 600;
   }
 
   .cta-button {
@@ -196,13 +230,21 @@ import {
 
   @media (max-width: 1024px) {
     .hero-section {
-      padding: 80px 24px;
-      min-height: 70vh;
+      padding: 2rem 24px;
     }
 
-    .headline-primary,
-    .headline-accent {
+    .hero-body {
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 2rem;
+    }
+
+    .headline-primary {
       font-size: 3rem;
+    }
+
+    .headline-accent {
+      font-size: 1.5rem;
     }
 
     .hero-subtitle {
@@ -211,12 +253,17 @@ import {
 
     .hero-container {
       display: flex;
-      flex-direction: column-reverse;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
     }
 
+    .hero-content {
+      padding-right: 0;
+    }
+
     .hero-image {
+      max-width: 90vw;
       aspect-ratio: 1/1;
       object-position: top;
     }
@@ -224,13 +271,15 @@ import {
 
   @media (max-width: 640px) {
     .hero-section {
-      padding: 60px 24px;
-      min-height: auto;
+      padding: 1.5rem 16px;
     }
 
-    .headline-primary,
+    .headline-primary {
+      font-size: 2.25rem;
+    }
+
     .headline-accent {
-      font-size: 2rem;
+      font-size: 1.25rem;
     }
 
     .hero-subtitle {

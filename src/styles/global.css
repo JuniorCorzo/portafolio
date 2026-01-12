@@ -12,6 +12,14 @@
   --sky-rgb: 137, 220, 235;
   --text-rgb: 205, 214, 244;
   --subtext-rgb: 166, 173, 200;
+  --blue-rgb: 121, 147, 199;
+  --blue-dark-rgb: 102, 124, 169;
+  --green-rgb: 161, 193, 112;
+  --green-dark-rgb: 140, 169, 98;
+  --purple-rgb: 152, 126, 211;
+  --purple-dark-rgb: 133, 110, 185;
+  --orange-rgb: 233, 165, 108;
+  --orange-dark-rgb: 208, 145, 90;
 
   /* Versiones sólidas para uso directo */
   --crust: rgb(var(--crust-rgb));
@@ -26,6 +34,14 @@
   --text: rgb(var(--text-rgb));
   --subtext: rgb(var(--subtext-rgb));
   --text-gray: rgb(205, 214, 244);
+  --blue: rgb(var(--blue-rgb));
+  --blue-dark: rgb(var(--blue-dark-rgb));
+  --green: rgb(var(--green-rgb));
+  --green-dark: rgb(var(--green-dark-rgb));
+  --purple: rgb(var(--purple-rgb));
+  --purple-dark: rgb(var(--purple-dark-rgb));
+  --orange: rgb(var(--orange-rgb));
+  --orange-dark: rgb(var(--orange-dark-rgb));
 
   /* Legacy variables for compatibility */
   --black: 30, 30, 46;

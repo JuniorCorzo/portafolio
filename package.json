@@ -26,6 +26,7 @@
 	"devDependencies": {
 		"@iconify-json/heroicons": "^1.2.3",
 		"@iconify-json/lucide": "^1.2.82",
+		"@iconify-json/material-symbols": "^1.2.51",
 		"@iconify-json/simple-icons": "^1.2.63",
 		"astro-icon": "^1.1.5",
 		"wrangler": "4.56.0"
