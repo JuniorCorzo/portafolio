@@ -167,7 +167,7 @@ export const PROJECTS = [
       "Gradle",
       "Docker",
       "Cloudflare R2",
-      "PostgreSQL",
+      "MongoDB",
     ],
     githubUrl: "https://github.com/JuniorCorzo/UrbanStyle",
     caseStudyUrl: "/proyectos/urban-style-ecommerce",
