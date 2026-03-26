@@ -170,7 +170,7 @@ export const PROJECTS = [
       "MongoDB",
     ],
     githubUrl: "https://github.com/JuniorCorzo/UrbanStyle",
-    caseStudyUrl: "/proyectos/urban-style-ecommerce",
+    caseStudyUrl: "/study-case/urban-style",
   },
   {
     title: "DAYEN - Sistema de Trazabilidad Agroindustrial",
@@ -198,7 +198,7 @@ export const PROJECTS = [
       "Nginx",
     ],
     githubUrl: "https://github.com/JuniorCorzo/Dayen",
-    caseStudyUrl: "/proyectos/dayen-trazabilidad",
+    caseStudyUrl: "/study-case/dayen",
     sector: "Agroindustria",
   },
   {
@@ -226,7 +226,7 @@ export const PROJECTS = [
       "Docker",
     ],
     githubUrl: "https://github.com/JuniorCorzo/InstrumentsManage",
-    caseStudyUrl: "/proyectos/instruments-microservices",
+    caseStudyUrl: "/study-case/instruments-manage",
   },
   {
     title:
@@ -245,7 +245,7 @@ export const PROJECTS = [
     results: "60% reducción en tiempo de procesamiento | Publicada en Maven",
     tech: ["Java", "Gradle", "Multithreading", "XML/UBL", "API DIAN"],
     githubUrl: "https://github.com/JuniorCorzo/FactusDependency",
-    caseStudyUrl: "/proyectos/factus-dependency-dian",
+    caseStudyUrl: "/study-case/factus-dependency",
     sector: "Fintech / Compliance",
   },
 ];
