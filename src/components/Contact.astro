@@ -1,8 +1,19 @@
 ---
 import { CONTACT_DETAILS } from "../consts";
+import {
+  WHATSAPP_NUMBER,
+  WHATSAPP_MESSAGE,
+  CALENDLY_URL,
+  RESPONSE_TIME,
+} from "../data/contact";
 import { Icon } from "astro-icon/components";
+import WhatsAppButton from "./WhatsAppButton.astro";
 
 const { email, social, ubication } = CONTACT_DETAILS;
+
+const waUrl = WHATSAPP_NUMBER
+  ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`
+  : "";
 ---
 
 <section class="contact-section" id="contact">
@@ -85,6 +96,54 @@ const { email, social, ubication } = CONTACT_DETAILS;
             </div>
           </div>
         </div>
+        {
+          waUrl && (
+            <div class="contact-details-item">
+              <div class="contact-details-item-icon" title="WhatsApp">
+                <Icon name="lucide:message-circle" size="20" />
+              </div>
+              <div class="contact-details-item-content">
+                <span class="contact-details__label">WhatsApp</span>
+                <div>
+                  <a class="contact-email" href={waUrl} target="_blank" rel="noopener noreferrer">
+                    <span class="contact-email__mail contact-details__text--primary">
+                      +{WHATSAPP_NUMBER}
+                    </span>
+                    <span class="contact-email__cta contact-details__text--secondary icons">
+                      Respuesta {RESPONSE_TIME}
+                      <Icon name="lucide:arrow-right" size={14} />
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          )
+        }
+
+        {
+          CALENDLY_URL && (
+            <div class="contact-details-item">
+              <div class="contact-details-item-icon" title="Calendly">
+                <Icon name="lucide:calendar" size="20" />
+              </div>
+              <div class="contact-details-item-content">
+                <span class="contact-details__label">Agendar llamada</span>
+                <div>
+                  <a class="contact-email" href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
+                    <span class="contact-email__mail contact-details__text--primary">
+                      Calendly
+                    </span>
+                    <span class="contact-email__cta contact-details__text--secondary icons">
+                      Reservar slot
+                      <Icon name="lucide:arrow-right" size={14} />
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          )
+        }
+
         <div class="contact-details-item">
           <div class="contact-details-item-icon" title={ubication.title}>
             <Icon name={ubication.icon} size="20" />

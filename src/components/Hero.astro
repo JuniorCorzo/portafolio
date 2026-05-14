@@ -1,66 +1,72 @@
 ---
 import { Image } from "astro:assets";
-import { Icon } from "astro-icon/components";
-import { DEVELOPER_NAME, HERO_CHIPS } from "../consts";
-
 import {
+  DEVELOPER_NAME,
+  HERO_CHIPS,
   HERO_HEADLINE_1,
   HERO_HEADLINE_2,
   HERO_IMAGE,
   HERO_DESCRIPTION,
 } from "../consts";
-import Chip from "./Chip.astro";
+import {
+  WHATSAPP_NUMBER,
+  WHATSAPP_MESSAGE,
+} from "../data/contact";
+
+const waUrl = WHATSAPP_NUMBER
+  ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`
+  : "/contacto";
 ---
 
 <section class="hero-section">
   <div class="hero-container">
-    <div class="hero-header">
-      {
-        HERO_CHIPS.map(({ title, icon, color, background }) => (
-          <Chip
-            title={title}
-            icon={icon}
-            class="hero-chip"
-            style={{
-              color: `var(${color})`,
-              backgroundColor: `rgba(var(${background}), 0.1)`,
-              borderColor: `var(${color})`,
-            }}
-          />
-        ))
-      }
+    <div class="hero-chips">
+      {HERO_CHIPS.map(({ title, color, background }) => (
+        <span
+          class="chip"
+          style={`color: var(${color}); background: rgba(var(${background}), 0.08); border-color: var(${color});`}
+        >
+          <span class="chip-dot">●</span>
+          {title}
+        </span>
+      ))}
     </div>
+
     <div class="hero-body">
       <div class="hero-content">
         <h1 class="hero-title">
-          <span class="headline-primary"
-            >{HERO_HEADLINE_1}
-            <span style="color: var(--sky);">{`[${DEVELOPER_NAME}]`}</span>
-          </span>
+          <span class="headline-primary">{HERO_HEADLINE_1}</span>
+          <span class="headline-accent">{HERO_HEADLINE_2}</span>
         </h1>
-        <h2 class="headline-accent">{HERO_HEADLINE_2}</h2>
+
+        <p class="hero-subtitle">Hola, soy {DEVELOPER_NAME}</p>
         <p class="hero-description">{HERO_DESCRIPTION}</p>
+
         <div class="hero-cta">
-          <a href="#projects" class="cta-button cta-primary">
-            Proyectos
-            <Icon name="heroicons:arrow-long-right" size={20} />
+          <a
+            href={waUrl}
+            class="cta-button cta-primary"
+            target={waUrl === "/contacto" ? undefined : "_blank"}
+            rel={waUrl === "/contacto" ? undefined : "noopener noreferrer"}
+          >
+            💬 Hablemos por WhatsApp
           </a>
-          <a href="#contact" class="cta-button cta-secondary">
-            Contactar
-            <Icon name="lucide:send-horizontal" size={20} />
-          </a>
+          <a href="/servicios" class="cta-button cta-secondary">Ver servicios →</a>
         </div>
       </div>
+
       <div class="hero-image-container">
-        <Image
-          src={HERO_IMAGE}
-          class="hero-image"
-          alt="Hero Image"
-          loading="eager"
-          fetchpriority="high"
-          width={480}
-          height={600}
-        />
+        <div class="hero-image-frame">
+          <Image
+            src={HERO_IMAGE}
+            class="hero-image"
+            alt="Angel Corzo - Desarrollador Full Stack en Cúcuta"
+            loading="eager"
+            fetchpriority="high"
+            width={480}
+            height={600}
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -68,14 +74,10 @@ import Chip from "./Chip.astro";
 
 <style>
   .hero-section {
-    padding: 3rem 24px;
+    padding: 48px 24px 80px;
     background: linear-gradient(135deg, var(--crust) 0%, var(--base) 100%);
     position: relative;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
   }
 
   .hero-section::before {
@@ -85,206 +87,189 @@ import Chip from "./Chip.astro";
     right: -10%;
     width: 600px;
     height: 600px;
-    background: radial-gradient(
-      circle,
-      rgba(183, 50, 63, 0.1) 0%,
-      transparent 70%
-    );
+    background: radial-gradient(circle, rgba(203, 166, 247, 0.08) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
   }
 
   .hero-container {
     width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
     position: relative;
     z-index: 1;
   }
 
-  .hero-body {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    box-sizing: border-box;
+  .hero-chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 10px;
   }
 
-  .hero-content {
-    text-align: left;
-    grid-column: span 7;
-    padding-right: 1.8rem;
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 16px;
+    border-radius: 9999px;
+    border: 1px solid;
+    font-size: 0.75rem;
+    font-weight: 600;
+    backdrop-filter: blur(8px);
+  }
+
+  .chip-dot {
+    font-size: 0.8rem;
+    line-height: 1;
+  }
+
+  .hero-body {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: 48px;
+    align-items: center;
   }
 
   .hero-title {
-    margin: 0 0 24px 0;
-    line-height: 1.1;
+    margin: 0;
+    line-height: 1.05;
+    max-width: none;
+    width: 100%;
+  }
+
+  .headline-primary,
+  .headline-accent {
+    display: block;
+    font-size: clamp(2.1rem, 5vw, 3.8rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
   }
 
   .headline-primary {
-    display: block;
     color: var(--text);
-    font-size: 4.5rem;
-    font-weight: 700;
-    margin-bottom: 8px;
   }
 
   .headline-accent {
-    display: block;
+    color: var(--sky);
+  }
+
+  .hero-subtitle {
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--text);
-    margin-top: 2rem;
+    margin-top: 12px;
   }
 
   .hero-description {
     font-size: 1.125rem;
-    color: var(--subtext);
-    margin-top: 1rem;
+    color: var(--subtext0);
+    margin-top: 20px;
     line-height: 1.8;
-    text-wrap: pretty;
-  }
-
-  .hero-image-container {
-    position: relative;
-    grid-column: span 5;
-  }
-
-  .hero-image {
-    aspect-ratio: 4 / 5;
-    max-width: 460px;
+    max-width: none;
     width: 100%;
-    object-fit: cover;
-    border: 1px solid var(--accent);
-    box-shadow: 0 0 20px var(--accent-dark);
-    margin: 0 auto;
+    text-wrap: pretty;
   }
 
   .hero-cta {
     display: flex;
     gap: 16px;
-    justify-content: start;
+    margin-top: 32px;
     flex-wrap: wrap;
-  }
-
-  .hero-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 2em;
-    gap: 12px;
-  }
-
-  .hero-chip {
-    backdrop-filter: blur(8px);
-    font-weight: 600;
   }
 
   .cta-button {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     padding: 10px 32px;
     border-radius: 6px;
+    font-weight: 700;
     font-size: 1rem;
-    font-weight: 600;
     text-decoration: none;
     transition: all 0.3s ease-in-out;
-    cursor: pointer;
+    border: 2px solid;
   }
 
   .cta-primary {
-    background-color: var(--accent);
+    background: #25d366;
     color: #1e1e2e;
-    border: 2px solid var(--accent);
-    font-weight: 700;
+    border-color: #25d366;
   }
 
   .cta-primary:hover {
-    background-color: var(--accent-dark);
-    border-color: var(--accent-dark);
+    background: #128c7e;
+    border-color: #128c7e;
     transform: translateY(-2px);
-    box-shadow: 0 3px 10px rgba(var(--sky-rgb), 0.2);
-
-    & svg {
-      transform: translateX(4px);
-      transition: all 0.3s ease-in-out;
-    }
+    box-shadow: 0 3px 10px rgba(37, 211, 102, 0.3);
+    color: #1e1e2e;
   }
 
   .cta-secondary {
-    background-color: transparent;
-    color: var(--accent);
-    border: 2px solid var(--accent);
+    background: transparent;
+    color: var(--mauve);
+    border-color: var(--mauve);
   }
 
   .cta-secondary:hover {
-    background-color: var(--accent);
-    color: #1e1e2e;
-    font-weight: 700;
+    background: var(--mauve);
+    color: var(--crust);
     transform: translateY(-2px);
-    box-shadow: 0 3px 10px rgba(var(--sky-rgb), 0.2);
+  }
 
-    & svg {
-      transform: rotate(-25deg);
-      transition: all 0.3s ease-in-out;
-    }
+  .hero-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-image-frame {
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 4 / 5;
+    border-radius: 8px;
+    border: 1px solid var(--mauve);
+    box-shadow: 0 0 20px rgba(203, 166, 247, 0.2);
+    overflow: hidden;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   @media (max-width: 1024px) {
-    .hero-section {
-      padding: 2rem 24px;
-    }
-
     .hero-body {
-      display: flex;
-      flex-direction: column-reverse;
-      gap: 2rem;
+      grid-template-columns: 1fr;
     }
 
-    .headline-primary {
-      font-size: 3rem;
+    .hero-image-container {
+      order: -1;
     }
+  }
 
-    .headline-accent {
-      font-size: 1.5rem;
-    }
-
-    .hero-subtitle {
-      font-size: 1rem;
-    }
-
-    .hero-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .hero-content {
-      padding-right: 0;
-    }
-
-    .hero-image {
-      max-width: 90vw;
-      aspect-ratio: 1/1;
-      object-position: top;
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 40px 24px 64px;
     }
   }
 
   @media (max-width: 640px) {
-    .hero-section {
-      padding: 1.5rem 16px;
+    .hero-chips {
+      gap: 8px;
     }
 
-    .headline-primary {
-      font-size: 2.25rem;
-    }
-
-    .headline-accent {
-      font-size: 1.25rem;
+    .chip {
+      width: 100%;
+      justify-content: center;
     }
 
     .hero-subtitle {
-      font-size: 0.95rem;
-      margin-bottom: 32px;
+      font-size: 1.25rem;
     }
 
     .hero-cta {

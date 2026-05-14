@@ -1,57 +1,132 @@
-/* Catppuccin Dark Theme with Elegant Gray Accent */
+/* Catppuccin Mocha Theme — Terminal Aesthetic Portfolio */
+@import "tailwindcss";
+
+@theme {
+  --color-crust: #11111b;
+  --color-mantle: #181825;
+  --color-base: #1e1e2e;
+  --color-surface-0: #313244;
+  --color-surface-1: #45475a;
+  --color-surface-2: #585b70;
+  --color-overlay-0: #6c7086;
+  --color-overlay-1: #7f849c;
+  --color-overlay-2: #898e9f;
+  --color-text: #cdd6f4;
+  --color-subtext-0: #a6adc8;
+  --color-subtext-1: #bac2de;
+  --color-mauve: #cba6f7;
+  --color-mauve-dark: #b48def;
+  --color-sky: #89dceb;
+  --color-sapphire: #74c7ec;
+  --color-green: #a6e3a1;
+  --color-green-dark: #8fd889;
+  --color-peach: #fab387;
+  --color-peach-dark: #f5a170;
+  --color-blue: #89b4fa;
+  --color-blue-dark: #739ff5;
+  --color-teal: #94e2d5;
+  --color-red: #f38ba8;
+  --color-yellow: #f9e2af;
+  --color-pink: #f5c2e7;
+  --color-lavender: #b4befe;
+  --color-rosewater: #f5e0dc;
+  --color-flamingo: #f2cdcd;
+  --color-maroon: #eba0ac;
+  --font-atkinson: "Atkinson Hyperlegible", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+}
+
 :root {
-  /* Define los colores base en formato RGB */
-  --crust-rgb: 30, 30, 46;
-  --base-rgb: 49, 50, 68;
-  --surface1-rgb: 56, 58, 77;
-  --surface2-rgb: 68, 70, 90;
-  --overlay0-rgb: 108, 112, 134;
-  --overlay1-rgb: 127, 132, 156;
-  --accent-rgb: 186, 194, 222;
-  --accent-dark-rgb: 166, 173, 200;
-  --sky-rgb: 137, 220, 235;
-  --text-rgb: 205, 214, 244;
-  --subtext-rgb: 166, 173, 200;
-  --blue-rgb: 121, 147, 199;
-  --blue-dark-rgb: 102, 124, 169;
-  --green-rgb: 161, 193, 112;
-  --green-dark-rgb: 140, 169, 98;
-  --purple-rgb: 152, 126, 211;
-  --purple-dark-rgb: 133, 110, 185;
-  --orange-rgb: 233, 165, 108;
-  --orange-dark-rgb: 208, 145, 90;
-
-  /* Versiones sólidas para uso directo */
+  /* Base Layer (Backgrounds) */
+  --crust-rgb: 17, 17, 27;
   --crust: rgb(var(--crust-rgb));
+  --mantle-rgb: 24, 24, 37;
+  --mantle: rgb(var(--mantle-rgb));
+  --base-rgb: 30, 30, 46;
   --base: rgb(var(--base-rgb));
-  --surface1: rgb(var(--surface1-rgb));
-  --surface2: rgb(var(--surface2-rgb));
-  --overlay0: rgb(var(--overlay0-rgb));
-  --overlay1: rgb(var(--overlay1-rgb));
-  --accent: rgb(var(--accent-rgb));
-  --accent-dark: rgb(var(--accent-dark-rgb));
-  --sky: rgb(var(--sky-rgb));
-  --text: rgb(var(--text-rgb));
-  --subtext: rgb(var(--subtext-rgb));
-  --text-gray: rgb(205, 214, 244);
-  --blue: rgb(var(--blue-rgb));
-  --blue-dark: rgb(var(--blue-dark-rgb));
-  --green: rgb(var(--green-rgb));
-  --green-dark: rgb(var(--green-dark-rgb));
-  --purple: rgb(var(--purple-rgb));
-  --purple-dark: rgb(var(--purple-dark-rgb));
-  --orange: rgb(var(--orange-rgb));
-  --orange-dark: rgb(var(--orange-dark-rgb));
 
-  /* Legacy variables for compatibility */
+  /* Surface Layer */
+  --surface0-rgb: 49, 50, 68;
+  --surface0: rgb(var(--surface0-rgb));
+  --surface1-rgb: 69, 71, 90;
+  --surface1: rgb(var(--surface1-rgb));
+  --surface2-rgb: 88, 91, 112;
+  --surface2: rgb(var(--surface2-rgb));
+
+  /* Overlay Layer */
+  --overlay0-rgb: 108, 112, 134;
+  --overlay0: rgb(var(--overlay0-rgb));
+  --overlay1-rgb: 127, 132, 156;
+  --overlay1: rgb(var(--overlay1-rgb));
+  --overlay2-rgb: 137, 142, 159;
+  --overlay2: rgb(var(--overlay2-rgb));
+
+  /* Text */
+  --text-rgb: 205, 214, 244;
+  --text: rgb(var(--text-rgb));
+  --subtext0-rgb: 166, 173, 200;
+  --subtext0: rgb(var(--subtext0-rgb));
+  --subtext1-rgb: 186, 194, 222;
+  --subtext1: rgb(var(--subtext1-rgb));
+
+  /* Accent Colors (Semantic) */
+  --rosewater-rgb: 245, 224, 220;
+  --rosewater: rgb(var(--rosewater-rgb));
+  --flamingo-rgb: 242, 205, 205;
+  --flamingo: rgb(var(--flamingo-rgb));
+  --pink-rgb: 245, 194, 231;
+  --pink: rgb(var(--pink-rgb));
+  --mauve-rgb: 203, 166, 247;
+  --mauve: rgb(var(--mauve-rgb));
+  --mauve-dark: #b48def;
+  --red-rgb: 243, 139, 168;
+  --red: rgb(var(--red-rgb));
+  --maroon-rgb: 235, 160, 172;
+  --maroon: rgb(var(--maroon-rgb));
+  --peach-rgb: 250, 179, 135;
+  --peach: rgb(var(--peach-rgb));
+  --peach-dark: #f5a170;
+  --yellow-rgb: 249, 226, 175;
+  --yellow: rgb(var(--yellow-rgb));
+  --green-rgb: 166, 227, 161;
+  --green: rgb(var(--green-rgb));
+  --green-dark: #8fd889;
+  --teal-rgb: 148, 226, 213;
+  --teal: rgb(var(--teal-rgb));
+  --sky-rgb: 137, 220, 235;
+  --sky: rgb(var(--sky-rgb));
+  --sapphire-rgb: 116, 199, 236;
+  --sapphire: rgb(var(--sapphire-rgb));
+  --blue-rgb: 137, 180, 250;
+  --blue: rgb(var(--blue-rgb));
+  --blue-dark: #739ff5;
+  --lavender-rgb: 180, 190, 254;
+  --lavender: rgb(var(--lavender-rgb));
+
+  /* Legacy aliases for backward compatibility during transition */
+  --accent-rgb: var(--mauve-rgb);
+  --accent: var(--mauve);
+  --accent-dark: var(--mauve-dark);
+  --subtext-rgb: var(--subtext0-rgb);
+  --subtext: var(--subtext0);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-glow-mauve: 0 0 20px rgba(203, 166, 247, 0.15);
+  --shadow-glow-sky: 0 0 20px rgba(137, 220, 235, 0.15);
+
+  /* Legacy */
   --black: 30, 30, 46;
   --gray: 166, 173, 200;
   --gray-light: 69, 71, 90;
   --gray-dark: 49, 50, 68;
-  --gray-gradient: rgba(69, 71, 90, 50%), #313244;
-  --box-shadow: 0 2px 6px rgba(49, 50, 68, 25%),
-    0 8px 24px rgba(49, 50, 68, 33%), 0 16px 32px rgba(49, 50, 68, 33%);
+  --box-shadow:
+    0 2px 6px rgba(49, 50, 68, 25%), 0 8px 24px rgba(49, 50, 68, 33%),
+    0 16px 32px rgba(49, 50, 68, 33%);
 }
+
 @font-face {
   font-family: "Atkinson";
   src: url("/fonts/atkinson-regular.woff") format("woff");
@@ -76,8 +151,16 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+  font-family:
+    "Atkinson Hyperlegible",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
   margin: 0;
   padding: 0;
   text-align: left;
@@ -90,7 +173,7 @@ body {
 }
 
 ::selection {
-  background-color: var(--accent);
+  background-color: var(--lavender);
   color: #1e1e2e;
 }
 
@@ -103,13 +186,14 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--accent);
+  background: var(--mauve);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-dark);
+  background: var(--mauve-dark);
 }
+
 main {
   width: 100%;
   margin: auto;
@@ -157,6 +241,7 @@ h6 {
   font-size: 1rem;
   font-weight: 600;
 }
+
 strong,
 b {
   font-weight: 700;
@@ -173,7 +258,7 @@ a:hover {
 }
 
 a:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--mauve);
   outline-offset: 2px;
   border-radius: 2px;
 }
@@ -202,15 +287,15 @@ select {
 
 textarea::placeholder,
 input::placeholder {
-  color: var(--subtext);
+  color: var(--subtext0);
 }
 
 textarea:focus,
 input:focus,
 select:focus {
   outline: none;
-  border-bottom-color: var(--accent);
-  color: var(--accent);
+  border-bottom-color: var(--mauve);
+  color: var(--mauve);
 }
 
 table {
@@ -242,7 +327,7 @@ code {
   padding: 2px 6px;
   background-color: var(--surface1);
   border-radius: 4px;
-  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-family: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
   font-size: 0.875em;
   color: var(--sky);
 }
@@ -258,23 +343,24 @@ pre {
 pre > code {
   all: unset;
   color: var(--text);
-  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-family: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
 }
 
 blockquote {
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid var(--mauve);
   padding: 0 0 0 20px;
   margin: 1.5em 0;
   font-size: 1.125em;
-  color: var(--subtext);
+  color: var(--subtext0);
   font-style: italic;
 }
 
 hr {
   border: none;
   border-top: 1px solid var(--overlay0);
-  margin: 2em 0;
+  margin: 3rem 0;
 }
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   h1 {
@@ -316,12 +402,8 @@ hr {
   height: 1px;
   width: 1px;
   overflow: hidden;
-  /* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
   clip: rect(1px 1px 1px 1px);
-  /* maybe deprecated but we need to support legacy browsers */
   clip: rect(1px, 1px, 1px, 1px);
-  /* modern browsers, clip-path works inwards from each corner */
   clip-path: inset(50%);
-  /* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
   white-space: nowrap;
 }

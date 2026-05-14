@@ -1,35 +1,35 @@
 ---
 import { Icon } from "astro-icon/components";
-import { DEVELOPER_NAME, DEVELOPER_CV } from "../consts";
+import { DEVELOPER_CV } from "../consts";
 ---
 
 <header class="header">
   <nav class="navbar">
-    <h2 class="logo"><a href="/">{DEVELOPER_NAME}</a></h2>
+    <h2 class="logo"><a href="/"><span>$</span> <span class="brand">angelcorzo</span></a></h2>
 
     <div class="nav-links" id="navLinks">
-      <a href="/#skills" class="nav-link">Habilidades</a>
-      <a href="/#experience" class="nav-link">Experiencia</a>
-      <a href="/#projects" class="nav-link">Proyectos</a>
-      <a href="/#contact" class="nav-link">Contacto</a>
+      <a href="/" class="nav-link">Inicio</a>
+      <a href="/servicios" class="nav-link">Servicios</a>
+      <a href="/sobre-mi" class="nav-link">Sobre mí</a>
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/contacto" class="nav-link">Contacto</a>
 
-      <!-- versión de escritorio del botón CV -->
       <div class="mobile-cv">
-        <a href={DEVELOPER_CV} target="_blank" class="cv">
+        <a href={DEVELOPER_CV} target="_blank" rel="noreferrer" class="cv">
           <Icon name="lucide:download" size={20} />
-          Curriculum
+          Descargar CV
         </a>
       </div>
     </div>
 
     <div class="desktop-cv">
-      <a href={DEVELOPER_CV} target="_blank" class="cv">
+      <a href={DEVELOPER_CV} target="_blank" rel="noreferrer" class="cv">
         <Icon name="lucide:download" size={20} />
-        Curriculum
+        Descargar CV
       </a>
     </div>
 
-    <button class="menu-toggle" aria-expanded="false" aria-label="Abrir menú">
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-label="Abrir menú">
       <span class="bar"></span>
       <span class="bar"></span>
       <span class="bar"></span>
@@ -48,45 +48,13 @@ import { DEVELOPER_NAME, DEVELOPER_CV } from "../consts";
   }
 
   .navbar {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 70px;
-  }
-
-  /* botón CV (estilo compartido) */
-  .navbar div .cv {
-    display: flex;
-    background-color: rgba(var(--accent-rgb), 0.1);
-    color: var(--accent);
-    align-items: center;
-    border: 2px solid rgba(var(--accent-rgb), 0.1);
-    padding: 6px 10px;
-    gap: 8px;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-  }
-
-  .mobile-cv {
-    display: none;
-  }
-
-  .desktop-cv {
-    display: inline-flex;
-  }
-
-  .navbar div .cv:hover {
-    background-color: var(--accent-dark);
-    color: var(--crust);
-    border: 2px solid var(--accent-dark);
-    font-weight: 700;
-    transform: translateY(-2px);
-    box-shadow: 0 3px 10px rgba(var(--accent-rgb), 0.5);
   }
 
   .logo {
@@ -99,10 +67,15 @@ import { DEVELOPER_NAME, DEVELOPER_CV } from "../consts";
     color: var(--text);
     text-decoration: none;
     transition: color 0.3s ease-in-out;
+    font-family: var(--font-mono);
   }
 
   .logo a:hover {
-    color: var(--accent);
+    color: var(--mauve);
+  }
+
+  .logo .brand {
+    color: var(--mauve);
   }
 
   .nav-links {
@@ -127,19 +100,51 @@ import { DEVELOPER_NAME, DEVELOPER_CV } from "../consts";
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--accent);
+    background: var(--mauve);
     transition: width 0.3s ease-in-out;
   }
 
-  .nav-link:hover {
+  .nav-link:hover,
+  .nav-link.active {
     color: var(--text);
   }
 
-  .nav-link:hover::after {
+  .nav-link:hover::after,
+  .nav-link.active::after {
     width: 100%;
   }
 
-  /* Hamburger button */
+  .cv {
+    display: flex;
+    background-color: rgba(var(--mauve-rgb), 0.1);
+    color: var(--mauve);
+    align-items: center;
+    border: 2px solid rgba(var(--mauve-rgb), 0.1);
+    padding: 6px 10px;
+    gap: 8px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+  }
+
+  .cv:hover {
+    background-color: var(--mauve);
+    color: var(--crust);
+    border-color: var(--mauve);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(var(--mauve-rgb), 0.5);
+  }
+
+  .mobile-cv {
+    display: none;
+  }
+
+  .desktop-cv {
+    display: inline-flex;
+  }
+
   .menu-toggle {
     display: none;
     background: none;
@@ -148,15 +153,13 @@ import { DEVELOPER_NAME, DEVELOPER_CV } from "../consts";
     cursor: pointer;
   }
 
-  .menu-toggle .bar {
+  .bar {
     display: block;
     width: 22px;
     height: 2px;
     background: var(--text);
     margin: 4px 0;
-    transition:
-      transform 0.25s ease,
-      opacity 0.25s ease;
+    transition: transform 0.25s ease, opacity 0.25s ease;
   }
 
   .menu-toggle[aria-expanded="true"] .bar:nth-child(1) {
@@ -169,15 +172,6 @@ import { DEVELOPER_NAME, DEVELOPER_CV } from "../consts";
 
   .menu-toggle[aria-expanded="true"] .bar:nth-child(3) {
     transform: translateY(-6px) rotate(-45deg);
-  }
-
-  .cv-container {
-    display: block;
-  }
-
-  /* Mobile menu behavior */
-  .nav-links.open {
-    display: flex;
   }
 
   @media (max-width: 768px) {
@@ -199,7 +193,6 @@ import { DEVELOPER_NAME, DEVELOPER_CV } from "../consts";
       width: 100%;
     }
 
-    /* transform the menu into a dropdown panel */
     .nav-links {
       background: rgba(var(--crust-rgb), 0.96);
       backdrop-filter: blur(5px);
@@ -218,16 +211,12 @@ import { DEVELOPER_NAME, DEVELOPER_CV } from "../consts";
       z-index: 9999;
     }
 
-    .nav-links a {
-      padding: 8px 6px;
-    }
-
     .nav-links.open {
       display: flex;
     }
 
-    .nav-links {
-      gap: 20px;
+    .nav-links a {
+      padding: 8px 6px;
     }
 
     .nav-link {
@@ -235,7 +224,7 @@ import { DEVELOPER_NAME, DEVELOPER_CV } from "../consts";
       font-weight: 400;
     }
 
-    .navbar div .cv {
+    .cv {
       width: 100%;
       justify-content: center;
       align-items: center;
@@ -255,40 +244,17 @@ import { DEVELOPER_NAME, DEVELOPER_CV } from "../consts";
     .nav-links {
       gap: 16px;
     }
-
-    .nav-link {
-      font-size: 0.85rem;
-    }
-
-    /* adjust dropdown position for smaller screens */
-    .nav-links {
-      top: 56px;
-      min-width: 160px;
-    }
   }
 </style>
 
 <script>
-  // Script mínimo para alternar la visibilidad del menú en móviles
-  (function () {
-    const btn = document.querySelector(".menu-toggle");
-    const nav = document.getElementById("navLinks");
-    if (!btn || !nav) return;
+  const button = document.getElementById("menuToggle");
+  const nav = document.getElementById("navLinks");
 
-    btn.addEventListener("click", () => {
-      const expanded = btn.getAttribute("aria-expanded") === "true";
-      btn.setAttribute("aria-expanded", String(!expanded));
-      btn.classList.toggle("open");
-      nav.classList.toggle("open");
+  if (button && nav) {
+    button.addEventListener("click", () => {
+      const isOpen = nav.classList.toggle("open");
+      button.setAttribute("aria-expanded", String(isOpen));
     });
-
-    // Cerrar menú al hacer clic en un enlace (mejora UX en móviles)
-    nav.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        btn.setAttribute("aria-expanded", "false");
-        btn.classList.remove("open");
-        nav.classList.remove("open");
-      });
-    });
-  })();
+  }
 </script>

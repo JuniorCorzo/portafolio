@@ -1,0 +1,101 @@
+---
+import { SERVICES } from "../data/services";
+import ServiceCard from "./ServiceCard.astro";
+---
+
+<section class="services-section" id="servicios">
+  <div class="services-container">
+    <header class="services-header">
+      <h2 class="section-title">
+        <span class="terminal-prefix">$</span> ls servicios/
+      </h2>
+      <p class="section-subtitle">// soluciones que ofrezco</p>
+    </header>
+
+    <div class="services-grid">
+      {SERVICES.map((service) => <ServiceCard service={service} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services-section {
+    padding: 80px 24px;
+    background: var(--crust);
+    border-top: 1px solid var(--overlay0);
+  }
+
+  .services-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .services-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .section-title {
+    color: var(--text);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .terminal-prefix {
+    font-family: var(--font-mono);
+    color: var(--overlay1);
+    font-size: 2.2rem;
+    font-weight: 400;
+    user-select: none;
+  }
+
+  .section-subtitle {
+    color: var(--subtext0);
+    font-size: 1rem;
+    font-family: var(--font-mono);
+    margin: 0;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  @media (max-width: 1024px) {
+    .services-section {
+      padding: 60px 24px;
+    }
+
+    .section-title {
+      font-size: 2rem;
+    }
+
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .services-section {
+      padding: 40px 24px;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+    }
+
+    .terminal-prefix {
+      font-size: 1.5rem;
+    }
+
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

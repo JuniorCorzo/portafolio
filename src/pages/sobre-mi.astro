@@ -1,0 +1,503 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import { EXPERIENCE, HERO_IMAGE } from "../consts";
+import { SKILLS } from "../consts";
+import { SITE_TITLE, SITE_DESCRIPTION, DEVELOPER_NAME } from "../data/site";
+import Image from "astro/components/Image.astro";
+
+const skillCategories = [
+  { key: "frontend", label: "Frontend", color: "sky" },
+  { key: "backend", label: "Backend", color: "peach" },
+  { key: "devops", label: "Infra & DevOps", color: "blue" },
+  { key: "testing", label: "Testing", color: "green" },
+] as const;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <BaseHead
+      title={`Sobre mí — ${SITE_TITLE}`}
+      description={`Conoce a ${DEVELOPER_NAME}: desarrollador Full Stack con experiencia en Ecopetrol, arquitectura hexagonal y microservicios.`}
+    />
+    <meta name="theme-color" content="#1e1e2e" />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <!-- Page Hero -->
+      <section class="page-hero">
+        <div class="container">
+          <h1><span class="terminal-prefix">$</span> whoami</h1>
+          <p>
+            Tecnólogo en Análisis y Desarrollo de Software. Construyo productos
+            digitales de punta a punta: desde la arquitectura del backend hasta
+            la experiencia final del usuario.
+          </p>
+        </div>
+      </section>
+
+      <!-- About Grid -->
+      <section class="section">
+        <div class="container">
+          <div class="about-grid">
+            <div class="about-image">
+              <Image
+                src={HERO_IMAGE}
+                alt="Angel Corzo - Desarrollador Full Stack en Cúcuta"
+                loading="eager"
+                fetchpriority="high"
+                width={400}
+                height={400}
+              />
+            </div>
+            <div class="about-text">
+              <h2>La versión corta</h2>
+              <p>
+                Empecé programando por curiosidad y terminé haciéndolo
+                profesionalmente. Me formé como Tecnólogo en Análisis y
+                Desarrollo de Software, pero la mayor parte de lo que sé viene
+                de construir cosas reales, romperlas, y arreglarlas.
+              </p>
+              <p>
+                Trabajo como full-stack developer, lo que significa que puedo
+                llevar un proyecto desde una idea en un papel hasta un producto
+                funcionando en producción. Me gusta la parte técnica, pero
+                también me interesa entender el negocio: para qué se construye,
+                qué problema resuelve, cómo se mide el éxito.
+              </p>
+              <p>
+                Últimamente me volqué al mundo de la inteligencia artificial. No
+                solo usar LLMs por API, sino diseñar agentes que realmente
+                automatizan trabajo: RAG, pipelines de datos, integración con
+                sistemas existentes.
+              </p>
+              <p>
+                Fuera del código, disfruto la mentoría, escribir documentación
+                clara y discutir arquitectura de software con quien sea que
+                aguante la conversación.
+              </p>
+              <div class="about-ctas">
+                <WhatsAppButton variant="inline" text="Hablemos por WhatsApp" />
+                <a href="/contacto" class="btn-ghost">Ver más opciones →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Experience Timeline -->
+      <section class="section" style="background: var(--mantle);">
+        <div class="container">
+          <div class="section-header">
+            <h2>
+              <span class="terminal-prefix">$</span> cat experiencia.log
+            </h2>
+            <p>// dónde estuve y qué hice</p>
+          </div>
+          <div class="timeline">
+            {
+              EXPERIENCE.map((exp) => (
+                <div class="timeline-item">
+                  <div class="timeline-marker" />
+                  <div class="timeline-content">
+                    <div class="timeline-date">{exp.period}</div>
+                    <h3 class="timeline-title">$ {exp.title}</h3>
+                    <div class="timeline-company">
+                      {exp.company} · {exp.location}
+                    </div>
+                    <ul class="timeline-highlights">
+                      {exp.highlights.map((h) => (
+                        <li>{h}</li>
+                      ))}
+                    </ul>
+                    {exp.metric && (
+                      <div class="timeline-metric">{exp.metric}</div>
+                    )}
+                    {exp.tech && (
+                      <div class="timeline-tech">
+                        {exp.tech.map((t) => (
+                          <span class="tech-chip">{t}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <h2>
+              <span class="terminal-prefix">$</span> cat skills.json
+            </h2>
+            <p>// con qué trabajo</p>
+          </div>
+          <div class="skills-grid">
+            {
+              skillCategories.map((cat) => {
+                const items = SKILLS[cat.key as keyof typeof SKILLS] || [];
+                if (items.length === 0) return null;
+                return (
+                  <div class="skills-category">
+                    <h3>$ cat skills.json | jq '.{cat.key}'</h3>
+                    <div class="chips">
+                      {items.map((item: { title: string }) => (
+                        <span class={`skill-chip skill-${cat.color}`}>
+                          {item.title}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })
+            }
+          </div>
+        </div>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .page-hero {
+    padding: 64px 0 48px;
+    background: linear-gradient(135deg, var(--crust) 0%, var(--base) 100%);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .page-hero p {
+    font-size: 1.125rem;
+    color: var(--subtext0);
+    margin-top: 12px;
+    max-width: 640px;
+  }
+
+  .terminal-prefix {
+    font-family: var(--font-mono);
+    color: var(--overlay1);
+    user-select: none;
+    margin-right: 8px;
+  }
+
+  .section {
+    padding: 80px 0;
+  }
+
+  .section-header {
+    margin-bottom: 48px;
+  }
+
+  .section-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+  }
+
+  .section-header p {
+    font-size: 1rem;
+    color: var(--subtext0);
+    margin-top: 8px;
+    font-family: var(--font-mono);
+  }
+
+  /* About Grid */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .about-image {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    border: 1px solid var(--mauve);
+    box-shadow: 0 0 20px rgba(203, 166, 247, 0.15);
+    background: linear-gradient(
+      135deg,
+      var(--surface0) 0%,
+      var(--surface1) 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    color: var(--overlay1);
+    font-size: 4rem;
+  }
+
+  .about-text h2 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .about-text p {
+    color: var(--subtext0);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .about-ctas {
+    margin-top: 24px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 32px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    border: 2px solid var(--mauve);
+    background: transparent;
+    color: var(--mauve);
+    text-decoration: none;
+  }
+
+  .btn-ghost:hover {
+    background: var(--mauve);
+    color: var(--crust);
+    font-weight: 700;
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--surface1);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 40px;
+  }
+
+  .timeline-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -30px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--mauve);
+    border: 2px solid var(--base);
+  }
+
+  .timeline-content {
+    background: var(--surface0);
+    border: 1px solid rgba(var(--overlay0-rgb), 0.3);
+    border-radius: 8px;
+    padding: 28px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .timeline-content:hover {
+    background: var(--surface1);
+    transform: translateY(-2px);
+  }
+
+  .timeline-date {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--overlay1);
+    margin-bottom: 6px;
+  }
+
+  .timeline-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 4px 0;
+  }
+
+  .timeline-company {
+    font-size: 0.95rem;
+    color: var(--subtext0);
+    margin-bottom: 10px;
+  }
+
+  .timeline-highlights {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px 0;
+  }
+
+  .timeline-highlights li {
+    color: var(--subtext0);
+    line-height: 1.6;
+    padding: 4px 0;
+    padding-left: 18px;
+    position: relative;
+  }
+
+  .timeline-highlights li::before {
+    content: "›";
+    position: absolute;
+    left: 0;
+    color: var(--mauve);
+  }
+
+  .timeline-metric {
+    background: rgba(var(--mauve-rgb), 0.08);
+    color: var(--mauve);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-left: 3px solid var(--mauve);
+    margin-bottom: 12px;
+  }
+
+  .timeline-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Skills Grid */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 32px;
+  }
+
+  .skills-category h3 {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--overlay1);
+    margin-bottom: 14px;
+  }
+
+  .skills-category .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .skill-chip {
+    padding: 8px 18px;
+    border-radius: 9999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1px solid;
+    transition: all 0.2s;
+  }
+
+  .skill-chip:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .skill-green {
+    color: var(--green);
+    background: rgba(166, 227, 161, 0.08);
+    border-color: var(--green);
+  }
+  .skill-sky {
+    color: var(--sky);
+    background: rgba(137, 220, 235, 0.08);
+    border-color: var(--sky);
+  }
+  .skill-peach {
+    color: var(--peach);
+    background: rgba(250, 179, 135, 0.08);
+    border-color: var(--peach);
+  }
+  .skill-blue {
+    color: var(--blue);
+    background: rgba(137, 180, 250, 0.08);
+    border-color: var(--blue);
+  }
+  .skill-mauve {
+    color: var(--mauve);
+    background: rgba(203, 166, 247, 0.08);
+    border-color: var(--mauve);
+  }
+
+  @media (max-width: 768px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-image {
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    .timeline {
+      padding-left: 24px;
+    }
+
+    .timeline-item::before {
+      left: -24px;
+    }
+
+    .section-header h2 {
+      font-size: 1.875rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .section {
+      padding: 48px 0;
+    }
+
+    .page-hero {
+      padding: 48px 0 32px;
+    }
+
+    .timeline-content {
+      padding: 20px;
+    }
+  }
+</style>

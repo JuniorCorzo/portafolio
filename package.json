@@ -24,6 +24,7 @@
 		"typescript": "5.9.3"
 	},
 	"devDependencies": {
+		"@astrojs/check": "^0.9.9",
 		"@iconify-json/heroicons": "^1.2.3",
 		"@iconify-json/lucide": "^1.2.82",
 		"@iconify-json/material-symbols": "^1.2.51",
@@ -39,7 +40,9 @@
 		"check": "astro build && tsc && wrangler deploy --dry-run",
 		"deploy": "wrangler deploy",
 		"dev": "astro dev",
-		"preview": "astro build && wrangler dev"
+		"preview": "astro build && wrangler dev",
+		"test": "node scripts/smoke.test.mjs",
+		"typecheck": "astro check"
 	},
 	"type": "module"
 }

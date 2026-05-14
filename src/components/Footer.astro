@@ -1,79 +1,130 @@
 ---
-import { DEVELOPER_NAME } from "../consts";
+import { DEVELOPER_NAME } from "../data/site";
+
 const today = new Date();
+const brand = DEVELOPER_NAME.toLowerCase().replace(/\s+/g, "");
+const footerJson = `{
+  "built_with": ["HTML", "CSS", "☕"],
+  "deployed_on": "Cloudflare Pages",
+  "source": "github.com/angelcorzo/portafolio",
+  "year": "${today.getFullYear()}"
+}`;
 ---
 
 <footer class="footer">
   <div class="footer-container">
-    <div class="footer-content">
-      <p class="footer-text">
-        © {today.getFullYear()}
-        {DEVELOPER_NAME}. Todos los derechos reservados.
-      </p>
-      <p class="footer-subtitle">
-        Creado con <span class="heart">❤️</span> pasión por el código y diseño.
-      </p>
+    <div class="footer-top">
+      <div class="footer-brand">$ {brand}</div>
+      <div class="footer-links">
+        <a href="/">Inicio</a>
+        <a href="/servicios">Servicios</a>
+        <a href="/sobre-mi">Sobre mí</a>
+        <a href="/blog">Blog</a>
+        <a href="/contacto">Contacto</a>
+      </div>
     </div>
+
+    <div class="footer-json">
+      <span class="key">// footer.json</span>
+      <pre><code>{footerJson}</code></pre>
+    </div>
+
+    <div class="footer-bottom">© {today.getFullYear()} {DEVELOPER_NAME}. Hecho con café y código.</div>
   </div>
 </footer>
 
 <style>
   .footer {
-    background: var(--base);
-    border-top: 1px solid var(--overlay0);
-    padding: 48px 24px;
-    margin-top: 80px;
+    background: var(--crust);
+    padding: 48px 0 24px;
   }
 
   .footer-container {
-    max-width: 1400px;
+    width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 0 24px;
   }
 
-  .footer-content {
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  .footer-brand {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text);
+    font-family: var(--font-mono);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    color: var(--overlay1);
+    text-decoration: none;
+  }
+
+  .footer-links a:hover {
+    color: var(--sky);
+  }
+
+  .footer-json {
+    color: var(--overlay1);
+    line-height: 1.8;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  .footer-json pre {
+    margin: 0;
+    white-space: pre-wrap;
+    background: var(--surface0);
+    border: 1px solid rgba(var(--overlay0-rgb), 0.3);
+    border-radius: 8px;
+    padding: 16px;
+  }
+
+  .footer-json code {
+    font-family: inherit;
+  }
+
+  .key {
+    color: var(--overlay1);
+  }
+
+  .str {
+    color: var(--green);
+  }
+
+  .footer-bottom {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(var(--overlay0-rgb), 0.2);
     text-align: center;
-  }
-
-  .footer-text {
-    color: var(--subtext);
-    font-size: 0.95rem;
-    margin: 0 0 8px 0;
-    font-weight: 500;
-  }
-
-  .footer-subtitle {
     color: var(--overlay1);
     font-size: 0.85rem;
-    margin: 0;
-  }
-
-  .heart {
-    color: var(--accent);
-    animation: heart-beat 1.5s infinite;
-  }
-
-  @keyframes heart-beat {
-    0%,
-    100% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.2);
-    }
   }
 
   @media (max-width: 640px) {
     .footer {
-      padding: 32px 16px;
-      margin-top: 60px;
+      padding: 40px 0 24px;
     }
 
-    .footer-text {
-      font-size: 0.9rem;
+    .footer-links {
+      gap: 14px;
     }
 
-    .footer-subtitle {
-      font-size: 0.8rem;
+    .footer-json {
+      font-size: 0.75rem;
     }
   }
 </style>

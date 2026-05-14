@@ -3,45 +3,185 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Hero from '../components/Hero.astro';
-import Principles from '../components/Principles.astro';
-import Skills from '../components/Skills.astro';
-import Experience from '../components/Experience.astro';
+import ServicesTeaser from '../components/ServicesTeaser.astro';
+import TrustSignals from '../components/TrustSignals.astro';
 import Projects from '../components/Projects.astro';
-import Contact from '../components/Contact.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from '../data/contact';
+
+const ctaWaUrl = WHATSAPP_NUMBER
+  ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`
+  : '/contacto';
 ---
 
 <!doctype html>
 <html lang="es">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<meta name="theme-color" content="#1e1e2e" />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<Hero />
-			<Principles />
-			<Skills />
-			<section id="experience">
-				<Experience />
-			</section>
-			<section id="projects">
-				<Projects />
-			</section>
-			<Contact />
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <meta name="theme-color" content="#1e1e2e" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Qué es arquitectura hexagonal y por qué usarla?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La arquitectura hexagonal separa la lógica de negocio de frameworks externos, facilitando testing, mantenibilidad y cambios de tecnología sin reescribir código core."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Trabajas con empresas fuera de Cúcuta?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí, trabajo 100% remoto con clientes en toda Colombia y Latinoamérica."
+          }
+        }
+      ]
+    })} />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <Hero />
+
+      <section class="section trust-section" id="trust">
+        <div class="container">
+          <TrustSignals />
+        </div>
+      </section>
+
+      <ServicesTeaser />
+
+      <section class="section projects-shell" id="projects">
+        <Projects />
+      </section>
+
+      <section class="section cta-section">
+        <div class="container">
+          <h2><span class="terminal-prefix">$</span> ¿listo para tu próximo proyecto?</h2>
+          <p>Agendemos una llamada de 15 minutos para hablar sobre tu idea. Sin compromiso.</p>
+          <div class="cta-actions">
+            <a href={ctaWaUrl} class="cta-btn cta-whatsapp" target={ctaWaUrl === '/contacto' ? undefined : '_blank'} rel={ctaWaUrl === '/contacto' ? undefined : 'noopener noreferrer'}>💬 Hablemos por WhatsApp</a>
+            <a href="/contacto" class="cta-btn cta-secondary">Ver más opciones de contacto →</a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <Footer />
+    <WhatsAppButton variant="floating" />
+  </body>
 </html>
 
 <style>
-	main {
-		margin: 0;
-		padding: 0;
-	}
+  main {
+    margin: 0;
+    padding: 0;
+  }
 
-	section {
-		scroll-margin-top: 70px;
-	}
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  section {
+    scroll-margin-top: 70px;
+  }
+
+  .trust-section {
+    padding: 80px 24px;
+    background: var(--base);
+  }
+
+  .projects-shell {
+    padding: 0;
+  }
+
+  .cta-section {
+    text-align: center;
+    padding: 80px 24px;
+    background: var(--base);
+  }
+
+  .cta-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .cta-section p {
+    color: var(--subtext0);
+    margin-bottom: 24px;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 32px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    border: 2px solid;
+  }
+
+  .cta-whatsapp {
+    background: #25d366;
+    color: #1e1e2e;
+    border-color: #25d366;
+  }
+
+  .cta-whatsapp:hover {
+    background: #128c7e;
+    border-color: #128c7e;
+    transform: translateY(-2px);
+    color: #1e1e2e;
+  }
+
+  .cta-secondary {
+    background: transparent;
+    color: var(--mauve);
+    border-color: var(--mauve);
+  }
+
+  .cta-secondary:hover {
+    background: var(--mauve);
+    color: var(--crust);
+    transform: translateY(-2px);
+  }
+
+  .terminal-prefix {
+    font-family: var(--font-mono);
+    color: var(--overlay1);
+    user-select: none;
+  }
+
+  @media (max-width: 640px) {
+    .trust-section,
+    .cta-section {
+      padding: 60px 24px;
+    }
+
+    .cta-actions {
+      flex-direction: column;
+    }
+
+    .cta-btn {
+      width: 100%;
+    }
+  }
 </style>

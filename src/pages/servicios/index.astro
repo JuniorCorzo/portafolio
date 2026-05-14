@@ -1,0 +1,141 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import ServicesTeaser from "../../components/ServicesTeaser.astro";
+import WhatsAppButton from "../../components/WhatsAppButton.astro";
+import { SITE_TITLE } from "../../data/site";
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <BaseHead
+      title={`Servicios — ${SITE_TITLE}`}
+      description="Servicios de desarrollo Full Stack: backend Java, microservicios, frontend React/Astro, optimización de rendimiento y seguridad empresarial."
+    />
+    <meta name="theme-color" content="#1e1e2e" />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <!-- Page Hero -->
+      <section class="page-hero">
+        <div class="page-hero-content">
+          <h1>
+            <span class="terminal-prefix">$</span> ls servicios/
+          </h1>
+          <p class="page-subtitle">// soluciones que ofrezco para llevar tu proyecto del concepto al deploy</p>
+        </div>
+      </section>
+
+      <ServicesTeaser />
+
+      <!-- CTA Section -->
+      <section class="section cta-section">
+        <div class="container">
+          <h2>
+            <span class="terminal-prefix">$</span> ¿no sabés qué necesitás?
+          </h2>
+          <p>Agendemos una llamada gratuita de 15 minutos para entender tu proyecto y recomendarte la mejor solución.</p>
+          <WhatsAppButton variant="inline" text="💬 Hablemos por WhatsApp" />
+        </div>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .page-hero {
+    padding: 80px 24px 40px;
+    background: linear-gradient(135deg, var(--crust) 0%, var(--base) 100%);
+    text-align: center;
+  }
+
+  .page-hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .page-hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 12px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .terminal-prefix {
+    font-family: var(--font-mono);
+    color: var(--overlay1);
+    font-size: 2.5rem;
+    font-weight: 400;
+    user-select: none;
+  }
+
+  .page-subtitle {
+    color: var(--subtext0);
+    font-size: 1.125rem;
+    font-family: var(--font-mono);
+    margin: 0;
+  }
+
+  .section {
+    padding: 80px 24px;
+  }
+
+  .cta-section {
+    background: var(--mantle);
+    text-align: center;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .cta-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .cta-section p {
+    color: var(--subtext0);
+    margin-bottom: 24px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (max-width: 640px) {
+    .page-hero {
+      padding: 60px 24px 24px;
+    }
+
+    .page-hero h1 {
+      font-size: 2rem;
+    }
+
+    .terminal-prefix {
+      font-size: 1.75rem;
+    }
+
+    .section {
+      padding: 48px 24px;
+    }
+
+    .cta-section h2 {
+      font-size: 1.5rem;
+    }
+  }
+</style>

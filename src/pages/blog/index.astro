@@ -1,0 +1,229 @@
+---
+import { getCollection } from "astro:content";
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE_TITLE } from "../../data/site";
+
+const posts = await getCollection("blog");
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <BaseHead
+      title={`Blog — ${SITE_TITLE}`}
+      description="Artículos técnicos sobre desarrollo Full Stack, arquitectura de software, Spring Boot, React y mejores prácticas."
+    />
+    <meta name="theme-color" content="#1e1e2e" />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <!-- Page Hero -->
+      <section class="page-hero">
+        <div class="container">
+          <h1>
+            <span class="terminal-prefix">$</span> ls blog/
+          </h1>
+          <p>// pensamientos sobre desarrollo, arquitectura e inteligencia artificial</p>
+        </div>
+      </section>
+
+      <!-- Blog Grid -->
+      <section class="section">
+        <div class="container">
+          {posts.length === 0 ? (
+            <div class="coming-soon">
+              <h2>
+                <span class="terminal-prefix">$</span> echo "Más contenido en camino"
+              </h2>
+              <p>
+                Estoy escribiendo nuevos artículos sobre desarrollo web, IA y
+                arquitectura de software.<br />Suscribite para recibir las novedades.
+              </p>
+              <a href="/contacto" class="btn-primary">Avisame cuando haya novedades →</a>
+            </div>
+          ) : (
+            <div class="blog-grid">
+              {posts.map((post) => (
+                <article class="blog-card">
+                  <div class="blog-date">
+                    // {new Date(post.data.pubDate).toISOString().split("T")[0]}
+                  </div>
+                  <h3 class="blog-title">{post.data.title}</h3>
+                  <p class="blog-excerpt">{post.data.description}</p>
+                  <a href={`/blog/${post.id}`} class="blog-link">
+                    <span>&gt;</span> leer artículo
+                  </a>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .page-hero {
+    padding: 64px 0 48px;
+    background: linear-gradient(135deg, var(--crust) 0%, var(--base) 100%);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .page-hero p {
+    font-size: 1.125rem;
+    color: var(--subtext0);
+    margin-top: 12px;
+    max-width: 640px;
+  }
+
+  .terminal-prefix {
+    font-family: var(--font-mono);
+    color: var(--overlay1);
+    user-select: none;
+    margin-right: 8px;
+  }
+
+  .section {
+    padding: 80px 0;
+  }
+
+  /* Blog Grid */
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  .blog-card {
+    background: var(--surface0);
+    border: 1px solid rgba(108, 112, 134, 0.2);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .blog-card:hover {
+    background: var(--surface1);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .blog-date {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--overlay1);
+    margin-bottom: 8px;
+  }
+
+  .blog-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 8px 0;
+  }
+
+  .blog-excerpt {
+    font-size: 0.95rem;
+    color: var(--subtext0);
+    line-height: 1.6;
+    margin: 0 0 14px 0;
+    flex-grow: 1;
+  }
+
+  .blog-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--sky);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .blog-link:hover {
+    color: var(--sapphire);
+  }
+
+  /* Coming Soon */
+  .coming-soon {
+    text-align: center;
+    padding: 80px 24px;
+  }
+
+  .coming-soon h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .coming-soon p {
+    color: var(--subtext0);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 32px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    border: 2px solid var(--mauve);
+    background: var(--mauve);
+    color: var(--crust);
+    text-decoration: none;
+  }
+
+  .btn-primary:hover {
+    background: #b089e5;
+    border-color: #b089e5;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(203, 166, 247, 0.3);
+  }
+
+  @media (max-width: 640px) {
+    .section {
+      padding: 48px 0;
+    }
+
+    .page-hero {
+      padding: 48px 0 32px;
+    }
+
+    .coming-soon {
+      padding: 48px 24px;
+    }
+
+    .coming-soon h2 {
+      font-size: 1.5rem;
+    }
+  }
+</style>

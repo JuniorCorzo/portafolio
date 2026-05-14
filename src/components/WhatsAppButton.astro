@@ -1,0 +1,101 @@
+---
+import { Icon } from "astro-icon/components";
+import { WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from "../data/contact";
+
+interface Props {
+  variant?: "floating" | "inline";
+  message?: string;
+  text?: string;
+}
+
+const {
+  variant = "floating",
+  message = WHATSAPP_MESSAGE,
+  text = "WhatsApp",
+} = Astro.props;
+
+const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+---
+
+{
+  WHATSAPP_NUMBER ? (
+    variant === "floating" ? (
+      <a
+        href={waUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="whatsapp-float"
+        aria-label="Contactar por WhatsApp"
+        title="$ whatsapp"
+      >
+        <Icon name="lucide:message-circle" size={28} />
+      </a>
+    ) : (
+      <a href={waUrl} target="_blank" rel="noopener noreferrer" class="whatsapp-inline">
+        <Icon name="lucide:message-circle" size={20} />
+        {text}
+      </a>
+    )
+  ) : null
+}
+
+<style>
+  .whatsapp-float {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 90;
+    width: 60px;
+    height: 60px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #25d366;
+    color: #fff;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+    transition: all 0.3s ease-in-out;
+    border: none;
+  }
+
+  .whatsapp-float:hover {
+    background: #128c7e;
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+    color: #fff;
+  }
+
+  .whatsapp-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--green);
+    border: 2px solid var(--green);
+    padding: 10px 32px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .whatsapp-inline:hover {
+    background: var(--green);
+    color: #1e1e2e;
+    font-weight: 700;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 640px) {
+    .whatsapp-float {
+      bottom: 16px;
+      right: 16px;
+      width: 56px;
+      height: 56px;
+    }
+  }
+</style>

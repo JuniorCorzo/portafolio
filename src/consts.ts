@@ -1,51 +1,44 @@
-// Portfolio SEO Configuration - Angel Corzo
-export const SITE_TITLE =
-  "Angel Corzo - Desarrollador Full Stack Cúcuta | Backend Java Spring Boot & React";
-export const SITE_DESCRIPTION =
-  "Desarrollador Full Stack en Cúcuta con experiencia en Ecopetrol. Especialista en arquitectura de microservicios, Spring Boot, Java, React y APIs RESTful. Proyectos agroindustriales y e-commerce con resultados medibles. Disponible para freelance remoto.";
+// Portfolio Configuration — imports from data layer for backward compatibility
+export {
+  SITE_TITLE,
+  SITE_DESCRIPTION,
+  DEVELOPER_NAME,
+  DEVELOPER_ROLE,
+  DEVELOPER_EMAIL,
+  DEVELOPER_LOCATION,
+  DEVELOPER_AVAILABILITY,
+  DEVELOPER_CV,
+} from "./data/site";
 
-// Developer Information
-export const DEVELOPER_NAME = "Angel Corzo";
-export const DEVELOPER_ROLE = "Desarrollador Full Stack Backend";
-export const DEVELOPER_EMAIL = "contact@angelcorzo.dev";
-export const DEVELOPER_LOCATION = "Cúcuta, Norte de Santander, Colombia";
-export const DEVELOPER_AVAILABILITY = "Disponible para proyectos remotos";
-export const DEVELOPER_CV = "https://files.angelcorzo.dev/CV_Angel_Corzo.pdf";
+export {
+  HERO_HEADLINE_1,
+  HERO_HEADLINE_2,
+  HERO_DESCRIPTION,
+  HERO_IMAGE,
+  HERO_CHIPS,
+  HERO_VALUE_PROPS,
+  HERO_WHATSAPP_CTA,
+} from "./data/hero";
 
-// Hero Section - Optimized for Search Intent
-export const HERO_HEADLINE_1 = "Full Stack en Cúcuta";
-export const HERO_HEADLINE_2 =
-  "Especialista en Backend Java & Arquitectura de Microservicios";
-export const HERO_DESCRIPTION =
-  "Transformo ideas complejas en soluciones digitales escalables utilizando Spring Boot, React y arquitectura hexagonal. Con experiencia comprobada en Ecopetrol optimizando análisis de datos operativos, diseño APIs RESTful robustas, sistemas de trazabilidad agroindustrial y plataformas e-commerce de alto rendimiento. Enfoque meticuloso en código limpio, testing automatizado y Core Web Vitals para aplicaciones que crecen con tu negocio.";
-export const HERO_IMAGE = "/images/angel-corzo-desarrollador-cucuta.webp";
+export { SERVICES } from "./data/services";
+export type { Service } from "./data/services";
+export { TESTIMONIALS, CREDENTIALS, METRICS } from "./data/trust";
+export type { Testimonial } from "./data/trust";
+export {
+  CONTACT_EMAIL,
+  CONTACT_LOCATION,
+  CONTACT_REMOTE,
+  WHATSAPP_NUMBER,
+  WHATSAPP_MESSAGE,
+  CALENDLY_URL,
+  RESPONSE_TIME,
+  SOCIAL_LINKS,
+} from "./data/contact";
 
-export const HERO_CHIPS = [
-  {
-    title: "Cúcuta, Colombia",
-    icon: "lucide:map-pin",
-    background: "--blue-rgb",
-    color: "--blue-dark",
-  },
-  {
-    title: "Java • Spring Boot • React",
-    icon: "lucide:code",
-    background: "--green-rgb",
-    color: "--green-dark",
-  },
-  {
-    title: "Arquitectura Hexagonal & Microservicios",
-    icon: "lucide:layers",
-    background: "--purple-rgb",
-    color: "--purple-dark",
-  },
-  {
-    title: "Certificado SENA",
-    icon: "lucide:award",
-    background: "--orange-rgb",
-    color: "--orange-dark",
-  },
-];
+// Re-import locally for use in legacy CONTACT_DETAILS below
+import { DEVELOPER_EMAIL, DEVELOPER_CV } from "./data/site";
+
+// Keep local definitions for items not yet migrated to data layer
 
 // Development Principles - Enhanced with Technical SEO Terms
 export const PRINCIPLES = [
@@ -147,7 +140,7 @@ export const PROJECTS = [
   {
     title: "Urban Style - Plataforma E-Commerce Escalable",
     description:
-      "Sistema completo de comercio electrónico con arquitectura hexagonal backend en Spring Boot, frontend Astro/React, autenticación JWT, gestión de inventario, carrito de compras persistente y optimización de imágenes con CDN Cloudflare R2. Integración con pasarelas de pago y panel administrativo para gestión de productos.",
+      "Sistema completo de comercio electrónico con arquitectura hexagonal backend en Spring Boot, frontend Astro/React, autenticación JWT, gestión de inventario, carrito de compras persistente y optimización de imágenes con CDN Cloudflare R2.",
     challenge:
       "Reducir tiempos de carga en catálogo con 500+ productos manteniendo calidad visual",
     solution:
@@ -175,7 +168,7 @@ export const PROJECTS = [
   {
     title: "DAYEN - Sistema de Trazabilidad Agroindustrial",
     description:
-      "Plataforma de trazabilidad completa para cultivos de arroz con API REST escalable, autenticación Spring Security + JWT, gestión de ciclos de siembra, control de insumos y generación de reportes. Desplegado en VPS con dominio personalizado y SSL.",
+      "Plataforma de trazabilidad completa para cultivos de arroz con API REST escalable, autenticación Spring Security + JWT, gestión de ciclos de siembra, control de insumos y generación de reportes.",
     challenge:
       "Diseñar sistema que rastreé lotes de arroz desde siembra hasta cosecha para auditorías",
     solution:
@@ -232,7 +225,7 @@ export const PROJECTS = [
     title:
       "Factus Dependency - Librería Java para Facturación Electrónica DIAN",
     description:
-      "Librería Java modular para integración con la DIAN colombiana (facturación electrónica), diseñada con arquitectura de plugins, procesamiento multihilo para generación masiva de facturas y validación de esquemas XML/UBL según normativa colombiana.",
+      "Librería Java modular para integración con la DIAN colombiana (facturación electrónica), diseñada con arquitectura de plugins, procesamiento multihilo para generación masiva de facturas y validación de esquemas XML/UBL.",
     challenge:
       "Procesar lotes de 1000+ facturas sin bloquear aplicación principal",
     solution: "ExecutorService con thread pools y procesamiento asíncrono",

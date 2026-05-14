@@ -1,0 +1,111 @@
+---
+import type { Service } from "../data/services";
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+---
+
+<article class="service-card">
+  <header class="service-header">
+    <span class="service-file">// {service.slug}.ts</span>
+  </header>
+
+  <h3 class="service-title">{service.title}</h3>
+  <p class="service-description">{service.description}</p>
+
+  <div class="service-tech">
+    {service.tech.map((t) => <span class="tech-chip">{t}</span>)}
+  </div>
+
+  <a href={`/servicios/${service.slug}`} class="service-link">
+    <span class="link-prompt">&gt;</span> Ver servicio
+  </a>
+</article>
+
+<style>
+  .service-card {
+    background: var(--surface0);
+    border: 1px solid rgba(var(--overlay0-rgb), 0.3);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .service-card:hover {
+    background: var(--surface1);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--mauve);
+  }
+
+  .service-header {
+    margin-bottom: 12px;
+  }
+
+  .service-file {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--subtext1);
+    user-select: none;
+  }
+
+  .service-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 12px 0;
+  }
+
+  .service-description {
+    color: var(--subtext0);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0 0 16px 0;
+    flex-grow: 1;
+  }
+
+  .service-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .tech-chip {
+    display: inline-block;
+    background: rgba(var(--sky-rgb), 0.08);
+    color: var(--sky);
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid var(--sky);
+  }
+
+  .service-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--sky);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+    margin-top: auto;
+  }
+
+  .service-link:hover {
+    color: var(--sapphire);
+  }
+
+  .link-prompt {
+    font-family: var(--font-mono);
+    user-select: none;
+  }
+</style>

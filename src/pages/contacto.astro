@@ -1,0 +1,463 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import {
+  CONTACT_EMAIL,
+  WHATSAPP_NUMBER,
+  WHATSAPP_MESSAGE,
+  CALENDLY_URL,
+  RESPONSE_TIME,
+  SOCIAL_LINKS,
+} from "../data/contact";
+import { SITE_TITLE } from "../data/site";
+import { Icon } from "astro-icon/components";
+
+const waUrl = WHATSAPP_NUMBER
+  ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`
+  : "";
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <BaseHead
+      title={`Contacto — ${SITE_TITLE}`}
+      description="Contacta a Angel Corzo para proyectos de desarrollo Full Stack, consultoría técnica o freelance remoto. Respuesta en menos de 24h."
+    />
+    <meta name="theme-color" content="#1e1e2e" />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <!-- Page Hero -->
+      <section class="page-hero">
+        <div class="container">
+          <h1>
+            <span class="terminal-prefix">$</span> mailto:{CONTACT_EMAIL}
+          </h1>
+          <p>
+            Siempre abierto a nuevas oportunidades, proyectos freelance y
+            colaboraciones. Respondemos en menos de 24 horas.
+          </p>
+        </div>
+      </section>
+
+      <!-- Contact Grid -->
+      <section class="section">
+        <div class="container">
+          <div class="contact-grid">
+            <!-- Left: Info -->
+            <div class="contact-terminal">
+              <div class="terminal-prompt">
+                $ mailto:{CONTACT_EMAIL}
+              </div>
+              <div class="terminal-comment">// ¿hablamos?</div>
+              <p class="terminal-body">
+                Si tenés una idea, un proyecto en marcha, o simplemente querés
+                charlar sobre arquitectura de software, escribime. No hace falta
+                que sea un brief perfecto — podemos definir el alcance juntos.
+              </p>
+
+              <!-- WhatsApp Card -->
+              {
+                waUrl && (
+                  <div class="whatsapp-card">
+                    <h3>💬 WhatsApp Business</h3>
+                    <p>El canal más rápido. Respondemos en minutos durante horario laboral.</p>
+                    <a href={waUrl} class="btn-whatsapp" target="_blank" rel="noopener noreferrer">
+                      Enviar mensaje por WhatsApp
+                    </a>
+                  </div>
+                )
+              }
+
+              <!-- Social Links -->
+              <div class="social-links">
+                <a href={`mailto:${CONTACT_EMAIL}`} class="social-link">
+                  <span class="social-icon">✉</span>
+                  <span>{CONTACT_EMAIL}</span>
+                </a>
+                {
+                  SOCIAL_LINKS.map((s) => (
+                    <a href={s.url} target="_blank" rel="noopener noreferrer" class="social-link">
+                      <span class="social-icon">{s.name.slice(0, 2).toLowerCase()}</span>
+                      <span>{s.url.replace(/^https:\/\//, "")}</span>
+                    </a>
+                  ))
+                }
+              </div>
+
+              <!-- Copy Email Button -->
+              <div style="margin-top: 24px;">
+                <button class="btn-teal" onclick="copyEmail()">
+                  <span>✉</span> Copiar email
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: Form -->
+            <div>
+              <form
+                class="contact-form"
+                action="https://formspree.io/f/xzdbgjqz"
+                method="POST"
+              >
+                <div class="form-group">
+                  <label for="name">// tu nombre</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Juan Pérez"
+                    required
+                    class="form-input"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="email">// tu email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="juan@ejemplo.com"
+                    required
+                    class="form-input"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="subject">// asunto</label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    placeholder="Proyecto web para mi startup"
+                    required
+                    class="form-input"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="message">// mensaje</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Contame qué necesitás..."
+                    rows="6"
+                    required
+                    class="form-textarea"
+                  />
+                </div>
+                <button type="submit" class="btn-primary form-submit">
+                  Enviar mensaje →
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <Footer />
+
+    <!-- Copied Toast -->
+    <div class="copied-toast" id="toast">¡Email copiado!</div>
+
+    <script is:inline>
+      function copyEmail() {
+        navigator.clipboard.writeText("contact@angelcorzo.dev").then(() => {
+          const toast = document.getElementById("toast");
+          if (toast) {
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 2000);
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  .page-hero {
+    padding: 64px 0 48px;
+    background: linear-gradient(135deg, var(--crust) 0%, var(--base) 100%);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    word-break: break-word;
+  }
+
+  .page-hero p {
+    font-size: 1.125rem;
+    color: var(--subtext0);
+    margin-top: 12px;
+    max-width: 640px;
+  }
+
+  .terminal-prefix {
+    font-family: var(--font-mono);
+    color: var(--overlay1);
+    user-select: none;
+    margin-right: 8px;
+  }
+
+  .section {
+    padding: 80px 0;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  /* Terminal-style left column */
+  .contact-terminal {
+    font-family: var(--font-mono);
+  }
+
+  .terminal-prompt {
+    color: var(--teal);
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+  }
+
+  .terminal-comment {
+    color: var(--overlay1);
+    margin-bottom: 24px;
+  }
+
+  .terminal-body {
+    color: var(--subtext0);
+    line-height: 1.7;
+    margin-bottom: 24px;
+    font-family: var(--font-body);
+  }
+
+  /* WhatsApp Card */
+  .whatsapp-card {
+    background: linear-gradient(
+      135deg,
+      rgba(37, 211, 102, 0.1) 0%,
+      rgba(18, 140, 126, 0.05) 100%
+    );
+    border: 1px solid rgba(37, 211, 102, 0.3);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .whatsapp-card h3 {
+    color: #25d366;
+    font-size: 1.125rem;
+    margin: 0 0 8px 0;
+  }
+
+  .whatsapp-card p {
+    color: var(--subtext0);
+    font-size: 0.9rem;
+    margin: 0 0 16px 0;
+    font-family: var(--font-body);
+  }
+
+  .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 32px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    border: 2px solid #25d366;
+    background: #25d366;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .btn-whatsapp:hover {
+    background: #128c7e;
+    border-color: #128c7e;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(37, 211, 102, 0.3);
+  }
+
+  /* Social Links */
+  .social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    border-radius: 6px;
+    background: var(--surface0);
+    border: 1px solid rgba(108, 112, 134, 0.2);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .social-link:hover {
+    background: var(--surface1);
+    transform: translateY(-2px);
+    color: var(--text);
+  }
+
+  .social-icon {
+    width: 20px;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .btn-teal {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 32px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    border: 2px solid var(--teal);
+    background: transparent;
+    color: var(--teal);
+  }
+
+  .btn-teal:hover {
+    background: var(--teal);
+    color: var(--crust);
+    font-weight: 700;
+  }
+
+  /* Form */
+  .contact-form {
+    background: var(--surface0);
+    border: 1px solid rgba(108, 112, 134, 0.2);
+    border-radius: 8px;
+    padding: 2rem;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--overlay1);
+    margin-bottom: 6px;
+  }
+
+  .form-input,
+  .form-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 6px;
+    background: var(--crust);
+    border: 1px solid var(--overlay0);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .form-input::placeholder,
+  .form-textarea::placeholder {
+    color: var(--overlay1);
+  }
+
+  .form-input:focus,
+  .form-textarea:focus {
+    outline: none;
+    border-color: var(--mauve);
+    box-shadow: 0 0 0 3px rgba(203, 166, 247, 0.15);
+  }
+
+  .form-textarea {
+    min-height: 140px;
+    resize: vertical;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 32px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    border: 2px solid var(--mauve);
+    background: var(--mauve);
+    color: var(--crust);
+    text-decoration: none;
+  }
+
+  .btn-primary:hover {
+    background: #b089e5;
+    border-color: #b089e5;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(203, 166, 247, 0.3);
+  }
+
+  .form-submit {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Copied Toast */
+  .copied-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--green);
+    color: var(--crust);
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .copied-toast.show {
+    opacity: 1;
+  }
+
+  @media (max-width: 768px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .section {
+      padding: 48px 0;
+    }
+
+    .page-hero {
+      padding: 48px 0 32px;
+    }
+  }
+</style>

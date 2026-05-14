@@ -1,0 +1,206 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import WhatsAppButton from "../../components/WhatsAppButton.astro";
+import { SERVICES } from "../../data/services";
+import { SITE_TITLE, DEVELOPER_NAME } from "../../data/site";
+
+export function getStaticPaths() {
+  return SERVICES.map((s) => ({ params: { slug: s.slug } }));
+}
+
+const { slug } = Astro.params;
+const service = SERVICES.find((s) => s.slug === slug);
+
+if (!service) {
+  return Astro.redirect("/servicios");
+}
+
+const canonicalURL = new URL(`/servicios/${slug}`, Astro.site || "https://angelcorzo.dev");
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: service.title,
+  description: service.description,
+  url: canonicalURL.toString(),
+  provider: {
+    "@type": "Person",
+    name: DEVELOPER_NAME,
+    url: Astro.site?.toString() || "https://angelcorzo.dev",
+  },
+  serviceType: "Desarrollo de software a medida",
+  areaServed: {
+    "@type": "Place",
+    name: "Colombia y Latinoamérica",
+  },
+  offers: {
+    "@type": "Offer",
+    availability: "https://schema.org/InStock",
+    priceCurrency: "COP",
+  },
+};
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <BaseHead
+      title={`${service.title} — Servicios | ${SITE_TITLE}`}
+      description={service.description}
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#1e1e2e" />
+    <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <article class="service-page">
+        <div class="service-page-container">
+          <header class="service-page-header">
+            <span class="file-comment">// {service.slug}.md</span>
+            <h1>$ {service.title}</h1>
+          </header>
+
+          <p class="service-page-desc">{service.description}</p>
+
+          <div class="service-page-tech">
+            <span class="tech-comment">// stack.json</span>
+            <div class="tech-list">
+              {service.tech.map((t) => <span class="tech-chip">{t}</span>)}
+            </div>
+          </div>
+
+          <div class="service-page-cta">
+            <WhatsAppButton
+              variant="inline"
+              text="Solicitar este servicio"
+              message={`Hola Angel, me interesa contratar el servicio de ${service.title}.`}
+            />
+            <a href="/servicios" class="back-link">
+              <span class="prompt">&gt;</span> Volver a servicios
+            </a>
+          </div>
+        </div>
+      </article>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .service-page {
+    padding: 80px 24px;
+    background: linear-gradient(135deg, var(--crust) 0%, var(--base) 100%);
+    min-height: 60vh;
+  }
+
+  .service-page-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .service-page-header {
+    margin-bottom: 24px;
+  }
+
+  .file-comment {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--overlay1);
+    margin-bottom: 8px;
+    user-select: none;
+  }
+
+  .service-page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .service-page-desc {
+    color: var(--subtext0);
+    font-size: 1.125rem;
+    line-height: 1.7;
+    margin: 0 0 32px 0;
+  }
+
+  .service-page-tech {
+    margin-bottom: 40px;
+  }
+
+  .tech-comment {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--overlay1);
+    margin-bottom: 12px;
+    user-select: none;
+  }
+
+  .tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .tech-chip {
+    display: inline-block;
+    background: var(--base);
+    color: var(--sky);
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid var(--overlay0);
+  }
+
+  .service-page-cta {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .back-link {
+    color: var(--sky);
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.3s ease-in-out;
+  }
+
+  .back-link:hover {
+    color: var(--sapphire);
+  }
+
+  .prompt {
+    font-family: var(--font-mono);
+    user-select: none;
+  }
+
+  @media (max-width: 640px) {
+    .service-page {
+      padding: 60px 24px;
+    }
+
+    .service-page-header h1 {
+      font-size: 1.75rem;
+    }
+
+    .service-page-desc {
+      font-size: 1rem;
+    }
+
+    .service-page-cta {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+</style>

@@ -1,0 +1,141 @@
+---
+import { METRICS, CREDENTIALS } from "../data/trust";
+
+interface Props {
+  showMetrics?: boolean;
+  showCredentials?: boolean;
+}
+
+const { showMetrics = true, showCredentials = false } = Astro.props;
+---
+
+<div class="trust-signals">
+  {
+    showMetrics && (
+      <div class="metrics-grid">
+        {METRICS.map((metric) => (
+          <article class="metric-item">
+            <span class="metric-value">{metric.value}</span>
+            <span class="metric-label">{metric.label}</span>
+          </article>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    showCredentials && (
+      <div class="credentials-block">
+        <span class="trust-header">// credentials.json</span>
+        <ul class="credentials-list">
+          {CREDENTIALS.map((c) => (
+            <li class="credential-item">
+              <span class="credential-label">{c.label}</span>
+              <span class="credential-issuer">{c.issuer}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .trust-signals {
+    width: 100%;
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+  }
+
+  .metric-item {
+    text-align: center;
+    padding: 24px;
+    background: var(--mantle);
+    border: 1px solid rgba(var(--overlay0-rgb), 0.22);
+    border-radius: 8px;
+  }
+
+  .metric-value {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--mauve);
+    line-height: 1;
+    font-family: var(--font-mono);
+  }
+
+  .metric-label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--subtext0);
+    line-height: 1.5;
+    margin-top: 8px;
+  }
+
+  .credentials-block {
+    margin-top: 24px;
+  }
+
+  .trust-header {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--overlay1);
+    margin-bottom: 16px;
+    user-select: none;
+  }
+
+  .credentials-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .credential-item {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .credential-item::before {
+    content: "✓";
+    color: var(--green);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .credential-label {
+    color: var(--text);
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .credential-issuer {
+    color: var(--overlay1);
+    font-size: 0.85rem;
+    font-family: var(--font-mono);
+  }
+
+  @media (max-width: 640px) {
+    .metrics-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .metric-value {
+      font-size: 1.5rem;
+    }
+
+    .metric-item {
+      padding: 18px 14px;
+    }
+  }
+</style>
