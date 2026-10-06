@@ -1,6 +1,6 @@
 ---
-title: "Caso de Estudio: InstrumentsManage"
-description: "Sistema de Gestión de Instrumentación Industrial con Arquitectura de Microservicios"
+title: "InstrumentsManage: Microservicios y Telemetría Industrial IoT"
+description: "Gestión centralizada de instrumentación industrial y monitoreo de alarmas con arquitectura de microservicios. Caso de estudio técnico por Ángel Corzo."
 pubDate: "2026-01-07"
 ---
 ## 1. 📋 Resumen Ejecutivo

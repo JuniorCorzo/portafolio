@@ -1,8 +1,8 @@
 // Site metadata — extracted from consts.ts for single-responsibility data layer
 export const SITE_TITLE =
-  "Angel Corzo — Desarrollador Full-Stack | Tu proyecto, de la idea al deploy";
+  "Angel Corzo — Desarrollador Full-Stack | De la Idea al Deploy";
 export const SITE_DESCRIPTION =
-  "Portafolio de Angel Corzo: desarrollo full-stack, backend, consultoría técnica y agentes de IA. Diseño enfocado en conversión, proyectos reales y contacto rápido por WhatsApp.";
+  "Desarrollador Full-Stack & Backend en Colombia. Especialista en arquitecturas escalables, Cloudflare Workers, APIs y agentes de IA. Conoce mis proyectos.";
 
 export const DEVELOPER_NAME = "Angel Corzo";
 export const DEVELOPER_ROLE = "Desarrollador Full-Stack";

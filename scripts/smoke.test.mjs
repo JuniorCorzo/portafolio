@@ -1,4 +1,4 @@
-import { readFileSync, existsSync } from "fs";
+import { readFileSync, existsSync, readdirSync } from "fs";
 import { resolve } from "path";
 
 const SRC = resolve(import.meta.dirname, "../src");
@@ -119,6 +119,33 @@ check(
   studyCaseLayout.includes('<html lang="es">') &&
     studyCaseLayout.includes("alt={title}"),
   "StudyCasePost.astro has <html lang=\"es\"> and heroImage alt={title}"
+);
+
+// 8. SERP snippet quality: study case descriptions between 100 and 165 chars
+const studyCaseDir = resolve(SRC, "content", "study-case");
+const studyCaseFiles = existsSync(studyCaseDir)
+  ? readdirSync(studyCaseDir).filter((f) => f.endsWith(".md"))
+  : [];
+
+let allDescriptionsValid = studyCaseFiles.length > 0;
+const invalidCases = [];
+
+for (const file of studyCaseFiles) {
+  const content = readFileSync(resolve(studyCaseDir, file), "utf-8");
+  const match = content.match(/^description:\s*(?:"([^"]*)"|'([^']*)'|([^\r\n]+))/m);
+  const desc = match ? (match[1] ?? match[2] ?? match[3]).trim() : "";
+  const len = desc.length;
+  if (len < 100 || len > 165) {
+    allDescriptionsValid = false;
+    invalidCases.push(`${file} (${len} chars)`);
+  }
+}
+
+check(
+  allDescriptionsValid,
+  `Study case descriptions are between 100 and 165 chars (SERP snippet quality)${
+    invalidCases.length ? `: invalid [${invalidCases.join(", ")}]` : ""
+  }`
 );
 
 console.log("\n--------------------------");

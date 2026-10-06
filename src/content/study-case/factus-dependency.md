@@ -1,6 +1,6 @@
 ---
-title: "Caso de Estudio: Factus Dependency"
-description: "FactusDependency es una librería Java especializada que simplifica la integración con la API de Factus para la generación y gestión de facturas electrónicas en Colombia, proporcionando una capa de abstracción robusta sobre el complejo ecosistema de facturación DIAN. El proyecto implementa un sistema completo de autenticación OAuth, gestión de tokens, y procesamiento asíncrono de facturas con capacidades de descarga de documentos en formato PDF y XML."
+title: "Factus Dependency: Facturación Electrónica DIAN con Java & API"
+description: "Librería Java para integración de facturación electrónica DIAN: autenticación OAuth, procesamiento asíncrono y exportación PDF/XML por Ángel Corzo."
 pubDate: "2026-01-07"
 ---
 ## Resumen Ejecutivo

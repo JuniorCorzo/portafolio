@@ -1,6 +1,6 @@
 ---
-title: "Caso de Estudio: DAYEN"
-description: "DAYEN es un sistema de trazabilidad desarrollado para optimizar la gestión y documentación de procesos agrícolas en cultivos de arroz. La plataforma permite a los agricultores registrar, rastrear y visualizar cada actividad realizada durante el ciclo de cultivo, incluyendo aplicación de productos, fechas de intervención y asignación de personal."
+title: "DAYEN: Sistema de Trazabilidad Agrícola y Gestión de Cultivos"
+description: "Plataforma de trazabilidad para cultivos de arroz: registro de intervenciones, gestión de personal y analítica de procesos. Caso de estudio técnico."
 pubDate: "2026-01-07"
 ---
 

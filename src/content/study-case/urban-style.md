@@ -1,6 +1,6 @@
 ---
-title: "Caso de Estudio: UrbanStyle E-Commerce Platform"
-description: "UrbanStyle es una plataforma de comercio electrónico robusta y de alto rendimiento diseñada para la compra y venta de ropa en línea, construida con arquitectura hexagonal para garantizar flexibilidad, mantenibilidad y escalabilidad a largo plazo."
+title: "UrbanStyle: E-Commerce con Arquitectura Hexagonal y Java 21"
+description: "Diseño de e-commerce resiliente: arquitectura hexagonal, caché con Redis y microservicios desacoplados. Caso de estudio técnico por Ángel Corzo."
 pubDate: 01/07/2026
 ---
 
