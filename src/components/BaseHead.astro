@@ -16,26 +16,42 @@ const { title, description, image = "/images/og.png" } = Astro.props;
 
 const schemaData = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: DEVELOPER_NAME,
-  jobTitle: "Full Stack Developer",
-  description: description,
-  url: "https://angelcorzo.dev",
-  sameAs: [
-    "https://github.com/JuniorCorzo",
-    "https://linkedin.com/in/angel-corzo",
+  "@graph": [
+    {
+      "@type": "Person",
+      name: DEVELOPER_NAME,
+      jobTitle: "Full Stack Developer",
+      description: description,
+      url: "https://angelcorzo.dev",
+      inLanguage: "es",
+      sameAs: [
+        "https://github.com/JuniorCorzo",
+        "https://linkedin.com/in/angel-corzo",
+      ],
+      knowsAbout: [
+        "Backend Development",
+        "API Integration",
+        "Payment Systems",
+        "Server Optimization",
+      ],
+      address: {
+        "@type": "PostalAddress",
+        addressRegion: "North Santander",
+        addressCountry: "CO",
+      },
+    },
+    {
+      "@type": "WebSite",
+      name: "Ángel Corzo | Full Stack Developer",
+      url: "https://angelcorzo.dev",
+      inLanguage: "es",
+      description: description,
+      publisher: {
+        "@type": "Person",
+        name: DEVELOPER_NAME,
+      },
+    },
   ],
-  knowsAbout: [
-    "Backend Development",
-    "API Integration",
-    "Payment Systems",
-    "Server Optimization",
-  ],
-  address: {
-    "@type": "PostalAddress",
-    addressRegion: "North Santander",
-    addressCountry: "CO",
-  },
 };
 ---
 
@@ -70,6 +86,7 @@ const schemaData = {
 <meta name="title" content={title} />
 <meta name="description" content={description} />
 <meta name="author" content={DEVELOPER_NAME} />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />

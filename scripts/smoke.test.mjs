@@ -1,4 +1,4 @@
-import { readFileSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 import { resolve } from "path";
 
 const SRC = resolve(import.meta.dirname, "../src");
@@ -91,6 +91,35 @@ const allSrcFiles = [
 ];
 const hasTypo = allSrcFiles.some((f) => f.includes("interita"));
 check(!hasTypo, "Typo 'interita' is not present in source files");
+
+// 5. Technical SEO: public/robots.txt exists and declares sitemap & user-agent
+const robotsPath = resolve(import.meta.dirname, "../public/robots.txt");
+const robotsExists = existsSync(robotsPath);
+let robotsContent = "";
+if (robotsExists) {
+  robotsContent = readFileSync(robotsPath, "utf-8");
+}
+check(
+  robotsExists &&
+    robotsContent.includes("User-agent: *") &&
+    robotsContent.includes("Sitemap: https://angelcorzo.dev/sitemap-index.xml"),
+  "public/robots.txt exists and declares Sitemap and User-agent: *"
+);
+
+// 6. Technical SEO: BaseHead.astro contains robots meta tag with max-image-preview:large
+const baseHead = read("components", "BaseHead.astro");
+check(
+  baseHead.includes('name="robots"') && baseHead.includes("max-image-preview:large"),
+  "BaseHead.astro contains robots meta tag with max-image-preview:large"
+);
+
+// 7. Accessibility & i18n: StudyCasePost.astro has <html lang=\"es\"> and heroImage alt={title}
+const studyCaseLayout = read("layouts", "StudyCasePost.astro");
+check(
+  studyCaseLayout.includes('<html lang="es">') &&
+    studyCaseLayout.includes("alt={title}"),
+  "StudyCasePost.astro has <html lang=\"es\"> and heroImage alt={title}"
+);
 
 console.log("\n--------------------------");
 if (failed === 0) {
