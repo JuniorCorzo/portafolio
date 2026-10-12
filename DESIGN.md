@@ -348,7 +348,7 @@ $ cat skills.json | jq '.infra'
 ### Content & Routing Model
 
 - **Routes core**: `/`, `/servicios`, `/sobre-mi`, `/blog`, `/contacto`.
-- **Service pages**: `/servicios/[slug]` para ofertas específicas; si aún son stubs, deben llevar `noindex`.
+- **Service pages**: `/servicios/[slug]` para ofertas específicas; son páginas indexables con contenido real y schema estructurado.
 - **Blog pages**: contenido editorial en MDX para profundidad y autoridad.
 - **Validation**: la home debe priorizar credenciales, métricas y resultados verificables antes de pedir contacto.
 - **Fallbacks**: placeholders visibles sólo en `env.example` o contenido claramente marcado como pendiente.
@@ -619,6 +619,6 @@ WIP/XP: var(--peach) = #fab387
 - El héroe debe decir qué hacés, para quién y cuál es el siguiente paso.
 - El CTA primario apunta a conversión; el secundario a exploración.
 - Si faltan testimonios reales, usá validación alternativa o estado pendiente transparente.
-- Las páginas de servicios pueden empezar como stubs, pero deben estar marcadas con `noindex` hasta tener contenido real.
+- Las páginas de servicios son indexables con contenido comercial real y estructurado.
 - WhatsApp, Calendly y otros contactos externos viven detrás de variables de entorno o config explícita.
 - No sacrificar claridad comercial por decoración terminal.

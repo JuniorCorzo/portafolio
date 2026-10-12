@@ -30,11 +30,11 @@ function check(condition, message) {
 
 console.log("Running smoke tests...\n");
 
-// 1. Service detail page has noindex
+// 1. Service detail page is indexable
 const slugPage = read("pages", "servicios", "[slug].astro");
 check(
-  slugPage.includes('content="noindex') || slugPage.includes("noindex, nofollow"),
-  "Service detail page contains noindex meta tag"
+  !slugPage.includes("noindex") && !slugPage.includes("nofollow") && slugPage.includes("<BaseHead"),
+  "Service detail page is indexable (no noindex meta tag)"
 );
 
 // 2. WhatsApp runtime code has no hardcoded fake number fallback
