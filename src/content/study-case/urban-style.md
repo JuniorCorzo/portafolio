@@ -1,7 +1,7 @@
 ---
-title: "UrbanStyle: E-Commerce con Arquitectura Hexagonal y Java 21"
-description: "Diseño de e-commerce resiliente: arquitectura hexagonal, caché con Redis y microservicios desacoplados. Caso de estudio técnico por Ángel Corzo."
-pubDate: 01/07/2026
+title: "Arquitectura Hexagonal en Java 21: E-Commerce y Microservicios"
+description: "Implementación de arquitectura hexagonal en Java para plataformas e-commerce: microservicios, caché Redis y backend resiliente para empresas por Ángel Corzo."
+pubDate: "2026-01-07"
 ---
 
 ## 1. 📋 Resumen Ejecutivo
@@ -32,7 +32,7 @@ El ecosistema de e-commerce de moda requiere soluciones que balanceen rendimient
 **Problemas Técnicos:**
 
 - 🖼️ **Optimización de imágenes**: Las imágenes de productos pueden pesar entre 2-5MB, afectando severamente los tiempos de carga
-- 🏗️ **Escalabilidad arquitectural**: Necesidad de una arquitectura que permita evolución sin refactorizaciones masivas
+- 🏗️ **Escalabilidad arquitectónica**: Necesidad de una arquitectura que permita evolución sin refactorizaciones masivas
 - ⚡ **Rendimiento del carrito**: Operaciones frecuentes de lectura/escritura requieren latencias < 50ms
 - 💰 **Costos de almacenamiento**: Almacenar múltiples versiones de imágenes procesadas incrementa costos exponencialmente
 - 🔐 **Seguridad**: Implementar autenticación robusta con control de acceso granular
@@ -434,4 +434,4 @@ UrbanStyle demuestra que es posible construir una plataforma de e-commerce moder
 
 - 🔄 **Evolución continua**: El patrón de ports & adapters permite migrar tecnologías sin reescribir la lógica de negocio, preparando la plataforma para cambios futuros.
 
-Este proyecto evidencia mis competencias en diseño de sistemas distribuidos, optimización de rendimiento, procesamiento concurrente y toma de decisiones arquitecturales basadas en trade-offs medibles. Las decisiones técnicas están respaldadas por benchmarks reales y justificaciones de negocio, demostrando pensamiento sistémico aplicado a problemas reales de e-commerce.
+Este proyecto evidencia mis competencias en diseño de sistemas distribuidos, optimización de rendimiento, procesamiento concurrente y toma de decisiones arquitectónicas basadas en trade-offs medibles. Las decisiones técnicas están respaldadas por benchmarks reales y justificaciones de negocio, demostrando pensamiento sistémico aplicado a problemas reales de e-commerce.

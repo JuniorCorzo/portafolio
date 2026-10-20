@@ -1,6 +1,6 @@
 ---
-title: "Factus Dependency: Facturación Electrónica DIAN con Java & API"
-description: "Librería Java para integración de facturación electrónica DIAN: autenticación OAuth, procesamiento asíncrono y exportación PDF/XML por Ángel Corzo."
+title: "Facturación Electrónica DIAN Colombia: API Java y Factus"
+description: "Librería e integración de facturación electrónica DIAN en Colombia: API REST, OAuth, generación XML/UBL y emisión asíncrona para empresas por Ángel Corzo."
 pubDate: "2026-01-07"
 ---
 ## Resumen Ejecutivo
@@ -12,9 +12,9 @@ FactusDependency es una librería Java especializada que simplifica la integraci
 | Metadato | Valor |
 |----------|-------|
 | Categoría | FinTech / Billing API |
-| Duración del proyecto | 1 meses (desarrollo inicial) |
+| Duración del proyecto | 1 mes (desarrollo inicial) |
 | Tamaño del equipo | 1 desarrollador |
-| Cliente/Usuario | Empresas colombianas requiriendo facturación electrónica |
+| Cliente/Usuario | Empresas colombianas que requieren facturación electrónica |
 | Estado actual | Activo, en producción |
 
 </div>
@@ -257,14 +257,14 @@ FactusDependency/
 
 - **Repositorio GitHub**: [JuniorCorzo/FactusDependency](https://github.com/JuniorCorzo/FactusDependency)
 - **Licencia**: MIT License
-- **Issues**: 0 issues abiertas, 100% de PRs mergeados
+- **Issues**: 0 incidencias abiertas, 100% de PRs integrados
 - **Estadísticas**: 15+ stars, forks activos, contribuciones bienvenidas
 
 ---
 
 ## Conclusión 🎯
 
-FactusDependency demuestra cómo el diseño arquitectónico cuidadoso y la selección apropiada de patrones pueden transformar una integración API compleja en una solución elegante y mantenible. El proyecto showcasea competencias avanzadas en Java moderno, concurrencia, diseño de APIs y manejo de protocolos de autenticación estándar de la industria.
+FactusDependency demuestra cómo el diseño arquitectónico cuidadoso y la selección apropiada de patrones pueden transformar una integración API compleja en una solución elegante y mantenible. El proyecto demuestra competencias avanzadas en Java moderno, concurrencia, diseño de APIs y manejo de protocolos de autenticación estándar de la industria.
 
 Este caso de estudio evidencia capacidad para:
 - Diseñar sistemas escalables con separación clara de responsabilidades
@@ -280,6 +280,5 @@ El valor diferencial reside en la combinación de robustez técnica con simplici
 
 Este caso de estudio se basa en el análisis del código fuente real del proyecto FactusDependency, incluyendo la implementación completa de servicios de facturación, autenticación OAuth, y gestión de concurrencia. Las métricas proyectadas se basan en benchmarks de rendimiento de la arquitectura implementada. El proyecto representa un ejemplo sólido de diseño de librerías Java para integración con APIs externas complejas.
 
-**Wiki pages que podrías explorar:**
-- [Arquitectura (JuniorCorzo/FactusDependency)](/wiki/JuniorCorzo/FactusDependency#3)
-- [Data Flow de Operaciones de Facturación (JuniorCorzo/FactusDependency)](/wiki/JuniorCorzo/FactusDependency#3.3)
+**Documentación técnica:**
+- [Repositorio y especificaciones en GitHub](https://github.com/JuniorCorzo/FactusDependency#readme)

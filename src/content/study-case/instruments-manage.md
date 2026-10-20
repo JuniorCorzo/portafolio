@@ -1,6 +1,6 @@
 ---
-title: "InstrumentsManage: Microservicios y Telemetría Industrial IoT"
-description: "Gestión centralizada de instrumentación industrial y monitoreo de alarmas con arquitectura de microservicios. Caso de estudio técnico por Ángel Corzo."
+title: "Software de Telemetría Industrial y Microservicios en Colombia"
+description: "Plataforma industrial para gestión de instrumentos y telemetría IoT: arquitectura de microservicios, monitoreo de alarmas y auditoría para plantas y empresas."
 pubDate: "2026-01-07"
 ---
 ## 1. 📋 Resumen Ejecutivo
@@ -169,7 +169,7 @@ Campamento (Camp)
 
 Implementación de comunicación inter-servicios mediante el patrón de Service Discovery. El servicio de tags consume datos de los servicios de instrumentos y unidades de proceso para mantener consistencia de datos.
 
-**Ventajas arquitecturales**:
+**Ventajas arquitectónicas**:
 - **Desacoplamiento**: Servicios pueden evolucionar independientemente
 - **Escalabilidad horizontal**: Cada servicio puede escalar según demanda
 - **Resiliencia**: Failure de un servicio no colapsa el sistema completo
@@ -379,7 +379,7 @@ El proyecto sigue una separación clara entre frontend y backend, con cada micro
 
 Este proyecto destaca por:
 
-- **Complejidad arquitectural real**: No es un monolito, es una arquitectura distribuida con 6 servicios independientes, demostrando que sé cómo diseñar sistemas complejos desde cero.
+- **Complejidad arquitectónica real**: No es un monolito, es una arquitectura distribuida con 6 servicios independientes, demostrando que sé cómo diseñar sistemas complejos desde cero.
 
 - **Stack heterogéneo**: Integré Java, Node.js y TypeScript en un sistema cohesivo, mostrando versatilidad para trabajar con múltiples tecnologías sin perder coherencia en la arquitectura.
 

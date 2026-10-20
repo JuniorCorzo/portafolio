@@ -1,6 +1,6 @@
 ---
-title: "DAYEN: Sistema de Trazabilidad Agrícola y Gestión de Cultivos"
-description: "Plataforma de trazabilidad para cultivos de arroz: registro de intervenciones, gestión de personal y analítica de procesos. Caso de estudio técnico."
+title: "Sistema de Trazabilidad Agroindustrial y Gestión en Colombia"
+description: "Desarrollo de software a medida para trazabilidad agrícola en Colombia: control de cultivos, insumos y analítica de procesos agroindustriales por Ángel Corzo."
 pubDate: "2026-01-07"
 ---
 
@@ -398,7 +398,7 @@ El proyecto sigue estructura estándar Maven para backend Spring Boot, con separ
 
 ## 10. 🔗 Enlaces y Referencias
 
-**Repositorio GitHub**: https://github.com/[usuario]/DAYEN
+**Repositorio GitHub**: https://github.com/JuniorCorzo/Dayen
 
 **Licencia**: MIT License (Recomendada) o GPL v3
 
@@ -418,52 +418,50 @@ El proyecto sigue estructura estándar Maven para backend Spring Boot, con separ
 
 ## 11. 🎓 Conclusión
 
-**DAYEN** representa un proyecto académico ambicioso que trasciende la complejidad típica de trabajos de titulación. La plataforma demuestra mis competencias en:
+**DAYEN** representa una solución integral de trazabilidad agroindustrial que trasciende proyectos convencionales de software. La plataforma demuestra competencias sólidas en arquitectura de software, modelado relacional y entrega de sistemas listos para producción:
 
-### Valor Diferencial para Portfolio
+### Valor Diferencial
 
 Este proyecto destaca por:
 
-- **Dominio de arquitectura MVC**: Implementé correctamente los patrones de Spring Boot sin over-engineering, manteniendo el código limpio y mantenible.
+- **Dominio de arquitectura MVC y Clean Architecture**: Implementación rigurosa de patrones Spring Boot sin sobreingeniería, garantizando código mantenible, desacoplado y testeable.
 
-- **Modelo de datos sofisticado**: Diseñé relaciones complejas (Many-to-Many, One-to-Many) y las resolví elegantemente, demostrando profundidad en modelado de datos.
+- **Modelo de datos robusto**: Modelado relacional optimizado con relaciones complejas (Many-to-Many, One-to-Many), asegurando integridad referencial y consultas eficientes.
 
-- **Seguridad enterprise-grade**: Implementé OAuth2 correctamente, no solo un login básico, asegurando que la plataforma proteja datos sensibles de manera profesional.
+- **Seguridad enterprise-grade**: Configuración de OAuth2 y control de acceso basado en roles (RBAC), protegiendo la información sensible de parcelas y tratamientos agrícolas.
 
-- **Full-stack competency**: Trabajé desde el frontend (HTML/CSS/JS) hasta el backend (Java), pasando por el diseño de una base de datos relacional coherente.
+- **Enfoque Full-Stack**: Integración fluida entre backend Java, servicios RESTful y frontend responsivo, respaldado por persistencia relacional coherente.
 
-- **Contexto real**: El caso de uso agrícola es concreto y tangible, no un CRUD genérico de tutorial. Resolví un problema específico del sector agrícola colombiano.
+- **Contexto y valor de negocio real**: Enfoque directo en una necesidad crítica del agro colombiano, resolviendo la trazabilidad de insumos y auditoría de campo con impacto medible.
 
-### Aplicabilidad Profesional
+### Aplicabilidad en Entornos Enterprise
 
-Las habilidades que demostré son directamente transferibles a roles como:
+Las capacidades técnicas implementadas se traducen directamente en soluciones para:
 
-- **Backend Developer**: Dominio de Spring Boot, JPA y diseño de APIs REST robustas.
+- **Backend Engineering**: Arquitectura de servicios con Spring Boot, JPA/Hibernate y APIs RESTful de alta disponibilidad.
 
-- **Full-Stack Developer**: Capacidad de implementar tanto frontend como backend en una sola plataforma coherente.
+- **Full-Stack Development**: Construcción end-to-end de aplicaciones orientadas a optimizar flujos operativos complejos.
 
-- **Database Architect**: Modelado de datos relacional con normalización correcta, asegurando integridad y eficiencia.
+- **Database Engineering**: Modelado relacional normalizado con auditoría y consistencia transaccional.
 
-- **DevOps Engineer**: Containerización con Docker y deployment de aplicaciones Java en producción.
+- **DevOps y Containerización**: Empaquetamiento y despliegue automatizado con Docker y Docker Compose para entornos productivos.
 
-Este proyecto evidencia que no solo aprendí frameworks, sino que entendí conceptos fundamentales de arquitectura de software, seguridad y modelado de datos. DAYEN es exactamente el tipo de proyecto que reclutadores técnicos valoran: contextualizado en un problema real, bien ejecutado y con profundidad técnica demostrable.
+DAYEN consolida principios clave de ingeniería de software moderna: diseño modular, seguridad rigurosa y foco en resolver problemáticas del sector productivo.
 
 ### Impacto en el Dominio Agrícola
 
-Desde una perspectiva de negocio, DAYEN aborda un problema genuino en el sector agrícola colombiano donde la adopción tecnológica es baja. Un sistema de trazabilidad es más que un proyecto académico: es una herramienta que podría certificar cultivos sostenibles o asegurar trazabilidad para mercados premium, generando valor real para productores locales.
+Desde una perspectiva operativa y de negocio, DAYEN aborda un desafío crítico en la agroindustria colombiana. La digitalización de la trazabilidad habilita el cumplimiento normativo ante entidades regulatorias, facilita la certificación de cosechas sostenibles y abre puertas a mercados de exportación premium, generando valor medible para productores locales.
 
 ---
 
 ## 📊 Notas Adicionales
 
-- **Contexto SENA**: Este proyecto de titulación demuestra el cumplimiento de estándares educativos en tecnología establecidos por la institución.
+- **Contexto de Origen**: Proyecto concebido con estándares de calidad de la industria y validado como proyecto destacado de titulación en desarrollo de software.
 
-- **Relevancia sectorial**: AgriTech es un sector de alto crecimiento con adopción acelerada en Colombia, posicionando mis habilidades en un área de demanda creciente.
+- **Relevancia Sectorial**: El sector AgriTech demanda digitalización urgente en Colombia; DAYEN aporta una base tecnológica escalable para modernizar operaciones agrícolas.
 
-- **Extensibilidad**: La arquitectura que diseñé permite agregar módulos adicionales (predicción, IoT, analytics) sin reestructuración del sistema base.
+- **Extensibilidad**: La arquitectura modular permite incorporar capacidades de telemetría IoT, analítica predictiva y reportes avanzados sin reestructurar el núcleo del sistema.
 
-- **Aprendizaje continuo**: Combiné tecnologías establecidas (Spring Boot, MySQL) con conceptos modernos (OAuth2, REST APIs), demostrando capacidad de adaptación.
+- **Estándares Modernos**: Integración armónica de tecnologías maduras y confiables (Spring Boot, MySQL) con estándares de autenticación y consumo de APIs de nivel empresarial.
 
-- **Responsabilidad social**: DAYEN es una herramienta que puede impactar positivamente a pequeños y medianos agricultores, demostrando que desarrollo técnico puede ser aliado del desarrollo social.
-
-Este proyecto demuestra que fui más allá de cumplir requisitos académicos: construí una solución técnica profesional aplicada a un problema real del sector productivo colombiano, listo para escalar y crecer.
+- **Impacto Productivo**: DAYEN demuestra cómo la ingeniería de software aplicada resuelve fricciones operativas reales, posicionándose como una solución profesional de trazabilidad agroindustrial en Colombia lista para evolucionar y escalar.
