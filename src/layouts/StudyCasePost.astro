@@ -4,15 +4,37 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
+import { DEVELOPER_NAME } from "../consts";
 
 type Props = CollectionEntry<"study-case">["data"];
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://angelcorzo.dev");
+const techArticleSchema = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: title,
+  description: description,
+  url: canonicalURL.toString(),
+  datePublished: pubDate,
+  dateModified: updatedDate || pubDate,
+  author: {
+    "@type": "Person",
+    name: DEVELOPER_NAME,
+    url: "https://angelcorzo.dev",
+  },
+  publisher: {
+    "@type": "Person",
+    name: DEVELOPER_NAME,
+  },
+  inLanguage: "es",
+};
 ---
 
 <html lang="es">
   <head>
     <BaseHead title={title} description={description} />
+    <script type="application/ld+json" set:html={JSON.stringify(techArticleSchema)} />
     <style is:global>
       main {
         width: 100vw;

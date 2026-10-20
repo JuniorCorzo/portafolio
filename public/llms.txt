@@ -1,0 +1,24 @@
+# Angel Corzo — Desarrollador Full-Stack & Backend en Colombia
+
+> Desarrollador Full-Stack & Backend en Colombia especializado en arquitectura hexagonal, APIs de alto rendimiento con Spring Boot y Java 21, integración de facturación electrónica DIAN, Cloudflare Workers y desarrollo de agentes de IA.
+
+## Información Profesional
+- Nombre: Angel Corzo
+- Rol: Desarrollador Full-Stack & Backend
+- Ubicación: Cúcuta, Norte de Santander, Colombia (Disponible remoto)
+- Correo: contact@angelcorzo.dev
+- GitHub: https://github.com/JuniorCorzo
+- LinkedIn: https://linkedin.com/in/angel-corzo
+- Portafolio: https://angelcorzo.dev
+
+## Servicios Especializados
+- [Desarrollo Full Stack en Colombia](https://angelcorzo.dev/servicios/desarrollo-full-stack/): Aplicaciones web modernas con React, Astro, Node.js y PostgreSQL.
+- [Desarrollo Backend y APIs en Colombia](https://angelcorzo.dev/servicios/desarrollo-backend/): Arquitectura backend enterprise, Spring Boot, microservicios y bases de datos escalables.
+- [Consultoría de Software y Arquitectura](https://angelcorzo.dev/servicios/consultorias/): Auditoría de arquitectura de software, migración a microservicios, optimización y OWASP.
+- [Desarrollo de Agentes de IA en Colombia](https://angelcorzo.dev/servicios/agentes-ia/): Soluciones con LLMs, arquitecturas RAG y automatización para empresas.
+
+## Casos de Estudio Técnicos
+- [Facturación Electrónica DIAN Colombia: API Java y Factus](https://angelcorzo.dev/study-case/factus-dependency/): Integración API REST, OAuth, generación XML/UBL y emisión asíncrona.
+- [Arquitectura Hexagonal en Java 21: E-Commerce y Microservicios](https://angelcorzo.dev/study-case/urban-style/): Arquitectura limpia Ports & Adapters, caché con Redis y backend resiliente.
+- [Sistema de Trazabilidad Agroindustrial y Gestión en Colombia](https://angelcorzo.dev/study-case/dayen/): Control de cultivos de arroz, insumos y analítica de procesos.
+- [Software de Telemetría Industrial y Microservicios en Colombia](https://angelcorzo.dev/study-case/instruments-manage/): Monitoreo de instrumentación, tags de alarma y microservicios híbridos (Spring Boot + NestJS).

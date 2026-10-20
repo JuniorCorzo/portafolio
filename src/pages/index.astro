@@ -7,12 +7,25 @@ import ServicesTeaser from '../components/ServicesTeaser.astro';
 import TrustSignals from '../components/TrustSignals.astro';
 import Projects from '../components/Projects.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, FAQ_SCHEMA } from '../consts';
 import { WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from '../data/contact';
 
 const ctaWaUrl = WHATSAPP_NUMBER
   ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`
   : '/contacto';
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_SCHEMA.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
+    },
+  })),
+};
 ---
 
 <!doctype html>
@@ -20,28 +33,7 @@ const ctaWaUrl = WHATSAPP_NUMBER
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     <meta name="theme-color" content="#1e1e2e" />
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "¿Qué es arquitectura hexagonal y por qué usarla?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "La arquitectura hexagonal separa la lógica de negocio de frameworks externos, facilitando testing, mantenibilidad y cambios de tecnología sin reescribir código core."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Trabajas con empresas fuera de Cúcuta?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Sí, trabajo 100% remoto con clientes en toda Colombia y Latinoamérica."
-          }
-        }
-      ]
-    })} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   </head>
   <body>
     <Header />
