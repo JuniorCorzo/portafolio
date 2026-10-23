@@ -5,19 +5,31 @@ import Footer from "../../components/Footer.astro";
 import WhatsAppButton from "../../components/WhatsAppButton.astro";
 import { SERVICES } from "../../data/services";
 import { SITE_TITLE, DEVELOPER_NAME } from "../../data/site";
+import { getCollection, render } from "astro:content";
 
-export function getStaticPaths() {
-  return SERVICES.map((s) => ({ params: { slug: s.slug } }));
+export async function getStaticPaths() {
+  const serviceEntries = await getCollection("services");
+  return SERVICES.map((s) => {
+    const entry = serviceEntries.find(
+      (e) => e.data.slug === s.slug || e.id.replace(/\.mdx?$/, "") === s.slug
+    );
+    return {
+      params: { slug: s.slug },
+      props: { service: s, entry },
+    };
+  });
 }
 
-const { slug } = Astro.params;
-const service = SERVICES.find((s) => s.slug === slug);
+const { service, entry } = Astro.props;
 
 if (!service) {
   return Astro.redirect("/servicios");
 }
 
-const canonicalURL = new URL(`/servicios/${slug}`, Astro.site || "https://angelcorzo.dev");
+const rendered = entry ? await render(entry) : null;
+const Content = rendered?.Content;
+
+const canonicalURL = new URL(`/servicios/${service.slug}`, Astro.site || "https://angelcorzo.dev");
 
 const serviceSchema = {
   "@context": "https://schema.org",
@@ -51,7 +63,7 @@ const serviceSchema = {
       description={service.description}
     />
     <meta name="theme-color" content="#1e1e2e" />
-    <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
   </head>
   <body>
     <Header />
@@ -71,6 +83,12 @@ const serviceSchema = {
               {service.tech.map((t) => <span class="tech-chip">{t}</span>)}
             </div>
           </div>
+
+          {Content && (
+            <div class="service-content prose">
+              <Content />
+            </div>
+          )}
 
           <div class="service-page-cta">
             <WhatsAppButton
@@ -201,5 +219,44 @@ const serviceSchema = {
       flex-direction: column;
       align-items: stretch;
     }
+  }
+
+  .service-content {
+    margin: 32px 0;
+    padding: 24px;
+    background: var(--surface0);
+    border: 1px solid rgba(var(--overlay0-rgb), 0.3);
+    border-radius: 8px;
+    color: var(--text);
+  }
+
+  .service-content :global(h2) {
+    font-size: 1.5rem;
+    color: var(--mauve);
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+
+  .service-content :global(h3) {
+    font-size: 1.2rem;
+    color: var(--text);
+    margin-top: 20px;
+    margin-bottom: 12px;
+  }
+
+  .service-content :global(p) {
+    color: var(--subtext1);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .service-content :global(ul) {
+    padding-left: 20px;
+    color: var(--subtext1);
+    line-height: 1.7;
+  }
+
+  .service-content :global(li) {
+    margin-bottom: 8px;
   }
 </style>
