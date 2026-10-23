@@ -284,7 +284,7 @@ export const CONTACT_DETAILS = {
   },
   cta_secondary: {
     text: "Ver Casos de Estudio Detallados",
-    url: "/proyectos",
+    url: "/#projects",
     type: "internal",
   },
 };

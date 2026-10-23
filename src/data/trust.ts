@@ -20,7 +20,7 @@ export const CREDENTIALS = [
 
 export const METRICS = [
   { value: "3+", label: "Años de experiencia" },
-  { value: "0", label: "Proyectos públicos" },
+  { value: "4+", label: "Proyectos públicos" },
   { value: "100%", label: "Compromiso con la calidad" },
   { value: "24h", label: "Tiempo de respuesta" },
 ];

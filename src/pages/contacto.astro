@@ -6,12 +6,9 @@ import {
   CONTACT_EMAIL,
   WHATSAPP_NUMBER,
   WHATSAPP_MESSAGE,
-  CALENDLY_URL,
-  RESPONSE_TIME,
   SOCIAL_LINKS,
 } from "../data/contact";
 import { SITE_TITLE } from "../data/site";
-import { Icon } from "astro-icon/components";
 
 const waUrl = WHATSAPP_NUMBER
   ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`
@@ -159,11 +156,11 @@ const waUrl = WHATSAPP_NUMBER
     <Footer />
 
     <!-- Copied Toast -->
-    <div class="copied-toast" id="toast">¡Email copiado!</div>
+    <div class="copied-toast" id="toast" role="status" aria-live="polite">¡Email copiado!</div>
 
-    <script is:inline>
+    <script is:inline define:vars={{ email: CONTACT_EMAIL }}>
       function copyEmail() {
-        navigator.clipboard.writeText("contact@angelcorzo.dev").then(() => {
+        navigator.clipboard.writeText(email).then(() => {
           const toast = document.getElementById("toast");
           if (toast) {
             toast.classList.add("show");

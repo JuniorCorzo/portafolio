@@ -37,7 +37,7 @@ const techArticleSchema = {
     <script type="application/ld+json" set:html={JSON.stringify(techArticleSchema)} />
     <style is:global>
       main {
-        width: 100vw;
+        width: 100%;
         max-width: 100%;
         margin: 0;
       }
@@ -56,7 +56,7 @@ const techArticleSchema = {
       .prose {
         max-width: 80ch;
         margin: auto;
-        color: rgb(var(--text));
+        color: var(--text);
       }
 
       .title {
@@ -72,7 +72,7 @@ const techArticleSchema = {
 
       .date {
         margin-bottom: 0.5em;
-        color: rgb(var(--text));
+        color: var(--text);
       }
 
       .last-updated-on {
@@ -88,7 +88,7 @@ const techArticleSchema = {
       pre.mermaid {
         padding: 0;
         border-radius: 12px;
-        background-color: rgb(var(--background));
+        background-color: var(--surface0);
       }
 
       @media (max-width: 768px) {
@@ -106,7 +106,7 @@ const techArticleSchema = {
         <div class="hero-image">
           {
             heroImage && (
-              <img width={1020} height={510} src={heroImage} alt={title} />
+              <img width={1020} height={510} src={heroImage} alt={title} loading="lazy" decoding="async" />
             )
           }
         </div>

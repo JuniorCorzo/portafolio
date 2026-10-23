@@ -33,10 +33,14 @@
   --color-flamingo: #f2cdcd;
   --color-maroon: #eba0ac;
   --font-atkinson: "Atkinson Hyperlegible", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
 }
 
 :root {
+  --background: var(--base);
+  --font-body: var(--font-atkinson);
+
   /* Base Layer (Backgrounds) */
   --crust-rgb: 17, 17, 27;
   --crust: rgb(var(--crust-rgb));
@@ -127,6 +131,20 @@
     0 16px 32px rgba(49, 50, 68, 33%);
 }
 
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("/fonts/atkinson-regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("/fonts/atkinson-bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 @font-face {
   font-family: "Atkinson";
   src: url("/fonts/atkinson-regular.woff") format("woff");

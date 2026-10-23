@@ -19,6 +19,7 @@ export default defineConfig({
     mermaid({ autoTheme: true, theme: "dark", mermaidConfig: {} }),
   ],
   adapter: cloudflare({
+    imageService: "compile",
     platformProxy: {
       enabled: true,
     },
