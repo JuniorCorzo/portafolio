@@ -185,6 +185,7 @@ const waUrl = WHATSAPP_NUMBER
     justify-content: center;
     gap: 8px;
     padding: 10px 32px;
+    min-height: 44px;
     border-radius: 6px;
     font-weight: 700;
     font-size: 1rem;
@@ -248,7 +249,8 @@ const waUrl = WHATSAPP_NUMBER
     }
 
     .hero-image-container {
-      order: -1;
+      margin: 32px auto 0;
+      max-width: 320px;
     }
   }
 
@@ -261,11 +263,6 @@ const waUrl = WHATSAPP_NUMBER
   @media (max-width: 640px) {
     .hero-chips {
       gap: 8px;
-    }
-
-    .chip {
-      width: 100%;
-      justify-content: center;
     }
 
     .hero-subtitle {

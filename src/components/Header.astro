@@ -1,6 +1,13 @@
 ---
 import { Icon } from "astro-icon/components";
 import { DEVELOPER_CV } from "../consts";
+
+const currentPath = Astro.url.pathname.replace(/\/$/, "");
+const isActive = (path: string) => {
+  const cleanPath = path.replace(/\/$/, "");
+  if (cleanPath === "") return currentPath === "";
+  return currentPath.startsWith(cleanPath);
+};
 ---
 
 <header class="header">
@@ -8,11 +15,11 @@ import { DEVELOPER_CV } from "../consts";
     <div class="logo"><a href="/"><span>$</span> <span class="brand">angelcorzo</span></a></div>
 
     <div class="nav-links" id="navLinks">
-      <a href="/" class="nav-link">Inicio</a>
-      <a href="/servicios" class="nav-link">Servicios</a>
-      <a href="/sobre-mi" class="nav-link">Sobre mí</a>
-      <a href="/blog" class="nav-link">Blog</a>
-      <a href="/contacto" class="nav-link">Contacto</a>
+      <a href="/" class:list={["nav-link", { active: isActive("/") }]}>Inicio</a>
+      <a href="/servicios" class:list={["nav-link", { active: isActive("/servicios") }]}>Servicios</a>
+      <a href="/sobre-mi" class:list={["nav-link", { active: isActive("/sobre-mi") }]}>Sobre mí</a>
+      <a href="/blog" class:list={["nav-link", { active: isActive("/blog") }]}>Blog</a>
+      <a href="/contacto" class:list={["nav-link", { active: isActive("/contacto") }]}>Contacto</a>
 
       <div class="mobile-cv">
         <a href={DEVELOPER_CV} target="_blank" rel="noreferrer" class="cv">
@@ -85,7 +92,7 @@ import { DEVELOPER_CV } from "../consts";
   }
 
   .nav-link {
-    color: var(--subtext);
+    color: var(--subtext1);
     text-decoration: none;
     font-weight: 500;
     font-size: 0.95rem;
@@ -115,12 +122,13 @@ import { DEVELOPER_CV } from "../consts";
   }
 
   .cv {
-    display: flex;
+    display: inline-flex;
     background-color: rgba(var(--mauve-rgb), 0.1);
     color: var(--mauve);
     align-items: center;
     border: 2px solid rgba(var(--mauve-rgb), 0.1);
-    padding: 6px 10px;
+    padding: 8px 14px;
+    min-height: 44px;
     gap: 8px;
     border-radius: 6px;
     font-weight: 600;
@@ -149,7 +157,9 @@ import { DEVELOPER_CV } from "../consts";
     display: none;
     background: none;
     border: none;
-    padding: 8px;
+    padding: 10px;
+    min-width: 44px;
+    min-height: 44px;
     cursor: pointer;
   }
 
@@ -181,7 +191,9 @@ import { DEVELOPER_CV } from "../consts";
     }
 
     .menu-toggle {
-      display: block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .desktop-cv {
@@ -198,14 +210,14 @@ import { DEVELOPER_CV } from "../consts";
       backdrop-filter: blur(5px);
       display: none;
       position: absolute;
-      width: 100vw;
+      width: 100%;
+      left: 0;
+      transform: none;
       align-items: start;
       top: 60px;
-      left: 50%;
-      transform: translateX(-50%);
       flex-direction: column;
-      padding: 12px;
-      gap: 12px;
+      padding: 16px 20px;
+      gap: 8px;
       border-radius: 0 0 8px 8px;
       box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
       z-index: 9999;
@@ -216,7 +228,11 @@ import { DEVELOPER_CV } from "../consts";
     }
 
     .nav-links a {
-      padding: 8px 6px;
+      padding: 10px 12px;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      width: 100%;
     }
 
     .nav-link {
@@ -242,7 +258,7 @@ import { DEVELOPER_CV } from "../consts";
     }
 
     .nav-links {
-      gap: 16px;
+      gap: 12px;
     }
   }
 </style>
@@ -255,6 +271,28 @@ import { DEVELOPER_CV } from "../consts";
     button.addEventListener("click", () => {
       const isOpen = nav.classList.toggle("open");
       button.setAttribute("aria-expanded", String(isOpen));
+      button.setAttribute("aria-label", isOpen ? "Cerrar menú" : "Abrir menú");
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && nav.classList.contains("open")) {
+        nav.classList.remove("open");
+        button.setAttribute("aria-expanded", "false");
+        button.setAttribute("aria-label", "Abrir menú");
+        button.focus();
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      if (
+        nav.classList.contains("open") &&
+        !nav.contains(e.target as Node) &&
+        !button.contains(e.target as Node)
+      ) {
+        nav.classList.remove("open");
+        button.setAttribute("aria-expanded", "false");
+        button.setAttribute("aria-label", "Abrir menú");
+      }
     });
   }
 </script>
