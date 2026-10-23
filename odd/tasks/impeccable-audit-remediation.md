@@ -17,8 +17,9 @@ Test runner: npm test && npm run typecheck && npm run build
 ## Tasks
 - T1: [S1, S2, S3, S4, S7, S9] Route: inline. Fix core P0/P1 issues: trust metric, typography mismatch & CSS variables, heading hierarchy, StudyCasePost CSS/layout, broken links, and Cloudflare imageService. Commit: 632ac43.
 - T2: [S5, S6] Route: inline. Fix responsive design & usability: mobile hero order, header touch targets, mobile menu keyboard trap/outside-click, and active navigation indicator. Commit: b14d4f1.
-- T3: [S8] Route: inline. Clean orphaned dead components and connect services content collection. Commit: pending.
-- T4: Verification & full suite check across tests, typecheck, and build. Commit: pending.
+- T3: [S8] Route: inline. Clean orphaned dead components and connect services content collection. Commit: 0b17573.
+- T4: [S1-S9] Route: inline. Verification & full suite check across tests, typecheck, build, and detector anti-pattern cleanup. Commit: pending.
 
 ## Log
 L1: 2026-10-23 User request: "Soluciona todos los problemas que encontraste"
+L2: 2026-10-23 Remediated P0 trust metric, font mismatch, CSS variables, heading hierarchy, StudyCasePost styles, mobile hero order, touch targets, and dead components. All 10 smoke tests pass, astro check 0 errors, full static build succeeds.
