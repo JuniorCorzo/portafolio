@@ -279,7 +279,8 @@ check(
     heroComponent.includes("HERO_HEADLINE_2") &&
     heroComponent.includes("Hola, soy {DEVELOPER_NAME}") &&
     heroComponent.includes("HERO_DESCRIPTION") &&
-    heroComponent.includes("💬 Hablemos por WhatsApp") &&
+    heroComponent.includes("Hablemos por WhatsApp") &&
+    heroComponent.includes('<Icon name="lucide:message-circle"') &&
     heroComponent.includes("Ver servicios →"),
   "Hero copy preserved: H1 headlines, subtitle, description, and primary/secondary CTAs"
 );
@@ -323,7 +324,8 @@ check(
 check(
   indexContent.includes("¿listo para tu próximo proyecto?") &&
     indexContent.includes("Agendemos una llamada de 15 minutos para hablar sobre tu idea. Sin compromiso.") &&
-    indexContent.includes("💬 Hablemos por WhatsApp") &&
+    indexContent.includes("Hablemos por WhatsApp") &&
+    indexContent.includes('<Icon name="lucide:message-circle"') &&
     indexContent.includes("Ver más opciones de contacto →"),
   "Index CTA section preserved: H2 heading, pitch paragraph, and WhatsApp/Secondary CTAs"
 );

@@ -494,7 +494,7 @@ pre > code {
 }
 
 blockquote {
-  border-left: 3px solid var(--mauve);
+  border-left: 1px solid var(--mauve);
   padding: 0 0 0 20px;
   margin: 1.5em 0;
   font-size: 1.125em;
@@ -553,4 +553,64 @@ hr {
   clip: rect(1px, 1px, 1px, 1px);
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+/* Typography overflow resilience */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+a,
+li,
+blockquote {
+  overflow-wrap: break-word;
+}
+
+/* Touch targets hardening (WCAG 2.5.5 / 2.5.8) */
+button,
+.btn,
+.cta-button,
+.cta-btn,
+a.cta-button,
+a.cta-btn,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  min-height: 44px;
+}
+
+/* Micro-interactions & animations */
+@keyframes terminal-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.terminal-prefix {
+  display: inline-block;
+}
+
+.card,
+.service-card,
+.project-card,
+.testimonial-card,
+.blog-card,
+.whatsapp-card,
+.photo-pane-wrap {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+}
+
+/* Reduced motion fallback */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

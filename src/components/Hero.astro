@@ -50,7 +50,7 @@ const waUrl = WHATSAPP_NUMBER
             target={waUrl === "/contacto" ? undefined : "_blank"}
             rel={waUrl === "/contacto" ? undefined : "noopener noreferrer"}
           >
-            💬 Hablemos por WhatsApp
+            <Icon name="lucide:message-circle" size={18} class="cta-icon" /> Hablemos por WhatsApp
           </a>
           <a href="/servicios" class="cta-button cta-secondary">Ver servicios →</a>
         </div>
@@ -275,7 +275,7 @@ const waUrl = WHATSAPP_NUMBER
     display: flex;
     flex-direction: column;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
-    transition: all 0.3s ease;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
   }
 
   .photo-pane-wrap:hover {
@@ -366,7 +366,8 @@ const waUrl = WHATSAPP_NUMBER
     flex-shrink: 0;
   }
 
-  .chip-icon {
+  .chip-icon,
+  .cta-icon {
     flex-shrink: 0;
   }
 

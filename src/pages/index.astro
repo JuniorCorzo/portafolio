@@ -8,6 +8,7 @@ import TrustSignals from '../components/TrustSignals.astro';
 import GithubActivity from '../components/GithubActivity.astro';
 import Projects from '../components/Projects.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { Icon } from 'astro-icon/components';
 import { SITE_TITLE, SITE_DESCRIPTION, FAQ_SCHEMA } from '../consts';
 import { WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from '../data/contact';
 
@@ -59,7 +60,7 @@ const faqSchema = {
           <h2><span class="terminal-prefix">$</span> ¿listo para tu próximo proyecto?</h2>
           <p>Agendemos una llamada de 15 minutos para hablar sobre tu idea. Sin compromiso.</p>
           <div class="cta-actions">
-            <a href={ctaWaUrl} class="cta-btn cta-whatsapp" target={ctaWaUrl === '/contacto' ? undefined : '_blank'} rel={ctaWaUrl === '/contacto' ? undefined : 'noopener noreferrer'}>💬 Hablemos por WhatsApp</a>
+            <a href={ctaWaUrl} class="cta-btn cta-whatsapp" target={ctaWaUrl === '/contacto' ? undefined : '_blank'} rel={ctaWaUrl === '/contacto' ? undefined : 'noopener noreferrer'}><Icon name="lucide:message-circle" size={18} class="cta-icon" /> Hablemos por WhatsApp</a>
             <a href="/contacto" class="cta-btn cta-secondary">Ver más opciones de contacto →</a>
           </div>
         </div>
@@ -125,15 +126,24 @@ const faqSchema = {
     justify-content: center;
     gap: 8px;
     padding: 10px 32px;
+    min-height: 44px;
     border-radius: 6px;
     font-weight: 700;
     font-size: 1rem;
     text-decoration: none;
-    transition: all 0.3s ease-in-out;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
     border: 2px solid;
   }
 
+  .cta-icon {
+    flex-shrink: 0;
+  }
+
   .cta-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     background: #25d366;
     color: #1e1e2e;
     border-color: #25d366;
