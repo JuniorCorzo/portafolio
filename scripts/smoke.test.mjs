@@ -1,5 +1,6 @@
 import { readFileSync, existsSync, readdirSync } from "fs";
 import { resolve } from "path";
+import { getGithubActivity } from "../src/lib/github.ts";
 
 const SRC = resolve(import.meta.dirname, "../src");
 
@@ -185,6 +186,66 @@ check(
     headerContent.includes("monogram") &&
     (headerContent.includes("&gt;_") || headerContent.includes(">_")),
   "Header.astro embeds ThemeToggle and contains terminal monogram logo mark (>_ AC / angelcorzo)"
+);
+
+// 11. GitHub Activity: getGithubActivity() returns 52 weeks, totalContributions, streaks
+const activity = await getGithubActivity();
+check(
+  activity &&
+    Array.isArray(activity.weeks) &&
+    activity.weeks.length === 52 &&
+    activity.weeks.every((week) => Array.isArray(week) && week.length <= 7 && week.length > 0),
+  "getGithubActivity returns 52 weeks of contribution data"
+);
+
+const sampleDay = activity?.weeks?.[0]?.[0];
+check(
+  sampleDay &&
+    typeof sampleDay.date === "string" &&
+    typeof sampleDay.count === "number" &&
+    typeof sampleDay.level === "number" &&
+    sampleDay.level >= 0 &&
+    sampleDay.level <= 4,
+  "Contribution days contain valid date, count, and level (0-4)"
+);
+
+check(
+  typeof activity?.totalContributions === "number" && activity.totalContributions > 0,
+  `getGithubActivity returns valid totalContributions (${activity?.totalContributions})`
+);
+
+check(
+  typeof activity?.currentStreak === "number" && activity.currentStreak >= 0,
+  `getGithubActivity returns valid currentStreak (${activity?.currentStreak})`
+);
+
+check(
+  typeof activity?.longestStreak === "number" && activity.longestStreak >= (activity?.currentStreak ?? 0),
+  `getGithubActivity returns valid longestStreak (${activity?.longestStreak})`
+);
+
+// 12. GithubActivity.astro component renders CLI terminal with activity header, streak stats, and intensity legend
+const githubActivityPath = resolve(SRC, "components", "GithubActivity.astro");
+const githubActivityExists = existsSync(githubActivityPath);
+let githubActivityContent = "";
+if (githubActivityExists) {
+  githubActivityContent = read("components", "GithubActivity.astro");
+}
+check(
+  githubActivityExists &&
+    githubActivityContent.includes("ACTIVITY // JuniorCorzo") &&
+    githubActivityContent.includes("in the last year") &&
+    githubActivityContent.includes("day streak") &&
+    githubActivityContent.includes("Less") &&
+    githubActivityContent.includes("More"),
+  "GithubActivity.astro exists and renders CLI terminal with header, streaks, and legend"
+);
+
+// 13. index.astro embeds GithubActivity component under #trust
+const indexContent = read("pages", "index.astro");
+check(
+  indexContent.includes("<GithubActivity") && indexContent.includes("import GithubActivity"),
+  "index.astro embeds GithubActivity component"
 );
 
 console.log("\n--------------------------");
