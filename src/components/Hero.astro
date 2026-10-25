@@ -59,7 +59,7 @@ const waUrl = WHATSAPP_NUMBER
         <div class="photo-pane-wrap">
           <div class="photo-top-hud">
             <span class="hud-filename">BUFFER: img/angel_corzo.webp</span>
-            <span class="hud-status-badge">[CALIBRATED · 380x360]</span>
+            <span class="hud-status-badge">[CALIBRATED · 380x350]</span>
           </div>
 
           <div class="photo-img-container">
@@ -191,6 +191,10 @@ const waUrl = WHATSAPP_NUMBER
     font-family: var(--font-mono);
   }
 
+  :global(html[data-theme="latte"]) .hero-subtitle {
+    color: var(--text);
+  }
+
   .hero-description {
     font-size: 1.05rem;
     color: var(--subtext0);
@@ -293,6 +297,10 @@ const waUrl = WHATSAPP_NUMBER
     font-weight: 700;
   }
 
+  :global(html[data-theme="latte"]) .hud-status-badge {
+    color: var(--text);
+  }
+
   .photo-img-container {
     position: relative;
     background: #000000;
@@ -333,8 +341,8 @@ const waUrl = WHATSAPP_NUMBER
   .hud-badge-lg {
     font-size: 0.72rem;
     background: rgba(0, 0, 0, 0.85);
-    border: 1px solid var(--mauve);
-    color: var(--mauve);
+    border: 1px solid rgba(203, 166, 247, 0.4);
+    color: #cba6f7;
     padding: 2px 7px;
     border-radius: 4px;
     font-weight: 700;

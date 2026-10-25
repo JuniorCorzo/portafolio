@@ -119,9 +119,17 @@ import ServiceCard from "./ServiceCard.astro";
     color: var(--sky) !important;
   }
 
+  :global(html[data-theme="latte"] .service-link:hover) {
+    color: var(--text) !important;
+  }
+
   :global(.link-prompt) {
     color: var(--green) !important;
     font-weight: 700 !important;
+  }
+
+  :global(html[data-theme="latte"] .link-prompt) {
+    color: var(--mauve) !important;
   }
 
   @media (max-width: 1024px) {
