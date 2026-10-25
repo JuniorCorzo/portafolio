@@ -329,6 +329,47 @@ check(
   "Footer copy preserved: navigation links, footer.json buffer, and copyright notice"
 );
 
+// 15. Brand Assets: public/favicon.svg contains Noir monogram & public/images/og.png is valid PNG (> 10KB) referenced in BaseHead
+const faviconPath = resolve(import.meta.dirname, "../public/favicon.svg");
+const faviconExists = existsSync(faviconPath);
+let faviconContent = "";
+if (faviconExists) {
+  faviconContent = readFileSync(faviconPath, "utf-8");
+}
+check(
+  faviconExists &&
+    faviconContent.includes("<svg") &&
+    (faviconContent.includes(">_") || faviconContent.includes("&gt;_")) &&
+    faviconContent.includes("AC") &&
+    faviconContent.includes("#000000") &&
+    faviconContent.includes("#cba6f7"),
+  "public/favicon.svg exists and contains valid Catppuccin Noir monogram (>_ AC, #000000, #cba6f7)"
+);
+
+const ogPath = resolve(import.meta.dirname, "../public/images/og.png");
+const ogExists = existsSync(ogPath);
+let ogSize = 0;
+let isPng = false;
+if (ogExists) {
+  const ogBuffer = readFileSync(ogPath);
+  ogSize = ogBuffer.length;
+  // PNG magic signature: 0x89 0x50 0x4E 0x47
+  isPng =
+    ogBuffer[0] === 0x89 &&
+    ogBuffer[1] === 0x50 &&
+    ogBuffer[2] === 0x4e &&
+    ogBuffer[3] === 0x47;
+}
+check(
+  ogExists && isPng && ogSize > 10 * 1024,
+  `public/images/og.png exists, is valid PNG, and is > 10KB (actual: ${(ogSize / 1024).toFixed(1)}KB)`
+);
+
+check(
+  baseHead.includes('href="/favicon.svg"') && baseHead.includes('/images/og.png'),
+  "BaseHead.astro references /favicon.svg and /images/og.png"
+);
+
 console.log("\n--------------------------");
 if (failed === 0) {
   console.log(`All ${passed} smoke tests passed.`);
