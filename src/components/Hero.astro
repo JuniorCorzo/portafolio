@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 import {
   DEVELOPER_NAME,
   HERO_CHIPS,
@@ -21,12 +22,12 @@ const waUrl = WHATSAPP_NUMBER
 <section class="hero-section">
   <div class="hero-container">
     <div class="hero-chips">
-      {HERO_CHIPS.map(({ title, color, background }) => (
+      {HERO_CHIPS.map(({ title, color, background, icon }) => (
         <span
           class="chip"
           style={`color: var(${color}); background: rgba(var(${background}), 0.08); border-color: var(${color});`}
         >
-          <span class="chip-dot">●</span>
+          {icon ? <Icon name={icon} size={14} class="chip-icon" /> : <span class="chip-dot">●</span>}
           {title}
         </span>
       ))}
@@ -75,7 +76,9 @@ const waUrl = WHATSAPP_NUMBER
             <div class="photo-hud-bottom">
               <div>
                 <div class="hud-badge-lg">[FULL-STACK DEV]</div>
-                <div class="hud-location">📍 Cúcuta, Colombia</div>
+                <div class="hud-location">
+                  <Icon name="lucide:map-pin" size={13} class="hud-location-icon" /> Cúcuta, Colombia
+                </div>
               </div>
               <div class="hud-ok-badge">
                 STATUS: 200 OK
@@ -353,6 +356,18 @@ const waUrl = WHATSAPP_NUMBER
     font-size: 0.75rem;
     color: #bac2de;
     margin-top: 3px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .hud-location-icon {
+    color: var(--teal);
+    flex-shrink: 0;
+  }
+
+  .chip-icon {
+    flex-shrink: 0;
   }
 
   .hud-ok-badge {

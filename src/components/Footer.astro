@@ -4,23 +4,39 @@ import { DEVELOPER_NAME } from "../data/site";
 const today = new Date();
 const brand = DEVELOPER_NAME.toLowerCase().replace(/\s+/g, "");
 const footerJson = `{
-  "built_with": ["HTML", "CSS", "☕"],
+  "built_with": ["Astro", "Tailwind", "☕"],
   "deployed_on": "Cloudflare Pages",
   "source": "github.com/angelcorzo/portafolio",
+  "license": "MIT",
   "year": "${today.getFullYear()}"
 }`;
 ---
 
 <footer class="footer">
+  <div class="terminal-statusbar">
+    <div class="statusbar-container">
+      <div class="statusbar-left">
+        <span class="sb-mode">NORMAL</span>
+        <span class="sb-branch"><span class="branch-sym" aria-hidden="true"></span> main*</span>
+        <span class="sb-file">src/pages/index.astro</span>
+      </div>
+      <div class="statusbar-right">
+        <span class="sb-item">utf-8</span>
+        <span class="sb-item">astro</span>
+        <span class="sb-item">Ln 100%</span>
+      </div>
+    </div>
+  </div>
+
   <div class="footer-container">
     <div class="footer-top">
       <div class="footer-brand"><span class="brand-prompt">$</span> {brand}</div>
       <div class="footer-links">
-        <a href="/">Inicio</a>
-        <a href="/servicios">Servicios</a>
-        <a href="/sobre-mi">Sobre mí</a>
-        <a href="/blog">Blog</a>
-        <a href="/contacto">Contacto</a>
+        <a href="/"><span class="tab-idx">1:</span>Inicio</a>
+        <a href="/servicios"><span class="tab-idx">2:</span>Servicios</a>
+        <a href="/sobre-mi"><span class="tab-idx">3:</span>Sobre mí</a>
+        <a href="/blog"><span class="tab-idx">4:</span>Blog</a>
+        <a href="/contacto"><span class="tab-idx">5:</span>Contacto</a>
       </div>
     </div>
 
@@ -37,7 +53,71 @@ const footerJson = `{
   .footer {
     background: var(--crust);
     border-top: 1px solid rgba(var(--overlay0-rgb), 0.25);
-    padding: 56px 0 28px;
+    padding: 0 0 28px;
+  }
+
+  .terminal-statusbar {
+    background: var(--surface0);
+    border-bottom: 1px solid rgba(var(--overlay0-rgb), 0.2);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    font-weight: 600;
+    margin-bottom: 36px;
+  }
+
+  .statusbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .statusbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .sb-mode {
+    background: var(--mauve);
+    color: #000000;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+
+  :global(html[data-theme="latte"]) .sb-mode {
+    background: #8839ef;
+    color: #ffffff;
+  }
+
+  .sb-branch {
+    color: var(--peach);
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .branch-sym {
+    font-style: normal;
+  }
+
+  .sb-file {
+    color: var(--subtext1);
+  }
+
+  .statusbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--overlay1);
+    font-size: 0.72rem;
   }
 
   .footer-container {
@@ -70,23 +150,33 @@ const footerJson = `{
 
   .footer-links {
     display: flex;
-    gap: 20px;
+    gap: 12px;
     flex-wrap: wrap;
   }
 
   .footer-links a {
     color: var(--subtext0);
     text-decoration: none;
-    padding: 6px 0;
+    padding: 6px 10px;
     font-family: var(--font-mono);
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     display: inline-flex;
     align-items: center;
-    transition: color 0.2s ease;
+    gap: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+  }
+
+  .footer-links a .tab-idx {
+    color: var(--overlay1);
+    font-weight: 700;
   }
 
   .footer-links a:hover {
     color: var(--mauve);
+    background: rgba(var(--surface0-rgb), 0.5);
+    border-color: rgba(var(--overlay0-rgb), 0.2);
   }
 
   .footer-json {

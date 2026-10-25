@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import type { Service } from "../data/services";
 
 interface Props {
@@ -11,6 +12,7 @@ const { service } = Astro.props;
 <article class="service-card">
   <header class="service-header">
     <span class="service-file">// {service.slug}.ts</span>
+    {service.icon && <Icon name={service.icon} size={22} class="service-header-icon" />}
   </header>
 
   <h3 class="service-title">{service.title}</h3>
@@ -21,7 +23,7 @@ const { service } = Astro.props;
   </div>
 
   <a href={`/servicios/${service.slug}`} class="service-link">
-    <span class="link-prompt">&gt;</span> Ver servicio
+    <span class="link-prompt">&gt;</span> Ver servicio <Icon name="lucide:arrow-right" size={15} />
   </a>
 </article>
 
@@ -45,7 +47,15 @@ const { service } = Astro.props;
   }
 
   .service-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 12px;
+  }
+
+  .service-header-icon {
+    color: var(--teal);
+    flex-shrink: 0;
   }
 
   .service-file {

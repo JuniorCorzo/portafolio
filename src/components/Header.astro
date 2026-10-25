@@ -12,6 +12,20 @@ const isActive = (path: string) => {
 ---
 
 <header class="header">
+  <div class="header-titlebar">
+    <div class="titlebar-container">
+      <div class="titlebar-controls">
+        <span class="control-dot dot-close" aria-hidden="true"></span>
+        <span class="control-dot dot-minimize" aria-hidden="true"></span>
+        <span class="control-dot dot-maximize" aria-hidden="true"></span>
+        <span class="titlebar-session">angelcorzo.dev — tmux: portafolio</span>
+      </div>
+      <div class="titlebar-node">
+        <span class="node-indicator" aria-hidden="true">●</span> NODE: CLOUDFLARE EDGE
+      </div>
+    </div>
+  </div>
+
   <nav class="navbar">
     <div class="logo">
       <a href="/">
@@ -21,12 +35,22 @@ const isActive = (path: string) => {
       </a>
     </div>
 
-    <div class="nav-links" id="navLinks">
-      <a href="/" class:list={["nav-link", { active: isActive("/") }]}>Inicio</a>
-      <a href="/servicios" class:list={["nav-link", { active: isActive("/servicios") }]}>Servicios</a>
-      <a href="/sobre-mi" class:list={["nav-link", { active: isActive("/sobre-mi") }]}>Sobre mí</a>
-      <a href="/blog" class:list={["nav-link", { active: isActive("/blog") }]}>Blog</a>
-      <a href="/contacto" class:list={["nav-link", { active: isActive("/contacto") }]}>Contacto</a>
+    <div class="nav-links tmux-bar" id="navLinks">
+      <a href="/" class:list={["nav-link tmux-tab", { active: isActive("/") }]}>
+        <span class="tab-idx">1:</span>inicio.astro{isActive("/") ? "*" : ""}
+      </a>
+      <a href="/servicios" class:list={["nav-link tmux-tab", { active: isActive("/servicios") }]}>
+        <span class="tab-idx">2:</span>servicios.astro{isActive("/servicios") ? "*" : ""}
+      </a>
+      <a href="/sobre-mi" class:list={["nav-link tmux-tab", { active: isActive("/sobre-mi") }]}>
+        <span class="tab-idx">3:</span>sobre-mi.astro{isActive("/sobre-mi") ? "*" : ""}
+      </a>
+      <a href="/blog" class:list={["nav-link tmux-tab", { active: isActive("/blog") }]}>
+        <span class="tab-idx">4:</span>blog.astro{isActive("/blog") ? "*" : ""}
+      </a>
+      <a href="/contacto" class:list={["nav-link tmux-tab", { active: isActive("/contacto") }]}>
+        <span class="tab-idx">5:</span>contacto.sh{isActive("/contacto") ? "*" : ""}
+      </a>
 
       <div class="mobile-cv">
         <a href={DEVELOPER_CV} target="_blank" rel="noreferrer" class="cv">
@@ -63,8 +87,78 @@ const isActive = (path: string) => {
     top: 0;
     z-index: 100;
     background: rgba(var(--crust-rgb), 0.96);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(8px);
     border-bottom: 1px solid rgba(108, 112, 134, 0.2);
+  }
+
+  .header-titlebar {
+    background: var(--crust);
+    border-bottom: 1px solid rgba(var(--overlay0-rgb), 0.16);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--subtext0);
+  }
+
+  .titlebar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .titlebar-controls {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .control-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .dot-close {
+    background: var(--red);
+  }
+
+  .dot-minimize {
+    background: var(--yellow);
+  }
+
+  .dot-maximize {
+    background: var(--green);
+  }
+
+  .titlebar-session {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--subtext0);
+    margin-left: 6px;
+    letter-spacing: 0.02em;
+  }
+
+  .titlebar-node {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--green);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  .node-indicator {
+    color: var(--green);
+    animation: pulse-node 2s infinite ease-in-out;
+  }
+
+  @keyframes pulse-node {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
   }
 
   .navbar {
@@ -74,7 +168,7 @@ const isActive = (path: string) => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 70px;
+    height: 64px;
   }
 
   .logo {
@@ -126,40 +220,52 @@ const isActive = (path: string) => {
     color: var(--mauve);
   }
 
-  .nav-links {
+  .tmux-bar {
     display: flex;
-    gap: 32px;
+    gap: 8px;
     align-items: center;
   }
 
-  .nav-link {
+  .tmux-tab {
+    font-family: var(--font-mono);
+    font-size: 0.84rem;
+    padding: 6px 12px;
+    border-radius: 5px;
     color: var(--subtext1);
     text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    transition: all 0.3s ease-in-out;
-    position: relative;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid transparent;
   }
 
-  .nav-link::after {
-    content: "";
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--mauve);
-    transition: width 0.3s ease-in-out;
+  .tmux-tab .tab-idx {
+    color: var(--overlay1);
+    font-weight: 700;
   }
 
-  .nav-link:hover,
-  .nav-link.active {
+  .tmux-tab:hover {
     color: var(--text);
+    background: rgba(var(--surface0-rgb), 0.5);
+    border-color: rgba(var(--overlay0-rgb), 0.25);
   }
 
-  .nav-link:hover::after,
-  .nav-link.active::after {
-    width: 100%;
+  .tmux-tab.active {
+    color: var(--mauve);
+    background: rgba(var(--surface0-rgb), 0.8);
+    border-color: rgba(var(--mauve-rgb), 0.4);
+    font-weight: 700;
+  }
+
+  .tmux-tab.active .tab-idx {
+    color: var(--peach);
+  }
+
+  :global(html[data-theme="latte"]) .tmux-tab.active {
+    color: #8839ef;
+    background: #e6e9ef;
+    border-color: rgba(136, 57, 239, 0.4);
   }
 
   .cv {
@@ -238,6 +344,14 @@ const isActive = (path: string) => {
   }
 
   @media (max-width: 768px) {
+    .titlebar-node {
+      display: none;
+    }
+
+    .titlebar-container {
+      padding: 4px 16px;
+    }
+
     .navbar {
       padding: 0 20px;
       height: 60px;

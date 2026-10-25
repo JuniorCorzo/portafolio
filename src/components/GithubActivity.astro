@@ -220,6 +220,7 @@ const monthLabels = weeks.map((week) => {
     scrollbar-width: thin;
     scrollbar-color: var(--surface2) transparent;
     padding-bottom: 6px;
+    width: 100%;
   }
 
   .heatmap-scroll::-webkit-scrollbar {
@@ -232,14 +233,16 @@ const monthLabels = weeks.map((week) => {
   }
 
   .heatmap-container {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
-    min-width: max-content;
+    width: 100%;
+    min-width: 680px;
   }
 
   .months-row {
     display: flex;
     margin-bottom: 6px;
+    width: 100%;
   }
 
   .day-col-spacer {
@@ -249,8 +252,9 @@ const monthLabels = weeks.map((week) => {
 
   .months-track {
     display: grid;
-    grid-template-columns: repeat(52, 11px);
+    grid-template-columns: repeat(52, minmax(0, 1fr));
     gap: 3px;
+    width: 100%;
   }
 
   .month-col {
@@ -272,21 +276,26 @@ const monthLabels = weeks.map((week) => {
   .heatmap-content {
     display: flex;
     gap: 0;
+    width: 100%;
+    align-items: stretch;
   }
 
   .days-column {
     display: grid;
-    grid-template-rows: repeat(7, 11px);
+    grid-template-rows: repeat(7, minmax(0, 1fr));
     gap: 3px;
     width: 28px;
     flex-shrink: 0;
+    align-items: center;
   }
 
   .day-label {
     font-size: 0.68rem;
-    line-height: 11px;
+    line-height: 1;
     color: var(--overlay1);
     user-select: none;
+    display: flex;
+    align-items: center;
   }
 
   .day-label.spacer {
@@ -295,15 +304,17 @@ const monthLabels = weeks.map((week) => {
 
   .weeks-grid {
     display: grid;
-    grid-template-columns: repeat(52, 11px);
-    grid-template-rows: repeat(7, 11px);
+    grid-template-columns: repeat(52, minmax(0, 1fr));
+    grid-template-rows: repeat(7, minmax(0, 1fr));
     grid-auto-flow: column;
     gap: 3px;
+    width: 100%;
   }
 
   .day-square {
-    width: 11px;
-    height: 11px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
     border-radius: 2px;
     transition: transform 0.15s ease, outline 0.15s ease;
     box-sizing: border-box;
@@ -393,6 +404,9 @@ const monthLabels = weeks.map((week) => {
   }
 
   .legend-square {
+    width: 11px !important;
+    height: 11px !important;
+    aspect-ratio: auto !important;
     display: inline-block;
   }
 
