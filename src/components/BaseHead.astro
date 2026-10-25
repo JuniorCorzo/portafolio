@@ -66,6 +66,13 @@ const schemaData = {
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+<!-- Theme initialization (zero-FOUC) -->
+<script is:inline>
+  const savedTheme = localStorage.getItem('theme') || 'noir';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+</script>
+
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="generator" content={Astro.generator} />
 <meta name="theme-color" content="#1e1e2e" />

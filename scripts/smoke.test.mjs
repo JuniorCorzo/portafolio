@@ -148,6 +148,21 @@ check(
   }`
 );
 
+// 9. Theme Architecture: global.css exports Noir/Latte tokens and BaseHead has zero-FOUC script
+const globalCss = read("styles", "global.css");
+const baseHeadContent = read("components", "BaseHead.astro");
+check(
+  globalCss.includes("--color-noir-crust: #000000") &&
+    globalCss.includes('[data-theme="noir"]') &&
+    globalCss.includes('[data-theme="latte"]'),
+  "global.css defines Catppuccin Noir and Latte tokens (including --color-noir-crust: #000000)"
+);
+check(
+  baseHeadContent.includes("localStorage.getItem('theme') || 'noir'") &&
+    baseHeadContent.includes("document.documentElement.setAttribute('data-theme', savedTheme)"),
+  "BaseHead.astro contains zero-FOUC inline theme script defaulting to noir"
+);
+
 console.log("\n--------------------------");
 if (failed === 0) {
   console.log(`All ${passed} smoke tests passed.`);
