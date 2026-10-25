@@ -250,6 +250,85 @@ check(
   "index.astro embeds GithubActivity component"
 );
 
+// 14. Baseline Copy & Headings Preservation Checksum
+const heroData = read("data", "hero.ts");
+const heroComponent = read("components", "Hero.astro");
+const trustComponent = read("components", "TrustSignals.astro");
+const servicesData = read("data", "services.ts");
+const servicesTeaser = read("components", "ServicesTeaser.astro");
+const projectsComponent = read("components", "Projects.astro");
+const footerComponent = read("components", "Footer.astro");
+
+// 14.1 Hero H1 headline and copy preservation
+check(
+  heroData.includes('HERO_HEADLINE_1 = "Tu proyecto, de la"') &&
+    heroData.includes('HERO_HEADLINE_2 = "idea al deploy"') &&
+    heroData.includes("Tecnólogo en Análisis y Desarrollo de Software") &&
+    heroComponent.includes("HERO_HEADLINE_1") &&
+    heroComponent.includes("HERO_HEADLINE_2") &&
+    heroComponent.includes("Hola, soy {DEVELOPER_NAME}") &&
+    heroComponent.includes("HERO_DESCRIPTION") &&
+    heroComponent.includes("💬 Hablemos por WhatsApp") &&
+    heroComponent.includes("Ver servicios →"),
+  "Hero copy preserved: H1 headlines, subtitle, description, and primary/secondary CTAs"
+);
+
+// 14.2 Trust signals metrics & credentials preservation
+check(
+  trustData.includes('"3+"') &&
+    trustData.includes('"Años de experiencia"') &&
+    trustData.includes('"4+"') &&
+    trustData.includes('"Proyectos públicos"') &&
+    trustData.includes('"100%"') &&
+    trustData.includes('"Compromiso con la calidad"') &&
+    trustData.includes('"24h"') &&
+    trustData.includes('"Tiempo de respuesta"') &&
+    trustComponent.includes("metric.value") &&
+    trustComponent.includes("metric.label"),
+  "TrustSignals metrics copy preserved: exact metric values and labels match baseline"
+);
+
+// 14.3 Services H2 and service cards preservation
+check(
+  servicesTeaser.includes("ls servicios/") &&
+    servicesTeaser.includes("// soluciones que ofrezco") &&
+    servicesData.includes("Desarrollo Full Stack en Colombia") &&
+    servicesData.includes("Desarrollo Backend y APIs en Colombia") &&
+    servicesData.includes("Consultoría de Software y Arquitectura") &&
+    servicesData.includes("Desarrollo de Agentes de IA en Colombia"),
+  "ServicesTeaser copy preserved: H2 command heading, subtitle, and all 4 service titles"
+);
+
+// 14.4 Projects H2 and case study cards preservation
+check(
+  projectsComponent.includes("ls proyectos/destacados/") &&
+    projectsComponent.includes("// casos de éxito recientes") &&
+    projectsComponent.includes("GitHub") &&
+    projectsComponent.includes("Caso de Estudio"),
+  "Projects copy preserved: H2 command heading, subtitle, and project card CTAs"
+);
+
+// 14.5 Index CTA section copy preservation
+check(
+  indexContent.includes("¿listo para tu próximo proyecto?") &&
+    indexContent.includes("Agendemos una llamada de 15 minutos para hablar sobre tu idea. Sin compromiso.") &&
+    indexContent.includes("💬 Hablemos por WhatsApp") &&
+    indexContent.includes("Ver más opciones de contacto →"),
+  "Index CTA section preserved: H2 heading, pitch paragraph, and WhatsApp/Secondary CTAs"
+);
+
+// 14.6 Footer navigation and copyright copy preservation
+check(
+  footerComponent.includes("Inicio") &&
+    footerComponent.includes("Servicios") &&
+    footerComponent.includes("Sobre mí") &&
+    footerComponent.includes("Blog") &&
+    footerComponent.includes("Contacto") &&
+    footerComponent.includes("footer.json") &&
+    footerComponent.includes("Hecho con café y código."),
+  "Footer copy preserved: navigation links, footer.json buffer, and copyright notice"
+);
+
 console.log("\n--------------------------");
 if (failed === 0) {
   console.log(`All ${passed} smoke tests passed.`);

@@ -22,7 +22,7 @@ import ServiceCard from "./ServiceCard.astro";
   .services-section {
     padding: 80px 24px;
     background: var(--crust);
-    border-top: 1px solid var(--overlay0);
+    border-top: 1px solid rgba(var(--overlay0-rgb), 0.25);
   }
 
   .services-container {
@@ -32,25 +32,26 @@ import ServiceCard from "./ServiceCard.astro";
 
   .services-header {
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 56px;
   }
 
   .section-title {
     color: var(--text);
     font-size: 2.5rem;
-    font-weight: 700;
-    margin: 0 0 8px 0;
+    font-weight: 800;
+    margin: 0 0 10px 0;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
+    letter-spacing: -0.02em;
   }
 
   .terminal-prefix {
     font-family: var(--font-mono);
-    color: var(--overlay1);
+    color: var(--mauve);
     font-size: 2.2rem;
-    font-weight: 400;
+    font-weight: 700;
     user-select: none;
   }
 
@@ -65,6 +66,62 @@ import ServiceCard from "./ServiceCard.astro";
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 24px;
+  }
+
+  :global(.service-card) {
+    background: var(--surface0) !important;
+    border: 1px solid rgba(var(--overlay0-rgb), 0.3) !important;
+    border-radius: 8px !important;
+    padding: 1.5rem !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transition: all 0.25s ease-in-out !important;
+  }
+
+  :global(.service-card:hover) {
+    background: var(--surface1) !important;
+    transform: translateY(-3px) !important;
+    border-color: var(--mauve) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 20px rgba(var(--mauve-rgb), 0.15) !important;
+  }
+
+  :global(.service-file) {
+    color: var(--subtext1) !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.8rem !important;
+  }
+
+  :global(.service-title) {
+    color: var(--text) !important;
+    font-weight: 700 !important;
+  }
+
+  :global(.service-description) {
+    color: var(--subtext0) !important;
+    line-height: 1.6 !important;
+  }
+
+  :global(.tech-chip) {
+    background: rgba(var(--sky-rgb), 0.08) !important;
+    color: var(--sky) !important;
+    border: 1px solid rgba(var(--sky-rgb), 0.35) !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+  }
+
+  :global(.service-link) {
+    color: var(--mauve) !important;
+    font-family: var(--font-mono) !important;
+    font-weight: 700 !important;
+  }
+
+  :global(.service-link:hover) {
+    color: var(--sky) !important;
+  }
+
+  :global(.link-prompt) {
+    color: var(--green) !important;
+    font-weight: 700 !important;
   }
 
   @media (max-width: 1024px) {
@@ -83,15 +140,15 @@ import ServiceCard from "./ServiceCard.astro";
 
   @media (max-width: 640px) {
     .services-section {
-      padding: 40px 24px;
+      padding: 40px 20px;
     }
 
     .section-title {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
     }
 
     .terminal-prefix {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
     }
 
     .services-grid {

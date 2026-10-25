@@ -14,7 +14,7 @@ const footerJson = `{
 <footer class="footer">
   <div class="footer-container">
     <div class="footer-top">
-      <div class="footer-brand">$ {brand}</div>
+      <div class="footer-brand"><span class="brand-prompt">$</span> {brand}</div>
       <div class="footer-links">
         <a href="/">Inicio</a>
         <a href="/servicios">Servicios</a>
@@ -36,7 +36,8 @@ const footerJson = `{
 <style>
   .footer {
     background: var(--crust);
-    padding: 48px 0 24px;
+    border-top: 1px solid rgba(var(--overlay0-rgb), 0.25);
+    padding: 56px 0 28px;
   }
 
   .footer-container {
@@ -57,9 +58,14 @@ const footerJson = `{
 
   .footer-brand {
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.05rem;
     color: var(--text);
     font-family: var(--font-mono);
+  }
+
+  .brand-prompt {
+    color: var(--mauve);
+    font-weight: 700;
   }
 
   .footer-links {
@@ -71,13 +77,16 @@ const footerJson = `{
   .footer-links a {
     color: var(--subtext0);
     text-decoration: none;
-    padding: 8px 0;
+    padding: 6px 0;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
     display: inline-flex;
     align-items: center;
+    transition: color 0.2s ease;
   }
 
   .footer-links a:hover {
-    color: var(--sky);
+    color: var(--mauve);
   }
 
   .footer-json {
@@ -93,7 +102,9 @@ const footerJson = `{
     background: var(--surface0);
     border: 1px solid rgba(var(--overlay0-rgb), 0.3);
     border-radius: 8px;
-    padding: 16px;
+    padding: 18px;
+    color: var(--text);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
   }
 
   .footer-json code {
@@ -101,7 +112,9 @@ const footerJson = `{
   }
 
   .key {
-    color: var(--subtext0);
+    color: var(--subtext1);
+    display: block;
+    margin-bottom: 8px;
   }
 
   .str {
@@ -109,12 +122,13 @@ const footerJson = `{
   }
 
   .footer-bottom {
-    margin-top: 24px;
-    padding-top: 16px;
-    border-top: 1px solid rgba(var(--overlay0-rgb), 0.2);
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(var(--overlay0-rgb), 0.25);
     text-align: center;
-    color: var(--subtext0);
+    color: var(--subtext1);
     font-size: 0.85rem;
+    font-family: var(--font-mono);
   }
 
   @media (max-width: 640px) {
