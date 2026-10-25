@@ -1,8 +1,11 @@
 import { readFileSync, existsSync, readdirSync } from "fs";
-import { resolve } from "path";
+import { resolve, join, extname } from "path";
+import { execSync } from "child_process";
 import { getGithubActivity } from "../src/lib/github.ts";
 
-const SRC = resolve(import.meta.dirname, "../src");
+const ROOT = resolve(import.meta.dirname, "..");
+const SRC = resolve(ROOT, "src");
+const DIST = resolve(ROOT, "dist");
 
 function read(...segments) {
   return readFileSync(resolve(SRC, ...segments), "utf-8");
@@ -368,6 +371,316 @@ check(
 check(
   baseHead.includes('href="/favicon.svg"') && baseHead.includes('/images/og.png'),
   "BaseHead.astro references /favicon.svg and /images/og.png"
+);
+
+// 16. WCAG 2.2 Contrast Ratio Compliance (Catppuccin Noir & Latte palettes)
+function getRelativeLuminance(hex) {
+  const rgb = hex.replace("#", "").match(/.{2}/g).map((x) => parseInt(x, 16) / 255);
+  const [r, g, b] = rgb.map((c) => (c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+function getContrastRatio(hex1, hex2) {
+  const l1 = getRelativeLuminance(hex1);
+  const l2 = getRelativeLuminance(hex2);
+  const lighter = Math.max(l1, l2);
+  const darker = Math.min(l1, l2);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+// Catppuccin Noir OLED checks
+const noirCrust = "#000000";
+const noirSurface0 = "#181826";
+const noirText = "#e0e2ea";
+const noirSubtext0 = "#a6adc8";
+const noirMauve = "#cba6f7";
+const noirSky = "#89dceb";
+const noirGreen = "#a6e3a1";
+
+const noirTextCrustRatio = getContrastRatio(noirText, noirCrust);
+const noirTextSurfaceRatio = getContrastRatio(noirText, noirSurface0);
+const noirSubtextCrustRatio = getContrastRatio(noirSubtext0, noirCrust);
+const noirSubtextSurfaceRatio = getContrastRatio(noirSubtext0, noirSurface0);
+const noirMauveCrustRatio = getContrastRatio(noirMauve, noirCrust);
+const noirSkyCrustRatio = getContrastRatio(noirSky, noirCrust);
+const noirGreenCrustRatio = getContrastRatio(noirGreen, noirCrust);
+
+check(
+  noirTextCrustRatio >= 7.0 && noirTextSurfaceRatio >= 7.0,
+  `Catppuccin Noir text satisfies WCAG AAA (>= 7.0:1): ${noirTextCrustRatio.toFixed(2)}:1 on OLED crust, ${noirTextSurfaceRatio.toFixed(2)}:1 on surface0`
+);
+
+check(
+  noirSubtextCrustRatio >= 4.5 && noirSubtextSurfaceRatio >= 4.5,
+  `Catppuccin Noir subtext satisfies WCAG AA (>= 4.5:1): ${noirSubtextCrustRatio.toFixed(2)}:1 on OLED crust, ${noirSubtextSurfaceRatio.toFixed(2)}:1 on surface0`
+);
+
+check(
+  noirMauveCrustRatio >= 4.5 && noirSkyCrustRatio >= 4.5 && noirGreenCrustRatio >= 4.5,
+  `Catppuccin Noir accents satisfy WCAG AA on pitch black: Mauve ${noirMauveCrustRatio.toFixed(2)}:1, Sky ${noirSkyCrustRatio.toFixed(2)}:1, Green ${noirGreenCrustRatio.toFixed(2)}:1`
+);
+
+// Catppuccin Latte checks
+const latteBase = "#eff1f5";
+const latteText = "#4c4f69";
+const latteMauve = "#8839ef";
+const latteBlue = "#1e66f5";
+
+const latteTextRatio = getContrastRatio(latteText, latteBase);
+const latteMauveRatio = getContrastRatio(latteMauve, latteBase);
+const latteBlueRatio = getContrastRatio(latteBlue, latteBase);
+
+check(
+  latteTextRatio >= 7.0,
+  `Catppuccin Latte text satisfies WCAG AAA (>= 7.0:1): ${latteTextRatio.toFixed(2)}:1 on base (#eff1f5)`
+);
+
+check(
+  latteMauveRatio >= 4.5 && latteBlueRatio >= 3.0,
+  `Catppuccin Latte accents satisfy WCAG AA: Mauve ${latteMauveRatio.toFixed(2)}:1 (>= 4.5:1), Blue ${latteBlueRatio.toFixed(2)}:1 (>= 3.0:1)`
+);
+
+// 17. Build Artifacts & Sitemap Integrity
+if (!existsSync(resolve(DIST, "index.html"))) {
+  console.log("dist/ not found, building for comprehensive verification...");
+  execSync("npx astro build", { stdio: "inherit", cwd: ROOT });
+}
+
+const sitemapPath = resolve(DIST, "sitemap-0.xml");
+const sitemapExists = existsSync(sitemapPath);
+let sitemapUrls = [];
+if (sitemapExists) {
+  const sitemapXml = readFileSync(sitemapPath, "utf-8");
+  const locMatches = [...sitemapXml.matchAll(/<loc>(https:\/\/angelcorzo\.dev([^<]*))<\/loc>/g)];
+  sitemapUrls = locMatches.map((m) => m[2]);
+}
+
+const EXPECTED_ROUTES = [
+  "/",
+  "/blog/",
+  "/blog/arquitectura-mvp/",
+  "/blog/spring-boot-seguridad/",
+  "/contacto/",
+  "/servicios/",
+  "/servicios/agentes-ia/",
+  "/servicios/consultorias/",
+  "/servicios/desarrollo-backend/",
+  "/servicios/desarrollo-full-stack/",
+  "/sobre-mi/",
+  "/study-case/dayen/",
+  "/study-case/factus-dependency/",
+  "/study-case/instruments-manage/",
+  "/study-case/urban-style/",
+];
+
+const allExpectedRoutesInSitemap =
+  sitemapExists &&
+  sitemapUrls.length === EXPECTED_ROUTES.length &&
+  EXPECTED_ROUTES.every((r) => sitemapUrls.includes(r));
+
+check(
+  allExpectedRoutesInSitemap,
+  `sitemap-0.xml contains all ${EXPECTED_ROUTES.length} canonical routes without regression`
+);
+
+let allHtmlFilesExist = true;
+const missingHtmlFiles = [];
+for (const route of EXPECTED_ROUTES) {
+  const htmlPath = resolve(DIST, route === "/" ? "index.html" : join(route.replace(/^\//, ""), "index.html"));
+  if (!existsSync(htmlPath)) {
+    allHtmlFilesExist = false;
+    missingHtmlFiles.push(route);
+  }
+}
+
+check(
+  allHtmlFilesExist,
+  `All ${EXPECTED_ROUTES.length} routes have prerendered index.html in dist/${
+    missingHtmlFiles.length ? `: missing [${missingHtmlFiles.join(", ")}]` : ""
+  }`
+);
+
+// 18. Structured Data (Schema.org / JSON-LD) Integrity
+let allSchemasValid = true;
+const invalidSchemaRoutes = [];
+
+for (const route of EXPECTED_ROUTES) {
+  const htmlPath = resolve(DIST, route === "/" ? "index.html" : join(route.replace(/^\//, ""), "index.html"));
+  if (!existsSync(htmlPath)) continue;
+
+  const html = readFileSync(htmlPath, "utf-8");
+  const scriptMatches = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+  let parsedScripts = [];
+  try {
+    parsedScripts = scriptMatches.map((m) => JSON.parse(m[1]));
+  } catch (err) {
+    allSchemasValid = false;
+    invalidSchemaRoutes.push(`${route} (JSON parse error: ${err.message})`);
+    continue;
+  }
+
+  // Base graph check: Person and WebSite
+  const baseSchema = parsedScripts.find((s) => Array.isArray(s["@graph"]));
+  if (!baseSchema) {
+    allSchemasValid = false;
+    invalidSchemaRoutes.push(`${route} (missing @graph base schema)`);
+    continue;
+  }
+
+  const hasPerson = baseSchema["@graph"].some(
+    (n) => n["@type"] === "Person" && n.url === "https://angelcorzo.dev" && n.name === "Angel Corzo"
+  );
+  const hasWebSite = baseSchema["@graph"].some(
+    (n) => n["@type"] === "WebSite" && n.url === "https://angelcorzo.dev"
+  );
+
+  if (!hasPerson || !hasWebSite) {
+    allSchemasValid = false;
+    invalidSchemaRoutes.push(`${route} (incomplete Person/WebSite in @graph)`);
+    continue;
+  }
+
+  // Route-specific schemas
+  if (route === "/") {
+    const faq = parsedScripts.find((s) => s["@type"] === "FAQPage");
+    if (!faq || !Array.isArray(faq.mainEntity) || faq.mainEntity.length === 0) {
+      allSchemasValid = false;
+      invalidSchemaRoutes.push(`${route} (missing or empty FAQPage schema)`);
+    }
+  } else if (route.startsWith("/servicios/") && route !== "/servicios/") {
+    const service = parsedScripts.find((s) => s["@type"] === "Service");
+    if (!service || !service.name || !service.provider) {
+      allSchemasValid = false;
+      invalidSchemaRoutes.push(`${route} (missing or invalid Service schema)`);
+    }
+  } else if (route.startsWith("/study-case/")) {
+    const techArticle = parsedScripts.find((s) => s["@type"] === "TechArticle");
+    if (!techArticle || !techArticle.headline || !techArticle.author) {
+      allSchemasValid = false;
+      invalidSchemaRoutes.push(`${route} (missing or invalid TechArticle schema)`);
+    }
+  }
+}
+
+check(
+  allSchemasValid,
+  `All routes have valid Schema.org JSON-LD (Person/WebSite base, FAQPage, Service, and TechArticle)${
+    invalidSchemaRoutes.length ? `: invalid [${invalidSchemaRoutes.join(", ")}]` : ""
+  }`
+);
+
+// 19. SEO Guardrails on Prerendered HTML Pages
+let seoGuardrailsPassed = true;
+const seoFailures = [];
+
+for (const route of EXPECTED_ROUTES) {
+  const htmlPath = resolve(DIST, route === "/" ? "index.html" : join(route.replace(/^\//, ""), "index.html"));
+  if (!existsSync(htmlPath)) continue;
+
+  const html = readFileSync(htmlPath, "utf-8");
+  const titleMatch = html.match(/<title>([^<]+)<\/title>/);
+  const descMatch =
+    html.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i) ||
+    html.match(/<meta\s+content=["']([^"']+)["']\s+name=["']description["']/i);
+  const canonicalMatch =
+    html.match(/<link\s+rel=["']canonical["']\s+href=["']([^"']+)["']/i) ||
+    html.match(/<link\s+href=["']([^"']+)["']\s+rel=["']canonical["']/i);
+  const ogTitle = html.includes('property="og:title"');
+  const ogDesc = html.includes('property="og:description"');
+  const ogImg = html.includes('property="og:image"');
+  const noindex = html.includes("noindex");
+
+  const expectedCanonical = `https://angelcorzo.dev${route}`;
+  if (!titleMatch || !titleMatch[1].trim()) {
+    seoGuardrailsPassed = false;
+    seoFailures.push(`${route} (missing <title>)`);
+  }
+  if (!descMatch || descMatch[1].length < 50 || descMatch[1].length > 200) {
+    seoGuardrailsPassed = false;
+    seoFailures.push(`${route} (description length ${descMatch ? descMatch[1].length : 0})`);
+  }
+  if (!canonicalMatch || canonicalMatch[1] !== expectedCanonical) {
+    seoGuardrailsPassed = false;
+    seoFailures.push(`${route} (canonical mismatch: ${canonicalMatch ? canonicalMatch[1] : "none"} vs ${expectedCanonical})`);
+  }
+  if (!ogTitle || !ogDesc || !ogImg) {
+    seoGuardrailsPassed = false;
+    seoFailures.push(`${route} (missing OG tags)`);
+  }
+  if (noindex) {
+    seoGuardrailsPassed = false;
+    seoFailures.push(`${route} (unexpected noindex found)`);
+  }
+}
+
+check(
+  seoGuardrailsPassed,
+  `Prerendered HTML pages pass SEO guardrails (title, valid description, exact canonical, OG meta, zero noindex)${
+    seoFailures.length ? `: failures [${seoFailures.join(", ")}]` : ""
+  }`
+);
+
+// 20. WCAG Accessibility on Build Outputs: Image Alt Attributes & Internal Link Integrity
+function getHtmlFiles(dir) {
+  let files = [];
+  for (const item of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, item.name);
+    if (item.isDirectory() && item.name !== "_worker.js") {
+      files.push(...getHtmlFiles(full));
+    } else if (item.isFile() && item.name.endsWith(".html")) {
+      files.push(full);
+    }
+  }
+  return files;
+}
+
+const htmlFiles = getHtmlFiles(DIST);
+let allImagesHaveAlt = true;
+const imagesMissingAlt = [];
+
+for (const file of htmlFiles) {
+  const html = readFileSync(file, "utf-8");
+  const imgTags = html.match(/<img[^>]+>/g) || [];
+  for (const img of imgTags) {
+    if (!/alt=["']/.test(img)) {
+      allImagesHaveAlt = false;
+      imagesMissingAlt.push(`${file}: ${img}`);
+    }
+  }
+}
+
+check(
+  allImagesHaveAlt,
+  `All <img> tags in prerendered HTML output contain alt attributes (WCAG 1.1)${
+    imagesMissingAlt.length ? `: missing [${imagesMissingAlt.join(", ")}]` : ""
+  }`
+);
+
+let internalLinksValid = true;
+const brokenLinks = [];
+for (const file of htmlFiles) {
+  const html = readFileSync(file, "utf-8");
+  const hrefs = [...html.matchAll(/href=["']([^"']+)["']/g)].map((m) => m[1]);
+  for (const href of hrefs) {
+    if (href.startsWith("/") && !href.startsWith("//") && !href.startsWith("/#")) {
+      const cleanHref = href.split("#")[0].split("?")[0];
+      let targetPath = join(DIST, cleanHref);
+      if (cleanHref.endsWith("/") || !extname(cleanHref)) {
+        targetPath = join(targetPath, "index.html");
+      }
+      if (!existsSync(targetPath)) {
+        internalLinksValid = false;
+        brokenLinks.push(`${file} -> ${href}`);
+      }
+    }
+  }
+}
+
+check(
+  internalLinksValid,
+  `All internal links across prerendered HTML resolve to valid static assets or pages (0 broken links)${
+    brokenLinks.length ? `: broken [${brokenLinks.join(", ")}]` : ""
+  }`
 );
 
 console.log("\n--------------------------");
