@@ -9,12 +9,16 @@ Test runner: npm test && npm run typecheck && npm run build
 - S3: Harden layout and responsiveness: guarantee touch targets >= 44px, verify overflow wrapping (`overflow-wrap: break-word`), secure external target rels, and ensure resilient Catppuccin Noir/Latte tokens across all screen widths.
 - S4: Purposeful motion and animations: add refined terminal micro-interactions (subtle status dot pulse, terminal prompt hover accent, smooth card transition curves) guarded strictly by `@media (prefers-reduced-motion: reduce)`.
 - S5: Full verification: run `impeccable detect`, smoke tests, Astro typecheck, and production build with zero errors.
+- S6: Header responsive layout fix: apply `white-space: nowrap` and `flex-shrink: 0` to `.tmux-tab` and `.cv`, tighten horizontal gaps and paddings, and adjust mobile menu breakpoint from 768px to 1024px to prevent horizontal overflow and text wrapping across tablets and laptops.
 
 ## Tasks
 - T1: [S1, S2] Route: delegated (writer). Migrate WhatsApp buttons to Lucide icon, resolve smoke test checks, and eliminate detector warning in global.css. Commit: 23f64f4.
 - T2: [S3, S4] Route: delegated (writer). Implement hardening (touch targets, overflow, accessibility) and purposeful animations with prefers-reduced-motion. Commit: 23f64f4.
 - T3: [S5] Route: inline. Run complete verification gate (tests, typecheck, build, and impeccable detect). Commit: 23f64f4.
+- T4: [S6] Route: delegated (writer). Fix header responsive layout, nowrap, and mobile breakpoint in Header.astro. Commit: bf993df.
 
 ## Log
 L1: 2026-10-25 User request: "/impeccable critique polish harden animete \n\ntambien cambia el logo del boton Hablemos por Whatsapp el icono de lucide \n\nlanza subagente para la implementacion"
 L2: 2026-10-25 Delegated writer executed T1 & T2. Migrated emoji to Lucide icon in Hero, Index, and Servicios; cleaned blockquote border-left to 1px (impeccable detect 0 warnings); hardened touch targets to >=44px and added overflow-wrap; added purposeful cubic-bezier transitions and terminal-blink with prefers-reduced-motion fallback. All 41 smoke tests pass, astro check 0 errors, full static build succeeds.
+L3: 2026-10-25 User approved header-breakage-report.md. Delegating T4 to writer subagent to fix Header.astro layout.
+L4: 2026-10-25 T4 executed and verified with agent-browser across 1280px, 1024px, and 800px viewports. Tab 3 height reduced from 57px to 35.5px, CV button height reduced from 71.2px to 45.6px, zero horizontal overflow across all viewports. All 42 smoke tests pass.

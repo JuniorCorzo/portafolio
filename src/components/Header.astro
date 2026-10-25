@@ -222,14 +222,14 @@ const isActive = (path: string) => {
 
   .tmux-bar {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     align-items: center;
   }
 
   .tmux-tab {
     font-family: var(--font-mono);
     font-size: 0.84rem;
-    padding: 6px 12px;
+    padding: 6px 10px;
     border-radius: 5px;
     color: var(--subtext1);
     text-decoration: none;
@@ -238,6 +238,8 @@ const isActive = (path: string) => {
     align-items: center;
     gap: 4px;
     border: 1px solid transparent;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .tmux-tab .tab-idx {
@@ -282,6 +284,8 @@ const isActive = (path: string) => {
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .cv:hover {
@@ -299,7 +303,8 @@ const isActive = (path: string) => {
   .desktop-actions {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
+    flex-shrink: 0;
   }
 
   .desktop-cv {
@@ -343,7 +348,7 @@ const isActive = (path: string) => {
     transform: translateY(-6px) rotate(-45deg);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .titlebar-node {
       display: none;
     }

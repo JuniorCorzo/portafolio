@@ -198,6 +198,13 @@ check(
     (headerContent.includes("&gt;_") || headerContent.includes(">_")),
   "Header.astro embeds ThemeToggle and contains terminal monogram logo mark (>_ AC / angelcorzo)"
 );
+check(
+  headerContent.includes("@media (max-width: 1024px)") &&
+    headerContent.includes("white-space: nowrap;") &&
+    headerContent.includes("flex-shrink: 0;") &&
+    headerContent.includes("gap: 6px;"),
+  "Header.astro implements responsive nowrap, flex-shrink, tightened gap (6px), and 1024px mobile breakpoint"
+);
 
 // 11. GitHub Activity: getGithubActivity() returns 52 weeks, totalContributions, streaks
 const activity = await getGithubActivity();
