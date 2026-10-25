@@ -237,8 +237,10 @@ check(
     githubActivityContent.includes("in the last year") &&
     githubActivityContent.includes("day streak") &&
     githubActivityContent.includes("Less") &&
-    githubActivityContent.includes("More"),
-  "GithubActivity.astro exists and renders CLI terminal with header, streaks, and legend"
+    githubActivityContent.includes("More") &&
+    !githubActivityContent.includes('tabindex="0"') &&
+    githubActivityContent.includes('role="img"'),
+  "GithubActivity.astro exists, renders CLI terminal with header, streaks, legend, and WCAG-accessible role='img' (no tab trap)"
 );
 
 // 13. index.astro embeds GithubActivity component under #trust

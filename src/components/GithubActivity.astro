@@ -83,7 +83,11 @@ const monthLabels = weeks.map((week) => {
             <span class="day-label spacer"></span>
           </div>
 
-          <div class="weeks-grid" role="grid" aria-label="Contribution heatmap">
+          <div
+            class="weeks-grid"
+            role="img"
+            aria-label={`Calendario de contribuciones de GitHub: ${totalContributions} contribuciones en el último año`}
+          >
             {
               weeks.map((week) =>
                 week.map((day) => (
@@ -93,9 +97,7 @@ const monthLabels = weeks.map((week) => {
                     data-date={day.date}
                     data-count={day.count}
                     title={`${day.date}: ${day.count} contribution${day.count === 1 ? "" : "s"}`}
-                    role="gridcell"
-                    tabindex="0"
-                    aria-label={`${day.date}: ${day.count} contributions`}
+                    aria-hidden="true"
                   />
                 ))
               )
