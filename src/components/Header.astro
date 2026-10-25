@@ -102,7 +102,7 @@ const isActive = (path: string) => {
   .titlebar-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 6px 24px;
+    padding: 6px 6px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -164,7 +164,7 @@ const isActive = (path: string) => {
   .navbar {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 6px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -229,7 +229,7 @@ const isActive = (path: string) => {
   .tmux-tab {
     font-family: var(--font-mono);
     font-size: 0.84rem;
-    padding: 6px 10px;
+    padding: 6px 8px;
     border-radius: 5px;
     color: var(--subtext1);
     text-decoration: none;
@@ -325,14 +325,19 @@ const isActive = (path: string) => {
     min-width: 44px;
     min-height: 44px;
     cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
   }
 
   .bar {
     display: block;
-    width: 22px;
+    width: 20px;
     height: 2px;
     background: var(--text);
-    margin: 4px 0;
+    border-radius: 2px;
+    margin: 0;
     transition: transform 0.25s ease, opacity 0.25s ease;
   }
 
@@ -368,12 +373,12 @@ const isActive = (path: string) => {
 
     .mobile-actions {
       display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .menu-toggle {
       display: inline-flex;
-      align-items: center;
-      justify-content: center;
     }
 
     .desktop-cv {
