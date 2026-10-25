@@ -155,16 +155,22 @@ check(
 // 9. Theme Architecture: global.css exports Noir/Latte tokens and BaseHead has zero-FOUC script
 const globalCss = read("styles", "global.css");
 const baseHeadContent = read("components", "BaseHead.astro");
+const serviciosIndexContent = read("pages", "servicios", "index.astro");
 check(
   globalCss.includes("--color-noir-crust: #000000") &&
     globalCss.includes('[data-theme="noir"]') &&
-    globalCss.includes('[data-theme="latte"]'),
-  "global.css defines Catppuccin Noir and Latte tokens (including --color-noir-crust: #000000)"
+    globalCss.includes('[data-theme="latte"]') &&
+    globalCss.includes("--color-text-secondary: var(--text-secondary);"),
+  "global.css defines Catppuccin Noir and Latte tokens (including --color-text-secondary and #000000)"
 );
 check(
-  baseHeadContent.includes("localStorage.getItem('theme') || 'noir'") &&
-    baseHeadContent.includes("document.documentElement.setAttribute('data-theme', savedTheme)"),
-  "BaseHead.astro contains zero-FOUC inline theme script defaulting to noir"
+  baseHeadContent.includes("try {") &&
+    baseHeadContent.includes("localStorage.getItem('theme') || 'noir'") &&
+    baseHeadContent.includes("document.documentElement.setAttribute('data-theme', savedTheme)") &&
+    baseHeadContent.includes("document.documentElement.setAttribute('data-theme', 'noir')") &&
+    baseHeadContent.includes('<meta name="theme-color" content="#000000" />') &&
+    serviciosIndexContent.includes('<meta name="theme-color" content="#000000" />'),
+  "BaseHead.astro and servicios/index.astro contain hardened try-catch theme initialization and #000000 theme-color"
 );
 
 // 10. Header & Theme Toggle: ThemeToggle component exists with accessible button & Header embeds it with monogram logo
@@ -179,8 +185,10 @@ check(
     themeToggleContent.includes('aria-label="Cambiar tema"') &&
     themeToggleContent.includes("<svg") &&
     (themeToggleContent.includes("sun") || themeToggleContent.includes("Sun")) &&
-    (themeToggleContent.includes("moon") || themeToggleContent.includes("Moon")),
-  "ThemeToggle.astro exists, renders accessible button with aria-label='Cambiar tema', and has sun/moon SVG icons"
+    (themeToggleContent.includes("moon") || themeToggleContent.includes("Moon")) &&
+    themeToggleContent.includes("try {") &&
+    themeToggleContent.includes('localStorage.setItem("theme"'),
+  "ThemeToggle.astro renders accessible button with sun/moon SVG icons and try-catch wrapped localStorage writes"
 );
 
 const headerContent = read("components", "Header.astro");

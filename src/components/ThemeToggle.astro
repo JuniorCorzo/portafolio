@@ -129,7 +129,11 @@
         const currentTheme = document.documentElement.getAttribute("data-theme") === "latte" ? "latte" : "noir";
         const nextTheme = currentTheme === "noir" ? "latte" : "noir";
         document.documentElement.setAttribute("data-theme", nextTheme);
-        localStorage.setItem("theme", nextTheme);
+        try {
+          localStorage.setItem("theme", nextTheme);
+        } catch {
+          // Ignore write failure in restricted browsing context
+        }
       });
     });
   }
