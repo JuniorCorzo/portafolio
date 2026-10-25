@@ -163,6 +163,30 @@ check(
   "BaseHead.astro contains zero-FOUC inline theme script defaulting to noir"
 );
 
+// 10. Header & Theme Toggle: ThemeToggle component exists with accessible button & Header embeds it with monogram logo
+const themeToggleExists = existsSync(resolve(SRC, "components", "ThemeToggle.astro"));
+let themeToggleContent = "";
+if (themeToggleExists) {
+  themeToggleContent = read("components", "ThemeToggle.astro");
+}
+check(
+  themeToggleExists &&
+    themeToggleContent.includes("<button") &&
+    themeToggleContent.includes('aria-label="Cambiar tema"') &&
+    themeToggleContent.includes("<svg") &&
+    (themeToggleContent.includes("sun") || themeToggleContent.includes("Sun")) &&
+    (themeToggleContent.includes("moon") || themeToggleContent.includes("Moon")),
+  "ThemeToggle.astro exists, renders accessible button with aria-label='Cambiar tema', and has sun/moon SVG icons"
+);
+
+const headerContent = read("components", "Header.astro");
+check(
+  headerContent.includes("<ThemeToggle") &&
+    headerContent.includes("monogram") &&
+    (headerContent.includes("&gt;_") || headerContent.includes(">_")),
+  "Header.astro embeds ThemeToggle and contains terminal monogram logo mark (>_ AC / angelcorzo)"
+);
+
 console.log("\n--------------------------");
 if (failed === 0) {
   console.log(`All ${passed} smoke tests passed.`);

@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import { DEVELOPER_CV } from "../consts";
+import ThemeToggle from "./ThemeToggle.astro";
 
 const currentPath = Astro.url.pathname.replace(/\/$/, "");
 const isActive = (path: string) => {
@@ -12,7 +13,13 @@ const isActive = (path: string) => {
 
 <header class="header">
   <nav class="navbar">
-    <div class="logo"><a href="/"><span>$</span> <span class="brand">angelcorzo</span></a></div>
+    <div class="logo">
+      <a href="/">
+        <span class="prompt">&gt;_</span>
+        <span class="monogram">AC</span>
+        <span class="brand">angelcorzo</span>
+      </a>
+    </div>
 
     <div class="nav-links" id="navLinks">
       <a href="/" class:list={["nav-link", { active: isActive("/") }]}>Inicio</a>
@@ -29,18 +36,24 @@ const isActive = (path: string) => {
       </div>
     </div>
 
-    <div class="desktop-cv">
-      <a href={DEVELOPER_CV} target="_blank" rel="noreferrer" class="cv">
-        <Icon name="lucide:download" size={20} />
-        Descargar CV
-      </a>
+    <div class="desktop-actions">
+      <ThemeToggle />
+      <div class="desktop-cv">
+        <a href={DEVELOPER_CV} target="_blank" rel="noreferrer" class="cv">
+          <Icon name="lucide:download" size={20} />
+          Descargar CV
+        </a>
+      </div>
     </div>
 
-    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-label="Abrir menú">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-    </button>
+    <div class="mobile-actions">
+      <ThemeToggle />
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-label="Abrir menú">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
   </nav>
 </header>
 
@@ -75,13 +88,41 @@ const isActive = (path: string) => {
     text-decoration: none;
     transition: color 0.3s ease-in-out;
     font-family: var(--font-mono);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
   }
 
   .logo a:hover {
     color: var(--mauve);
   }
 
+  .logo .prompt {
+    color: var(--mauve);
+    font-weight: 700;
+  }
+
+  .logo .monogram {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--mauve-rgb), 0.15);
+    color: var(--mauve);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    border: 1px solid rgba(var(--mauve-rgb), 0.3);
+  }
+
   .logo .brand {
+    color: var(--text);
+    font-weight: 700;
+    transition: color 0.3s ease-in-out;
+  }
+
+  .logo a:hover .brand {
     color: var(--mauve);
   }
 
@@ -149,8 +190,20 @@ const isActive = (path: string) => {
     display: none;
   }
 
+  .desktop-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
   .desktop-cv {
     display: inline-flex;
+  }
+
+  .mobile-actions {
+    display: none;
+    align-items: center;
+    gap: 8px;
   }
 
   .menu-toggle {
@@ -188,6 +241,14 @@ const isActive = (path: string) => {
     .navbar {
       padding: 0 20px;
       height: 60px;
+    }
+
+    .desktop-actions {
+      display: none;
+    }
+
+    .mobile-actions {
+      display: flex;
     }
 
     .menu-toggle {
