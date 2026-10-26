@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import { DEVELOPER_CV } from "../consts";
+import ThemeToggle from "./ThemeToggle.astro";
 
 const currentPath = Astro.url.pathname.replace(/\/$/, "");
 const isActive = (path: string) => {
@@ -11,15 +12,45 @@ const isActive = (path: string) => {
 ---
 
 <header class="header">
-  <nav class="navbar">
-    <div class="logo"><a href="/"><span>$</span> <span class="brand">angelcorzo</span></a></div>
+  <div class="header-titlebar">
+    <div class="titlebar-container">
+      <div class="titlebar-controls">
+        <span class="control-dot dot-close" aria-hidden="true"></span>
+        <span class="control-dot dot-minimize" aria-hidden="true"></span>
+        <span class="control-dot dot-maximize" aria-hidden="true"></span>
+        <span class="titlebar-session">angelcorzo.dev — tmux: portafolio</span>
+      </div>
+      <div class="titlebar-node">
+        <span class="node-indicator" aria-hidden="true">●</span> NODE: CLOUDFLARE EDGE
+      </div>
+    </div>
+  </div>
 
-    <div class="nav-links" id="navLinks">
-      <a href="/" class:list={["nav-link", { active: isActive("/") }]}>Inicio</a>
-      <a href="/servicios" class:list={["nav-link", { active: isActive("/servicios") }]}>Servicios</a>
-      <a href="/sobre-mi" class:list={["nav-link", { active: isActive("/sobre-mi") }]}>Sobre mí</a>
-      <a href="/blog" class:list={["nav-link", { active: isActive("/blog") }]}>Blog</a>
-      <a href="/contacto" class:list={["nav-link", { active: isActive("/contacto") }]}>Contacto</a>
+  <nav class="navbar">
+    <div class="logo">
+      <a href="/">
+        <span class="prompt">&gt;_</span>
+        <span class="monogram">AC</span>
+        <span class="brand">angelcorzo</span>
+      </a>
+    </div>
+
+    <div class="nav-links tmux-bar" id="navLinks">
+      <a href="/" class:list={["nav-link tmux-tab", { active: isActive("/") }]}>
+        <span class="tab-idx">1:</span>inicio.astro{isActive("/") ? "*" : ""}
+      </a>
+      <a href="/servicios" class:list={["nav-link tmux-tab", { active: isActive("/servicios") }]}>
+        <span class="tab-idx">2:</span>servicios.astro{isActive("/servicios") ? "*" : ""}
+      </a>
+      <a href="/sobre-mi" class:list={["nav-link tmux-tab", { active: isActive("/sobre-mi") }]}>
+        <span class="tab-idx">3:</span>sobre-mi.astro{isActive("/sobre-mi") ? "*" : ""}
+      </a>
+      <a href="/blog" class:list={["nav-link tmux-tab", { active: isActive("/blog") }]}>
+        <span class="tab-idx">4:</span>blog.astro{isActive("/blog") ? "*" : ""}
+      </a>
+      <a href="/contacto" class:list={["nav-link tmux-tab", { active: isActive("/contacto") }]}>
+        <span class="tab-idx">5:</span>contacto.sh{isActive("/contacto") ? "*" : ""}
+      </a>
 
       <div class="mobile-cv">
         <a href={DEVELOPER_CV} target="_blank" rel="noreferrer" class="cv">
@@ -29,18 +60,24 @@ const isActive = (path: string) => {
       </div>
     </div>
 
-    <div class="desktop-cv">
-      <a href={DEVELOPER_CV} target="_blank" rel="noreferrer" class="cv">
-        <Icon name="lucide:download" size={20} />
-        Descargar CV
-      </a>
+    <div class="desktop-actions">
+      <ThemeToggle />
+      <div class="desktop-cv">
+        <a href={DEVELOPER_CV} target="_blank" rel="noreferrer" class="cv">
+          <Icon name="lucide:download" size={20} />
+          Descargar CV
+        </a>
+      </div>
     </div>
 
-    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-label="Abrir menú">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-    </button>
+    <div class="mobile-actions">
+      <ThemeToggle />
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-label="Abrir menú">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
   </nav>
 </header>
 
@@ -50,18 +87,90 @@ const isActive = (path: string) => {
     top: 0;
     z-index: 100;
     background: rgba(var(--crust-rgb), 0.96);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(8px);
     border-bottom: 1px solid rgba(108, 112, 134, 0.2);
   }
 
-  .navbar {
-    max-width: 1200px;
+  .header-titlebar {
+    background: var(--crust);
+    border-bottom: 1px solid rgba(var(--overlay0-rgb), 0.16);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--subtext0);
+  }
+
+  .titlebar-container {
+    max-width: 1600px;
+    width: 100%;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 6px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .titlebar-controls {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .control-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .dot-close {
+    background: var(--red);
+  }
+
+  .dot-minimize {
+    background: var(--yellow);
+  }
+
+  .dot-maximize {
+    background: var(--green);
+  }
+
+  .titlebar-session {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--subtext0);
+    margin-left: 6px;
+    letter-spacing: 0.02em;
+  }
+
+  .titlebar-node {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--green);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  .node-indicator {
+    color: var(--green);
+    animation: pulse-node 2s infinite ease-in-out;
+  }
+
+  @keyframes pulse-node {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .navbar {
+    max-width: 1600px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 70px;
+    height: 64px;
   }
 
   .logo {
@@ -75,50 +184,92 @@ const isActive = (path: string) => {
     text-decoration: none;
     transition: color 0.3s ease-in-out;
     font-family: var(--font-mono);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
   }
 
   .logo a:hover {
     color: var(--mauve);
   }
 
+  .logo .prompt {
+    color: var(--mauve);
+    font-weight: 700;
+  }
+
+  .logo .monogram {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--mauve-rgb), 0.15);
+    color: var(--mauve);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    border: 1px solid rgba(var(--mauve-rgb), 0.3);
+  }
+
   .logo .brand {
+    color: var(--text);
+    font-weight: 700;
+    transition: color 0.3s ease-in-out;
+  }
+
+  .logo a:hover .brand {
     color: var(--mauve);
   }
 
-  .nav-links {
+  .tmux-bar {
     display: flex;
-    gap: 32px;
+    gap: 6px;
     align-items: center;
   }
 
-  .nav-link {
+  .tmux-tab {
+    font-family: var(--font-mono);
+    font-size: 0.84rem;
+    padding: 6px 8px;
+    border-radius: 5px;
     color: var(--subtext1);
     text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    transition: all 0.3s ease-in-out;
-    position: relative;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
-  .nav-link::after {
-    content: "";
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--mauve);
-    transition: width 0.3s ease-in-out;
+  .tmux-tab .tab-idx {
+    color: var(--overlay1);
+    font-weight: 700;
   }
 
-  .nav-link:hover,
-  .nav-link.active {
+  .tmux-tab:hover {
     color: var(--text);
+    background: rgba(var(--surface0-rgb), 0.5);
+    border-color: rgba(var(--overlay0-rgb), 0.25);
   }
 
-  .nav-link:hover::after,
-  .nav-link.active::after {
-    width: 100%;
+  .tmux-tab.active {
+    color: var(--mauve);
+    background: rgba(var(--surface0-rgb), 0.8);
+    border-color: rgba(var(--mauve-rgb), 0.4);
+    font-weight: 700;
+  }
+
+  .tmux-tab.active .tab-idx {
+    color: var(--peach);
+  }
+
+  :global(html[data-theme="latte"]) .tmux-tab.active {
+    color: #8839ef;
+    background: #e6e9ef;
+    border-color: rgba(136, 57, 239, 0.4);
   }
 
   .cv {
@@ -135,6 +286,8 @@ const isActive = (path: string) => {
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .cv:hover {
@@ -149,8 +302,21 @@ const isActive = (path: string) => {
     display: none;
   }
 
+  .desktop-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
   .desktop-cv {
     display: inline-flex;
+  }
+
+  .mobile-actions {
+    display: none;
+    align-items: center;
+    gap: 8px;
   }
 
   .menu-toggle {
@@ -161,14 +327,19 @@ const isActive = (path: string) => {
     min-width: 44px;
     min-height: 44px;
     cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
   }
 
   .bar {
     display: block;
-    width: 22px;
+    width: 20px;
     height: 2px;
     background: var(--text);
-    margin: 4px 0;
+    border-radius: 2px;
+    margin: 0;
     transition: transform 0.25s ease, opacity 0.25s ease;
   }
 
@@ -184,16 +355,36 @@ const isActive = (path: string) => {
     transform: translateY(-6px) rotate(-45deg);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
+    .titlebar-node {
+      display: none;
+    }
+
+    .titlebar-container {
+      padding: 4px 16px;
+    }
+
     .navbar {
       padding: 0 20px;
       height: 60px;
     }
 
+    .desktop-actions {
+      display: none;
+    }
+
+    .mobile-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
     .menu-toggle {
       display: inline-flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 4px;
     }
 
     .desktop-cv {

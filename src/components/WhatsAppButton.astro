@@ -31,8 +31,15 @@ const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(messag
         <Icon name="lucide:message-circle" size={28} />
       </a>
     ) : (
-      <a href={waUrl} target="_blank" rel="noopener noreferrer" class="whatsapp-inline">
-        <Icon name="lucide:message-circle" size={20} />
+      <a
+        href={waUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="whatsapp-inline"
+        aria-label={text}
+        title={text}
+      >
+        <Icon name="lucide:message-circle" size={20} class="whatsapp-icon" />
         {text}
       </a>
     )
@@ -42,11 +49,13 @@ const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(messag
 <style>
   .whatsapp-float {
     position: fixed;
-    bottom: 24px;
+    bottom: calc(24px + 36px);
     right: 24px;
     z-index: 90;
     width: 60px;
     height: 60px;
+    min-width: 44px;
+    min-height: 44px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -57,7 +66,7 @@ const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(messag
     font-size: 0.95rem;
     text-decoration: none;
     box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
-    transition: all 0.3s ease-in-out;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
     border: none;
   }
 
@@ -71,16 +80,18 @@ const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(messag
   .whatsapp-inline {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     background: transparent;
     color: var(--green);
     border: 2px solid var(--green);
     padding: 10px 32px;
+    min-height: 44px;
     border-radius: 6px;
     font-weight: 600;
     font-size: 1rem;
     text-decoration: none;
-    transition: all 0.3s ease-in-out;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, color 0.2s ease;
   }
 
   .whatsapp-inline:hover {
@@ -90,9 +101,13 @@ const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(messag
     transform: translateY(-2px);
   }
 
+  .whatsapp-icon {
+    flex-shrink: 0;
+  }
+
   @media (max-width: 640px) {
     .whatsapp-float {
-      bottom: 16px;
+      bottom: calc(16px + 36px);
       right: 16px;
       width: 56px;
       height: 56px;

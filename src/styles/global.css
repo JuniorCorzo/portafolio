@@ -1,111 +1,138 @@
-/* Catppuccin Mocha Theme — Terminal Aesthetic Portfolio */
+/* Catppuccin Noir (OLED pitch black) & Catppuccin Latte Themes */
 @import "tailwindcss";
 
 @theme {
-  --color-crust: #11111b;
-  --color-mantle: #181825;
-  --color-base: #1e1e2e;
-  --color-surface-0: #313244;
-  --color-surface-1: #45475a;
-  --color-surface-2: #585b70;
-  --color-overlay-0: #6c7086;
-  --color-overlay-1: #7f849c;
-  --color-overlay-2: #898e9f;
-  --color-text: #cdd6f4;
-  --color-subtext-0: #a6adc8;
-  --color-subtext-1: #bac2de;
-  --color-mauve: #cba6f7;
-  --color-mauve-dark: #b48def;
-  --color-sky: #89dceb;
-  --color-sapphire: #74c7ec;
-  --color-green: #a6e3a1;
-  --color-green-dark: #8fd889;
-  --color-peach: #fab387;
-  --color-peach-dark: #f5a170;
-  --color-blue: #89b4fa;
-  --color-blue-dark: #739ff5;
-  --color-teal: #94e2d5;
-  --color-red: #f38ba8;
-  --color-yellow: #f9e2af;
-  --color-pink: #f5c2e7;
-  --color-lavender: #b4befe;
-  --color-rosewater: #f5e0dc;
-  --color-flamingo: #f2cdcd;
-  --color-maroon: #eba0ac;
+  --color-crust: var(--crust);
+  --color-mantle: var(--mantle);
+  --color-base: var(--base);
+  --color-surface-0: var(--surface0);
+  --color-surface-1: var(--surface1);
+  --color-surface-2: var(--surface2);
+  --color-overlay-0: var(--overlay0);
+  --color-overlay-1: var(--overlay1);
+  --color-overlay-2: var(--overlay2);
+  --color-text: var(--text);
+  --color-subtext-0: var(--subtext0);
+  --color-subtext-1: var(--subtext1);
+  --color-mauve: var(--mauve);
+  --color-mauve-dark: var(--mauve-dark);
+  --color-sky: var(--sky);
+  --color-sapphire: var(--sapphire);
+  --color-green: var(--green);
+  --color-green-dark: var(--green-dark);
+  --color-peach: var(--peach);
+  --color-peach-dark: var(--peach-dark);
+  --color-blue: var(--blue);
+  --color-blue-dark: var(--blue-dark);
+  --color-teal: var(--teal);
+  --color-red: var(--red);
+  --color-yellow: var(--yellow);
+  --color-pink: var(--pink);
+  --color-lavender: var(--lavender);
+  --color-rosewater: var(--rosewater);
+  --color-flamingo: var(--flamingo);
+  --color-maroon: var(--maroon);
+
+  /* Specific palette static tokens */
+  --color-noir-crust: #000000;
+  --color-noir-mantle: #08080c;
+  --color-noir-base: #0f0f17;
+
+  --color-latte-crust: #dce0e8;
+  --color-latte-mantle: #e6e9ef;
+  --color-latte-base: #eff1f5;
+
+  /* Semantic utilities */
+  --color-bg-canvas: var(--bg-canvas);
+  --color-bg-surface: var(--bg-surface);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border-subtle: var(--border-subtle);
+  --color-accent-primary: var(--accent-primary);
+
   --font-atkinson: "Atkinson Hyperlegible", system-ui, sans-serif;
   --font-body: "Atkinson Hyperlegible", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
 }
 
-:root {
+:root,
+html[data-theme="noir"] {
   --background: var(--base);
   --font-body: var(--font-atkinson);
 
-  /* Base Layer (Backgrounds) */
-  --crust-rgb: 17, 17, 27;
-  --crust: rgb(var(--crust-rgb));
-  --mantle-rgb: 24, 24, 37;
-  --mantle: rgb(var(--mantle-rgb));
-  --base-rgb: 30, 30, 46;
-  --base: rgb(var(--base-rgb));
+  /* Semantic Tokens */
+  --bg-canvas: var(--crust);
+  --bg-surface: var(--surface0);
+  --text-primary: var(--text);
+  --text-secondary: var(--subtext0);
+  --border-subtle: var(--overlay0);
+  --accent-primary: var(--mauve);
+
+  /* Base Layer (Backgrounds) - Catppuccin Noir OLED */
+  --crust-rgb: 0, 0, 0;
+  --crust: #000000;
+  --mantle-rgb: 8, 8, 12;
+  --mantle: #08080c;
+  --base-rgb: 15, 15, 23;
+  --base: #0f0f17;
 
   /* Surface Layer */
-  --surface0-rgb: 49, 50, 68;
-  --surface0: rgb(var(--surface0-rgb));
-  --surface1-rgb: 69, 71, 90;
-  --surface1: rgb(var(--surface1-rgb));
-  --surface2-rgb: 88, 91, 112;
-  --surface2: rgb(var(--surface2-rgb));
+  --surface0-rgb: 24, 24, 38;
+  --surface0: #181826;
+  --surface1-rgb: 38, 38, 56;
+  --surface1: #262638;
+  --surface2-rgb: 52, 52, 77;
+  --surface2: #34344d;
 
   /* Overlay Layer */
-  --overlay0-rgb: 108, 112, 134;
-  --overlay0: rgb(var(--overlay0-rgb));
-  --overlay1-rgb: 127, 132, 156;
-  --overlay1: rgb(var(--overlay1-rgb));
-  --overlay2-rgb: 137, 142, 159;
-  --overlay2: rgb(var(--overlay2-rgb));
+  --overlay0-rgb: 86, 86, 110;
+  --overlay0: #56566e;
+  --overlay1-rgb: 110, 110, 140;
+  --overlay1: #6e6e8c;
+  --overlay2-rgb: 134, 134, 170;
+  --overlay2: #8686aa;
 
-  /* Text */
-  --text-rgb: 205, 214, 244;
-  --text: rgb(var(--text-rgb));
+  /* Text Layer */
+  --text-rgb: 224, 226, 234;
+  --text: #e0e2ea;
   --subtext0-rgb: 166, 173, 200;
-  --subtext0: rgb(var(--subtext0-rgb));
+  --subtext0: #a6adc8;
   --subtext1-rgb: 186, 194, 222;
-  --subtext1: rgb(var(--subtext1-rgb));
+  --subtext1: #bac2de;
 
-  /* Accent Colors (Semantic) */
+  /* Accent Colors (Semantic & High Contrast) */
   --rosewater-rgb: 245, 224, 220;
-  --rosewater: rgb(var(--rosewater-rgb));
+  --rosewater: #f5e0dc;
   --flamingo-rgb: 242, 205, 205;
-  --flamingo: rgb(var(--flamingo-rgb));
+  --flamingo: #f2cdcd;
   --pink-rgb: 245, 194, 231;
-  --pink: rgb(var(--pink-rgb));
+  --pink: #f5c2e7;
   --mauve-rgb: 203, 166, 247;
-  --mauve: rgb(var(--mauve-rgb));
+  --mauve: #cba6f7;
   --mauve-dark: #b48def;
   --red-rgb: 243, 139, 168;
-  --red: rgb(var(--red-rgb));
+  --red: #f38ba8;
   --maroon-rgb: 235, 160, 172;
-  --maroon: rgb(var(--maroon-rgb));
+  --maroon: #eba0ac;
   --peach-rgb: 250, 179, 135;
-  --peach: rgb(var(--peach-rgb));
+  --peach: #fab387;
   --peach-dark: #f5a170;
   --yellow-rgb: 249, 226, 175;
-  --yellow: rgb(var(--yellow-rgb));
+  --yellow: #f9e2af;
   --green-rgb: 166, 227, 161;
-  --green: rgb(var(--green-rgb));
+  --green: #a6e3a1;
   --green-dark: #8fd889;
   --teal-rgb: 148, 226, 213;
-  --teal: rgb(var(--teal-rgb));
+  --teal: #94e2d5;
   --sky-rgb: 137, 220, 235;
-  --sky: rgb(var(--sky-rgb));
+  --sky: #89dceb;
   --sapphire-rgb: 116, 199, 236;
-  --sapphire: rgb(var(--sapphire-rgb));
+  --sapphire: #74c7ec;
   --blue-rgb: 137, 180, 250;
-  --blue: rgb(var(--blue-rgb));
+  --blue: #89b4fa;
   --blue-dark: #739ff5;
   --lavender-rgb: 180, 190, 254;
-  --lavender: rgb(var(--lavender-rgb));
+  --lavender: #b4befe;
 
   /* Legacy aliases for backward compatibility during transition */
   --accent-rgb: var(--mauve-rgb);
@@ -115,20 +142,122 @@
   --subtext: var(--subtext0);
 
   /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.8);
   --shadow-glow-mauve: 0 0 20px rgba(203, 166, 247, 0.15);
   --shadow-glow-sky: 0 0 20px rgba(137, 220, 235, 0.15);
 
   /* Legacy */
-  --black: 30, 30, 46;
+  --black: 15, 15, 23;
   --gray: 166, 173, 200;
-  --gray-light: 69, 71, 90;
-  --gray-dark: 49, 50, 68;
+  --gray-light: 38, 38, 56;
+  --gray-dark: 24, 24, 38;
   --box-shadow:
-    0 2px 6px rgba(49, 50, 68, 25%), 0 8px 24px rgba(49, 50, 68, 33%),
-    0 16px 32px rgba(49, 50, 68, 33%);
+    0 2px 6px rgba(0, 0, 0, 35%), 0 8px 24px rgba(0, 0, 0, 50%),
+    0 16px 32px rgba(0, 0, 0, 60%);
+}
+
+html[data-theme="latte"] {
+  --background: var(--base);
+  --font-body: var(--font-atkinson);
+
+  /* Semantic Tokens */
+  --bg-canvas: var(--crust);
+  --bg-surface: var(--surface0);
+  --text-primary: var(--text);
+  --text-secondary: var(--subtext0);
+  --border-subtle: var(--overlay0);
+  --accent-primary: var(--mauve);
+
+  /* Base Layer (Backgrounds) - Catppuccin Latte */
+  --crust-rgb: 220, 224, 232;
+  --crust: #dce0e8;
+  --mantle-rgb: 230, 233, 239;
+  --mantle: #e6e9ef;
+  --base-rgb: 239, 241, 245;
+  --base: #eff1f5;
+
+  /* Surface Layer */
+  --surface0-rgb: 204, 208, 218;
+  --surface0: #ccd0da;
+  --surface1-rgb: 188, 192, 204;
+  --surface1: #bcc0cc;
+  --surface2-rgb: 172, 176, 190;
+  --surface2: #acb0be;
+
+  /* Overlay Layer */
+  --overlay0-rgb: 156, 160, 176;
+  --overlay0: #9ca0b0;
+  --overlay1-rgb: 140, 143, 161;
+  --overlay1: #8c8fa1;
+  --overlay2-rgb: 124, 127, 147;
+  --overlay2: #7c7f93;
+
+  /* Text Layer */
+  --text-rgb: 76, 79, 105;
+  --text: #4c4f69;
+  --subtext0-rgb: 108, 111, 133;
+  --subtext0: #6c6f85;
+  --subtext1-rgb: 92, 95, 119;
+  --subtext1: #5c5f77;
+
+  /* Accent Colors (Catppuccin Latte standard) */
+  --rosewater-rgb: 220, 138, 120;
+  --rosewater: #dc8a78;
+  --flamingo-rgb: 221, 120, 120;
+  --flamingo: #dd7878;
+  --pink-rgb: 234, 118, 203;
+  --pink: #ea76cb;
+  --mauve-rgb: 136, 57, 239;
+  --mauve: #8839ef;
+  --mauve-dark: #7222df;
+  --red-rgb: 210, 15, 57;
+  --red: #d20f39;
+  --maroon-rgb: 230, 69, 83;
+  --maroon: #e64553;
+  --peach-rgb: 254, 100, 11;
+  --peach: #fe640b;
+  --peach-dark: #e25505;
+  --yellow-rgb: 223, 142, 29;
+  --yellow: #df8e1d;
+  --green-rgb: 64, 160, 43;
+  --green: #40a02b;
+  --green-dark: #348522;
+  --teal-rgb: 23, 146, 153;
+  --teal: #179299;
+  --sky-rgb: 4, 165, 229;
+  --sky: #04a5e5;
+  --sapphire-rgb: 32, 159, 181;
+  --sapphire: #209fb5;
+  --blue-rgb: 30, 102, 245;
+  --blue: #1e66f5;
+  --blue-dark: #1554cf;
+  --lavender-rgb: 114, 135, 253;
+  --lavender: #7287fd;
+
+  /* Legacy aliases for backward compatibility during transition */
+  --accent-rgb: var(--mauve-rgb);
+  --accent: var(--mauve);
+  --accent-dark: var(--mauve-dark);
+  --subtext-rgb: var(--subtext0-rgb);
+  --subtext: var(--subtext0);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(76, 79, 105, 0.08);
+  --shadow-md: 0 4px 12px rgba(76, 79, 105, 0.12);
+  --shadow-lg: 0 8px 24px rgba(76, 79, 105, 0.16);
+  --shadow-glow-mauve: 0 0 20px rgba(136, 57, 239, 0.15);
+  --shadow-glow-sky: 0 0 20px rgba(4, 165, 229, 0.15);
+
+  /* Legacy */
+  --black: 239, 241, 245;
+  --gray: 108, 111, 133;
+  --gray-light: 204, 208, 218;
+  --gray-dark: 188, 192, 204;
+  --box-shadow:
+    0 2px 6px rgba(76, 79, 105, 10%), 0 8px 24px rgba(76, 79, 105, 12%),
+    0 16px 32px rgba(76, 79, 105, 15%);
 }
 
 @font-face {
@@ -365,7 +494,7 @@ pre > code {
 }
 
 blockquote {
-  border-left: 3px solid var(--mauve);
+  border-left: 1px solid var(--mauve);
   padding: 0 0 0 20px;
   margin: 1.5em 0;
   font-size: 1.125em;
@@ -424,4 +553,64 @@ hr {
   clip: rect(1px, 1px, 1px, 1px);
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+/* Typography overflow resilience */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+a,
+li,
+blockquote {
+  overflow-wrap: break-word;
+}
+
+/* Touch targets hardening (WCAG 2.5.5 / 2.5.8) */
+button,
+.btn,
+.cta-button,
+.cta-btn,
+a.cta-button,
+a.cta-btn,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  min-height: 44px;
+}
+
+/* Micro-interactions & animations */
+@keyframes terminal-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.terminal-prefix {
+  display: inline-block;
+}
+
+.card,
+.service-card,
+.project-card,
+.testimonial-card,
+.blog-card,
+.whatsapp-card,
+.photo-pane-wrap {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+}
+
+/* Reduced motion fallback */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

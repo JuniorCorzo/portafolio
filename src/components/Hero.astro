@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 import {
   DEVELOPER_NAME,
   HERO_CHIPS,
@@ -21,12 +22,12 @@ const waUrl = WHATSAPP_NUMBER
 <section class="hero-section">
   <div class="hero-container">
     <div class="hero-chips">
-      {HERO_CHIPS.map(({ title, color, background }) => (
+      {HERO_CHIPS.map(({ title, color, background, icon }) => (
         <span
           class="chip"
           style={`color: var(${color}); background: rgba(var(${background}), 0.08); border-color: var(${color});`}
         >
-          <span class="chip-dot">●</span>
+          {icon ? <Icon name={icon} size={14} class="chip-icon" /> : <span class="chip-dot">●</span>}
           {title}
         </span>
       ))}
@@ -49,23 +50,46 @@ const waUrl = WHATSAPP_NUMBER
             target={waUrl === "/contacto" ? undefined : "_blank"}
             rel={waUrl === "/contacto" ? undefined : "noopener noreferrer"}
           >
-            💬 Hablemos por WhatsApp
+            <Icon name="lucide:message-circle" size={18} class="cta-icon" /> Hablemos por WhatsApp
           </a>
           <a href="/servicios" class="cta-button cta-secondary">Ver servicios →</a>
         </div>
       </div>
 
       <div class="hero-image-container">
-        <div class="hero-image-frame">
-          <Image
-            src={HERO_IMAGE}
-            class="hero-image"
-            alt="Angel Corzo - Desarrollador Full Stack en Cúcuta"
-            loading="eager"
-            fetchpriority="high"
-            width={480}
-            height={600}
-          />
+        <div class="photo-pane-wrap">
+          <div class="photo-top-hud">
+            <span class="hud-filename">BUFFER: img/angel_corzo.webp</span>
+            <span class="hud-status-badge">[CALIBRATED · 380x350]</span>
+          </div>
+
+          <div class="photo-img-container">
+            <Image
+              src={HERO_IMAGE}
+              class="hero-image"
+              alt="Angel Corzo - Desarrollador Full Stack en Cúcuta"
+              loading="eager"
+              fetchpriority="high"
+              width={480}
+              height={600}
+            />
+            <div class="photo-hud-bottom">
+              <div>
+                <div class="hud-badge-lg">[FULL-STACK DEV]</div>
+                <div class="hud-location">
+                  <Icon name="lucide:map-pin" size={13} class="hud-location-icon" /> Cúcuta, Colombia
+                </div>
+              </div>
+              <div class="hud-ok-badge">
+                STATUS: 200 OK
+              </div>
+            </div>
+          </div>
+
+          <div class="photo-meta-bottom">
+            <span>WEBP LOSSLESS</span>
+            <span>AUTO-RESPONSIVE</span>
+          </div>
         </div>
       </div>
     </div>
@@ -74,8 +98,8 @@ const waUrl = WHATSAPP_NUMBER
 
 <style>
   .hero-section {
-    padding: 48px 24px 80px;
-    background: linear-gradient(135deg, var(--crust) 0%, var(--base) 100%);
+    padding: 48px 24px 72px;
+    background: var(--crust);
     position: relative;
     overflow: hidden;
   }
@@ -83,11 +107,11 @@ const waUrl = WHATSAPP_NUMBER
   .hero-section::before {
     content: "";
     position: absolute;
-    top: -50%;
+    top: -40%;
     right: -10%;
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(203, 166, 247, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(var(--mauve-rgb), 0.07) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
   }
@@ -112,12 +136,18 @@ const waUrl = WHATSAPP_NUMBER
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 4px 16px;
+    padding: 4px 14px;
     border-radius: 9999px;
     border: 1px solid;
     font-size: 0.75rem;
     font-weight: 600;
+    font-family: var(--font-mono);
     backdrop-filter: blur(8px);
+    transition: all 0.2s ease;
+  }
+
+  .chip:hover {
+    box-shadow: 0 0 10px currentColor;
   }
 
   .chip-dot {
@@ -127,14 +157,14 @@ const waUrl = WHATSAPP_NUMBER
 
   .hero-body {
     display: grid;
-    grid-template-columns: 7fr 5fr;
+    grid-template-columns: 1fr 380px;
     gap: 48px;
     align-items: center;
   }
 
   .hero-title {
     margin: 0;
-    line-height: 1.05;
+    line-height: 1.15;
     max-width: none;
     width: 100%;
   }
@@ -142,9 +172,9 @@ const waUrl = WHATSAPP_NUMBER
   .headline-primary,
   .headline-accent {
     display: block;
-    font-size: clamp(2.1rem, 5vw, 3.8rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-size: clamp(2.1rem, 4.5vw, 3.4rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
   }
 
   .headline-primary {
@@ -152,30 +182,36 @@ const waUrl = WHATSAPP_NUMBER
   }
 
   .headline-accent {
-    color: var(--sky);
+    color: var(--mauve);
   }
 
   .hero-subtitle {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 700;
+    color: var(--green);
+    margin-top: 14px;
+    margin-bottom: 0;
+    font-family: var(--font-mono);
+  }
+
+  :global(html[data-theme="latte"]) .hero-subtitle {
     color: var(--text);
-    margin-top: 12px;
   }
 
   .hero-description {
-    font-size: 1.125rem;
+    font-size: 1.05rem;
     color: var(--subtext0);
-    margin-top: 20px;
-    line-height: 1.8;
-    max-width: none;
-    width: 100%;
+    margin-top: 18px;
+    margin-bottom: 0;
+    line-height: 1.7;
+    max-width: 640px;
     text-wrap: pretty;
   }
 
   .hero-cta {
     display: flex;
-    gap: 16px;
-    margin-top: 32px;
+    gap: 14px;
+    margin-top: 28px;
     flex-wrap: wrap;
   }
 
@@ -184,28 +220,30 @@ const waUrl = WHATSAPP_NUMBER
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 10px 32px;
+    padding: 10px 28px;
     min-height: 44px;
     border-radius: 6px;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 0.95rem;
     text-decoration: none;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.25s ease-in-out;
     border: 2px solid;
+    font-family: var(--font-mono);
   }
 
   .cta-primary {
     background: #25d366;
-    color: #1e1e2e;
+    color: #000000;
     border-color: #25d366;
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25);
   }
 
   .cta-primary:hover {
-    background: #128c7e;
-    border-color: #128c7e;
+    background: #1fa855;
+    border-color: #1fa855;
     transform: translateY(-2px);
-    box-shadow: 0 3px 10px rgba(37, 211, 102, 0.3);
-    color: #1e1e2e;
+    box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
+    color: #000000;
   }
 
   .cta-secondary {
@@ -218,6 +256,7 @@ const waUrl = WHATSAPP_NUMBER
     background: var(--mauve);
     color: var(--crust);
     transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(var(--mauve-rgb), 0.25);
   }
 
   .hero-image-container {
@@ -226,37 +265,145 @@ const waUrl = WHATSAPP_NUMBER
     align-items: center;
   }
 
-  .hero-image-frame {
+  .photo-pane-wrap {
     width: 100%;
-    max-width: 400px;
-    aspect-ratio: 4 / 5;
+    max-width: 380px;
+    background: var(--surface0);
+    border: 1px solid rgba(var(--overlay0-rgb), 0.3);
     border-radius: 8px;
-    border: 1px solid var(--mauve);
-    box-shadow: 0 0 20px rgba(203, 166, 247, 0.2);
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+  }
+
+  .photo-pane-wrap:hover {
+    border-color: var(--mauve);
+    box-shadow: 0 0 25px rgba(var(--mauve-rgb), 0.2);
+  }
+
+  .photo-top-hud {
+    background: var(--mantle);
+    border-bottom: 1px solid rgba(var(--overlay0-rgb), 0.3);
+    padding: 7px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.72rem;
+    font-family: var(--font-mono);
+    color: var(--subtext1);
+  }
+
+  .hud-status-badge {
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  :global(html[data-theme="latte"]) .hud-status-badge {
+    color: var(--text);
+  }
+
+  .photo-img-container {
+    position: relative;
+    background: #000000;
+    height: 350px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .hero-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center 18%;
     display: block;
+    filter: contrast(1.03) brightness(0.99);
+    transition: transform 0.35s ease;
+  }
+
+  .photo-pane-wrap:hover .hero-image {
+    transform: scale(1.025);
+  }
+
+  .photo-hud-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 60%, transparent 100%);
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-family: var(--font-mono);
+  }
+
+  .hud-badge-lg {
+    font-size: 0.72rem;
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid rgba(203, 166, 247, 0.4);
+    color: #cba6f7;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-weight: 700;
+    display: inline-block;
+  }
+
+  .hud-location {
+    font-size: 0.75rem;
+    color: #bac2de;
+    margin-top: 3px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .hud-location-icon {
+    color: var(--teal);
+    flex-shrink: 0;
+  }
+
+  .chip-icon,
+  .cta-icon {
+    flex-shrink: 0;
+  }
+
+  .hud-ok-badge {
+    font-size: 0.72rem;
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  .photo-meta-bottom {
+    background: var(--mantle);
+    border-top: 1px solid rgba(var(--overlay0-rgb), 0.3);
+    padding: 6px 12px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    font-family: var(--font-mono);
+    color: var(--subtext1);
   }
 
   @media (max-width: 1024px) {
     .hero-body {
       grid-template-columns: 1fr;
+      gap: 36px;
     }
 
     .hero-image-container {
-      margin: 32px auto 0;
-      max-width: 320px;
+      margin: 16px auto 0;
+      max-width: 380px;
+      width: 100%;
     }
   }
 
   @media (max-width: 768px) {
     .hero-section {
-      padding: 40px 24px 64px;
+      padding: 36px 20px 56px;
     }
   }
 
@@ -266,7 +413,7 @@ const waUrl = WHATSAPP_NUMBER
     }
 
     .hero-subtitle {
-      font-size: 1.25rem;
+      font-size: 1.1rem;
     }
 
     .hero-cta {
@@ -275,6 +422,10 @@ const waUrl = WHATSAPP_NUMBER
 
     .cta-button {
       width: 100%;
+    }
+
+    .photo-img-container {
+      height: 320px;
     }
   }
 </style>

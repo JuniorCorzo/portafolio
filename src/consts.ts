@@ -247,7 +247,7 @@ export const PROJECTS = [
 export const CONTACT_DETAILS = {
   email: {
     title: "Contacto Directo",
-    icon: "simple-icons:gmail",
+    icon: "lucide:mail",
     mail: DEVELOPER_EMAIL,
     cta: "Solicita consultoría técnica gratuita",
   },
@@ -265,14 +265,14 @@ export const CONTACT_DETAILS = {
         name: "GitHub",
         subtitle: "5+ proyectos open source",
         url: "https://github.com/JuniorCorzo",
-        icon: "simple-icons:github",
+        icon: "lucide:github",
         color: "#FFFFFF",
       },
       {
         name: "LinkedIn",
         subtitle: "Experiencia profesional",
         url: "https://linkedin.com/in/angel-corzo",
-        icon: "simple-icons:linkedin",
+        icon: "lucide:linkedin",
         color: "#0077B5",
       },
     ],

@@ -1,0 +1,143 @@
+---
+// ThemeToggle.astro - Accessible toggle for Noir (dark) and Latte (light) Catppuccin themes
+---
+
+<button
+  type="button"
+  class="theme-toggle"
+  aria-label="Cambiar tema"
+  title="Cambiar tema"
+>
+  <!-- Sun icon: shown in Noir mode to switch to Latte -->
+  <svg
+    class="theme-icon sun-icon"
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2"></path>
+    <path d="M12 20v2"></path>
+    <path d="m4.93 4.93 1.41 1.41"></path>
+    <path d="m17.66 17.66 1.41 1.41"></path>
+    <path d="M2 12h2"></path>
+    <path d="M20 12h2"></path>
+    <path d="m6.34 17.66-1.41 1.41"></path>
+    <path d="m19.07 4.93-1.41 1.41"></path>
+  </svg>
+
+  <!-- Moon icon: shown in Latte mode to switch to Noir -->
+  <svg
+    class="theme-icon moon-icon"
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+  </svg>
+</button>
+
+<style>
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--surface1, rgba(108, 112, 134, 0.2));
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  }
+
+  .theme-toggle:hover {
+    color: var(--mauve);
+    border-color: var(--mauve);
+    background-color: rgba(var(--mauve-rgb), 0.1);
+    transform: translateY(-1px);
+  }
+
+  .theme-toggle:focus-visible {
+    outline: 2px solid var(--mauve);
+    outline-offset: 2px;
+  }
+
+  .theme-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;
+  }
+
+  .theme-toggle:hover .theme-icon {
+    transform: rotate(12deg);
+  }
+
+  /* Default / Noir mode: display Sun icon, hide Moon icon */
+  .sun-icon {
+    display: block;
+  }
+
+  .moon-icon {
+    display: none;
+  }
+
+  /* Explicit Noir mode */
+  :global([data-theme="noir"]) .theme-toggle .sun-icon {
+    display: block;
+  }
+
+  :global([data-theme="noir"]) .theme-toggle .moon-icon {
+    display: none;
+  }
+
+  /* Latte mode: display Moon icon, hide Sun icon */
+  :global([data-theme="latte"]) .theme-toggle .sun-icon {
+    display: none;
+  }
+
+  :global([data-theme="latte"]) .theme-toggle .moon-icon {
+    display: block;
+  }
+</style>
+
+<script is:inline>
+  function setupThemeToggle() {
+    const buttons = document.querySelectorAll(".theme-toggle");
+    buttons.forEach((btn) => {
+      // Avoid duplicate event listener binding
+      if (btn.dataset.themeBound) return;
+      btn.dataset.themeBound = "true";
+
+      btn.addEventListener("click", () => {
+        const currentTheme = document.documentElement.getAttribute("data-theme") === "latte" ? "latte" : "noir";
+        const nextTheme = currentTheme === "noir" ? "latte" : "noir";
+        document.documentElement.setAttribute("data-theme", nextTheme);
+        try {
+          localStorage.setItem("theme", nextTheme);
+        } catch {
+          // Ignore write failure in restricted browsing context
+        }
+      });
+    });
+  }
+
+  setupThemeToggle();
+  document.addEventListener("astro:after-swap", setupThemeToggle);
+</script>

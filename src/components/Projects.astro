@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import { PROJECTS } from "../consts";
 ---
 
@@ -29,9 +30,11 @@ import { PROJECTS } from "../consts";
                 </div>
 
                 <div class="project-links">
-                  <a href={project.githubUrl} class="project-link github-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+                  <a href={project.githubUrl} class="project-link github-link" target="_blank" rel="noopener noreferrer">
+                    <Icon name="lucide:github" size={16} /> GitHub
+                  </a>
                   <a href={project.caseStudyUrl} class="project-link case-study-link">
-                    Caso de Estudio
+                    <Icon name="lucide:file-text" size={16} /> Caso de Estudio
                   </a>
                 </div>
               </div>
@@ -45,8 +48,12 @@ import { PROJECTS } from "../consts";
               Estoy enfocado en servicios y trabajo privado. Si querés, te cuento qué puedo construir para tu caso.
             </p>
             <div class="project-empty-actions">
-              <a href="/servicios" class="project-link github-link">Ver servicios</a>
-              <a href="/contacto" class="project-link case-study-link">Hablemos</a>
+              <a href="/servicios" class="project-link github-link">
+                Ver servicios <Icon name="lucide:arrow-right" size={16} />
+              </a>
+              <a href="/contacto" class="project-link case-study-link">
+                Hablemos <Icon name="lucide:mail" size={16} />
+              </a>
             </div>
           </article>
         )
@@ -59,7 +66,7 @@ import { PROJECTS } from "../consts";
   .projects-section {
     padding: 80px 24px;
     background: var(--mantle);
-    border-top: 1px solid var(--overlay0);
+    border-top: 1px solid rgba(var(--overlay0-rgb), 0.25);
   }
 
   .projects-container {
@@ -69,25 +76,26 @@ import { PROJECTS } from "../consts";
 
   .section-header {
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 56px;
   }
 
   .section-title {
     color: var(--text);
     font-size: 2.5rem;
-    font-weight: 700;
-    margin: 0 0 8px 0;
+    font-weight: 800;
+    margin: 0 0 10px 0;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
+    letter-spacing: -0.02em;
   }
 
   .terminal-prefix {
     font-family: var(--font-mono);
-    color: var(--overlay1);
+    color: var(--mauve);
     font-size: 2.2rem;
-    font-weight: 400;
+    font-weight: 700;
     user-select: none;
   }
 
@@ -101,7 +109,7 @@ import { PROJECTS } from "../consts";
   .projects-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
+    gap: 28px;
   }
 
   .project-card {
@@ -109,15 +117,17 @@ import { PROJECTS } from "../consts";
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid rgba(var(--overlay0-rgb), 0.3);
-    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transition: all 0.25s ease-in-out;
     display: flex;
     flex-direction: column;
   }
 
   .project-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 20px rgba(var(--mauve-rgb), 0.15);
     background: var(--surface1);
+    border-color: var(--mauve);
   }
 
   .project-header {
@@ -141,20 +151,26 @@ import { PROJECTS } from "../consts";
     font-size: 1.25rem;
     font-weight: 700;
     margin: 0 0 12px 0;
+    line-height: 1.3;
   }
 
   .project-description {
     color: var(--subtext0);
     font-size: 0.95rem;
     line-height: 1.6;
-    margin: 0 0 20px 0;
+    margin: 0 0 18px 0;
   }
 
   .project-result {
-    margin: 0 0 20px 0;
-    color: var(--sky);
-    font-size: 0.9rem;
+    margin: 0 0 18px 0;
+    color: var(--green);
+    font-size: 0.88rem;
     font-weight: 600;
+    font-family: var(--font-mono);
+  }
+
+  :global(html[data-theme="latte"]) .project-result {
+    color: var(--text);
   }
 
   .tech-stack {
@@ -168,11 +184,12 @@ import { PROJECTS } from "../consts";
     display: inline-block;
     background: rgba(var(--sky-rgb), 0.08);
     color: var(--sky);
-    padding: 6px 12px;
-    border-radius: 16px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    border: 1px solid var(--sky);
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    border: 1px solid rgba(var(--sky-rgb), 0.35);
   }
 
   .project-links {
@@ -228,11 +245,12 @@ import { PROJECTS } from "../consts";
     padding: 8px 14px;
     min-height: 44px;
     border-radius: 6px;
-    font-size: 0.92rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
     text-align: center;
     text-decoration: none;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.25s ease-in-out;
     line-height: 1.2;
     white-space: nowrap;
   }
@@ -241,23 +259,26 @@ import { PROJECTS } from "../consts";
     background: var(--mauve);
     color: var(--crust);
     border: 2px solid var(--mauve);
-    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(var(--mauve-rgb), 0.2);
   }
 
   .github-link:hover {
-    background: #b089e5;
-    border-color: #b089e5;
+    background: var(--mauve-dark);
+    border-color: var(--mauve-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(var(--mauve-rgb), 0.3);
   }
 
   .case-study-link {
     background: transparent;
     color: var(--text);
-    border: 2px solid var(--overlay0);
+    border: 2px solid rgba(var(--overlay0-rgb), 0.4);
   }
 
   .case-study-link:hover {
     border-color: var(--sky);
     color: var(--sky);
+    transform: translateY(-2px);
   }
 
   @media (max-width: 1024px) {
@@ -267,22 +288,26 @@ import { PROJECTS } from "../consts";
 
     .section-title {
       font-size: 2rem;
-      margin-bottom: 40px;
+      margin-bottom: 36px;
     }
 
     .projects-grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
+      gap: 20px;
     }
   }
 
   @media (max-width: 640px) {
+    .projects-section {
+      padding: 40px 20px;
+    }
+
     .section-title {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
     }
 
     .terminal-prefix {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
     }
 
     .projects-grid {

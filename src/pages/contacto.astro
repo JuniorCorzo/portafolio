@@ -2,6 +2,7 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import { Icon } from "astro-icon/components";
 import {
   CONTACT_EMAIL,
   WHATSAPP_NUMBER,
@@ -60,10 +61,12 @@ const waUrl = WHATSAPP_NUMBER
               {
                 waUrl && (
                   <div class="whatsapp-card">
-                    <h3>💬 WhatsApp Business</h3>
+                    <h3 class="whatsapp-card-title">
+                      <Icon name="lucide:message-circle" size={20} /> WhatsApp Business
+                    </h3>
                     <p>El canal más rápido. Respondemos en minutos durante horario laboral.</p>
                     <a href={waUrl} class="btn-whatsapp" target="_blank" rel="noopener noreferrer">
-                      Enviar mensaje por WhatsApp
+                      <Icon name="lucide:message-circle" size={18} /> Enviar mensaje por WhatsApp
                     </a>
                   </div>
                 )
@@ -72,13 +75,17 @@ const waUrl = WHATSAPP_NUMBER
               <!-- Social Links -->
               <div class="social-links">
                 <a href={`mailto:${CONTACT_EMAIL}`} class="social-link">
-                  <span class="social-icon">✉</span>
+                  <span class="social-icon">
+                    <Icon name="lucide:mail" size={16} />
+                  </span>
                   <span>{CONTACT_EMAIL}</span>
                 </a>
                 {
                   SOCIAL_LINKS.map((s) => (
                     <a href={s.url} target="_blank" rel="noopener noreferrer" class="social-link">
-                      <span class="social-icon">{s.name.slice(0, 2).toLowerCase()}</span>
+                      <span class="social-icon">
+                        <Icon name={s.icon} size={16} />
+                      </span>
                       <span>{s.url.replace(/^https:\/\//, "")}</span>
                     </a>
                   ))
@@ -88,7 +95,7 @@ const waUrl = WHATSAPP_NUMBER
               <!-- Copy Email Button -->
               <div style="margin-top: 24px;">
                 <button class="btn-teal" onclick="copyEmail()">
-                  <span>✉</span> Copiar email
+                  <Icon name="lucide:copy" size={16} /> Copiar email
                 </button>
               </div>
             </div>
@@ -257,6 +264,9 @@ const waUrl = WHATSAPP_NUMBER
     color: #25d366;
     font-size: 1.125rem;
     margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   .whatsapp-card p {
@@ -319,7 +329,10 @@ const waUrl = WHATSAPP_NUMBER
 
   .social-icon {
     width: 20px;
-    text-align: center;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     font-weight: 700;
   }
 

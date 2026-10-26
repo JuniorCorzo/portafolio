@@ -1,0 +1,726 @@
+---
+// src/components/VimMode.astro
+import { DEVELOPER_CV, DEVELOPER_EMAIL } from "../data/site";
+import { WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from "../data/contact";
+
+const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+---
+
+<!-- Floating Command Line Palette (noice.nvim style) -->
+<div
+  class="vim-cmd-backdrop"
+  id="vimCmdPalette"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Neovim Command Palette"
+  style="display: none;"
+>
+  <div class="vim-cmd-float">
+    <div class="vim-cmd-header">
+      <div class="vim-cmd-title-badge">
+        <span class="vim-cmd-icon">:</span>
+        <span class="vim-cmd-title-text">Command Line</span>
+        <span class="vim-cmd-ro-tag">[RO]</span>
+      </div>
+      <span class="vim-cmd-hint">Esc to cancel</span>
+    </div>
+
+    <div class="vim-cmd-input-row" id="vimCmdBox">
+      <span class="vim-cmd-prompt-sym" aria-hidden="true">:</span>
+      <input
+        type="text"
+        id="vimCmdInput"
+        class="vim-cmd-input-field"
+        placeholder="type command (:cv, :wa, :theme, :1-:5, :w, :help)..."
+        spellcheck="false"
+        autocomplete="off"
+        autocapitalize="off"
+        aria-label="Vim command line"
+      />
+    </div>
+
+    <div class="vim-cmd-chips">
+      <button type="button" class="vim-chip" data-cmd="cv">
+        <span class="chip-cmd">:cv</span>
+        <span class="chip-label">curriculum</span>
+      </button>
+      <button type="button" class="vim-chip" data-cmd="wa">
+        <span class="chip-cmd">:wa</span>
+        <span class="chip-label">whatsapp</span>
+      </button>
+      <button type="button" class="vim-chip" data-cmd="theme">
+        <span class="chip-cmd">:theme</span>
+        <span class="chip-label">toggle</span>
+      </button>
+      <button type="button" class="vim-chip" data-cmd="1">
+        <span class="chip-cmd">:1-:5</span>
+        <span class="chip-label">tabs</span>
+      </button>
+      <button type="button" class="vim-chip" data-cmd="w">
+        <span class="chip-cmd">:w</span>
+        <span class="chip-label">readonly</span>
+      </button>
+      <button type="button" class="vim-chip" data-cmd="help">
+        <span class="chip-cmd">:help</span>
+        <span class="chip-label">shortcuts</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script
+  is:inline
+  define:vars={{
+    developerCv: DEVELOPER_CV,
+    developerEmail: DEVELOPER_EMAIL,
+    whatsappUrl: waUrl,
+  }}
+>
+  (() => {
+    // Only run on desktop with fine pointer / no touch
+    const isDesktop = () =>
+      window.innerWidth >= 1024 &&
+      !window.matchMedia("(pointer: coarse)").matches &&
+      !("ontouchstart" in window);
+
+    let mode = "NORMAL"; // 'NORMAL' | 'VISUAL' | 'COMMAND'
+    let pendingG = false;
+    let pendingY = false;
+    let pendingBracketClose = false;
+    let pendingBracketOpen = false;
+    let clearMsgTimer = null;
+
+    // Cache DOM nodes
+    const getEl = (id) => document.getElementById(id);
+
+    function updateModeBadge(newMode) {
+      mode = newMode;
+      const badge = getEl("vimModeBadge");
+      if (!badge) return;
+
+      badge.textContent = mode;
+      badge.classList.remove("mode-visual", "mode-command");
+      if (mode === "VISUAL") badge.classList.add("mode-visual");
+      if (mode === "COMMAND") badge.classList.add("mode-command");
+    }
+
+    function showStatusMsg(text, type = "info", duration = 3500) {
+      const msgEl = getEl("vimStatusMsg");
+      if (!msgEl) return;
+
+      if (clearMsgTimer) clearTimeout(clearMsgTimer);
+      msgEl.textContent = text;
+      msgEl.className = "statusbar-msg";
+
+      if (type === "warning") msgEl.classList.add("msg-warning");
+      else if (type === "error") msgEl.classList.add("msg-error");
+      else if (type === "success") msgEl.classList.add("msg-success");
+      else if (type === "info") msgEl.classList.add("msg-info");
+
+      clearMsgTimer = setTimeout(() => {
+        if (msgEl) {
+          msgEl.textContent = "";
+          msgEl.className = "statusbar-msg";
+        }
+      }, duration);
+    }
+
+    function flashRoBadge() {
+      const roBadge = getEl("vimRoBadge");
+      if (!roBadge) return;
+      roBadge.style.transition = "transform 0.1s ease, color 0.1s ease";
+      roBadge.style.transform = "scale(1.2)";
+      roBadge.style.color = "var(--red)";
+      setTimeout(() => {
+        roBadge.style.transform = "scale(1)";
+        roBadge.style.color = "";
+      }, 300);
+    }
+
+    function toggleHelpModal(force) {
+      const modal = getEl("vimHelpModal");
+      if (!modal) return;
+      const isVisible = modal.style.display !== "none";
+      const next = typeof force === "boolean" ? force : !isVisible;
+      modal.style.display = next ? "flex" : "none";
+      if (!next && mode === "COMMAND") {
+        exitCommandMode();
+      }
+    }
+
+    function enterCommandMode() {
+      updateModeBadge("COMMAND");
+      const palette = getEl("vimCmdPalette");
+      const cmdInput = getEl("vimCmdInput");
+
+      if (palette) palette.style.display = "flex";
+      if (cmdInput) {
+        cmdInput.value = "";
+        setTimeout(() => cmdInput.focus(), 15);
+      }
+    }
+
+    function exitCommandMode() {
+      updateModeBadge("NORMAL");
+      const palette = getEl("vimCmdPalette");
+      const cmdInput = getEl("vimCmdInput");
+
+      if (palette) palette.style.display = "none";
+      if (cmdInput) {
+        cmdInput.value = "";
+        cmdInput.blur();
+      }
+    }
+
+    function executeCommand(rawCmd) {
+      const cmd = rawCmd.trim().replace(/^:/, "");
+      exitCommandMode();
+
+      if (!cmd) return;
+
+      if (cmd === "w" || cmd === "write") {
+        showStatusMsg("E45: 'readonly' option is set (add ! to override)", "error");
+        flashRoBadge();
+      } else if (cmd === "w!" || cmd === "write!") {
+        showStatusMsg("E21: Cannot make changes, 'modifiable' is off", "error");
+        flashRoBadge();
+      } else if (cmd === "q" || cmd === "quit" || cmd === "q!") {
+        const modal = getEl("vimHelpModal");
+        if (modal && modal.style.display !== "none") {
+          toggleHelpModal(false);
+          showStatusMsg("Buffer closed: vim-mode.txt", "info");
+        } else {
+          showStatusMsg("E37: No write since last change (use :wa or :cv)", "warning");
+        }
+      } else if (cmd === "cv") {
+        showStatusMsg("Opening CV...", "success");
+        window.open(developerCv, "_blank", "noopener,noreferrer");
+      } else if (cmd === "wa" || cmd === "whatsapp") {
+        showStatusMsg("Opening WhatsApp...", "success");
+        window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+      } else if (cmd === "theme") {
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme") === "latte" ? "latte" : "noir";
+        const nextTheme = currentTheme === "noir" ? "latte" : "noir";
+        document.documentElement.setAttribute("data-theme", nextTheme);
+        try {
+          localStorage.setItem("theme", nextTheme);
+        } catch {
+          // ignore storage error
+        }
+        showStatusMsg(`Theme toggled to: ${nextTheme}`, "success");
+      } else if (cmd === "1") {
+        window.location.href = "/";
+      } else if (cmd === "2") {
+        window.location.href = "/servicios";
+      } else if (cmd === "3") {
+        window.location.href = "/sobre-mi";
+      } else if (cmd === "4") {
+        window.location.href = "/blog";
+      } else if (cmd === "5") {
+        window.location.href = "/contacto";
+      } else if (cmd === "help" || cmd === "h") {
+        toggleHelpModal(true);
+      } else {
+        showStatusMsg(`E492: Not an editor command: :${cmd}`, "error");
+      }
+    }
+
+    function copyToClipboard(text, label) {
+      if (!text) return;
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          showStatusMsg(`YANKED: ${label}`, "success");
+        })
+        .catch(() => {
+          showStatusMsg(`Failed to yank: ${label}`, "error");
+        });
+    }
+
+    function jumpSection(direction) {
+      const sections = Array.from(
+        document.querySelectorAll("section, article, main > div")
+      ).filter((s) => s.offsetHeight > 50);
+
+      if (sections.length === 0) return;
+
+      const currentY = window.scrollY + 100;
+      if (direction === "next") {
+        const next = sections.find((s) => s.offsetTop > currentY);
+        if (next) {
+          window.scrollTo({ top: next.offsetTop - 70, behavior: "smooth" });
+          const title = next.querySelector("h1, h2, h3")?.textContent?.trim();
+          if (title) showStatusMsg(`Jump: ${title}`, "info", 1500);
+        } else {
+          window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: "smooth",
+          });
+        }
+      } else {
+        const prev = [...sections].reverse().find((s) => s.offsetTop < currentY - 120);
+        if (prev) {
+          window.scrollTo({ top: prev.offsetTop - 70, behavior: "smooth" });
+          const title = prev.querySelector("h1, h2, h3")?.textContent?.trim();
+          if (title) showStatusMsg(`Jump: ${title}`, "info", 1500);
+        } else {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }
+    }
+
+    function updateScrollLine() {
+      const lineEl = getEl("vimScrollLine");
+      if (!lineEl) return;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? Math.round((window.scrollY / docHeight) * 100) : 0;
+      lineEl.textContent = `Ln ${pct}%`;
+    }
+
+    function initVim() {
+      if (!isDesktop()) return;
+
+      // Attach scroll tracker
+      window.addEventListener("scroll", updateScrollLine, { passive: true });
+      document.addEventListener("scroll", updateScrollLine, { passive: true });
+      updateScrollLine();
+
+      // Help modal close button and click-outside
+      const closeBtn = getEl("vimHelpClose");
+      if (closeBtn) closeBtn.addEventListener("click", () => toggleHelpModal(false));
+
+      const helpToggle = getEl("vimHelpToggle");
+      if (helpToggle) helpToggle.addEventListener("click", () => toggleHelpModal());
+
+      const helpModal = getEl("vimHelpModal");
+      if (helpModal) {
+        helpModal.addEventListener("click", (e) => {
+          if (e.target === helpModal) toggleHelpModal(false);
+        });
+      }
+
+      // Command palette backdrop click to exit
+      const palette = getEl("vimCmdPalette");
+      if (palette) {
+        palette.addEventListener("click", (e) => {
+          if (e.target === palette) exitCommandMode();
+        });
+      }
+
+      // Interactive chips
+      const chips = document.querySelectorAll(".vim-chip");
+      chips.forEach((chip) => {
+        chip.addEventListener("click", () => {
+          const cmd = chip.getAttribute("data-cmd");
+          if (cmd) executeCommand(cmd);
+        });
+      });
+
+      // Command input listeners
+      const cmdInput = getEl("vimCmdInput");
+      if (cmdInput) {
+        cmdInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            executeCommand(cmdInput.value);
+          } else if (e.key === "Escape") {
+            e.preventDefault();
+            exitCommandMode();
+          }
+        });
+      }
+
+      // Global Keydown Handler
+      window.addEventListener("keydown", (e) => {
+        if (!isDesktop()) return;
+
+        // Skip when inside form inputs unless in command mode handling Escape
+        const target = e.target;
+        const isEditingInput =
+          target instanceof HTMLInputElement ||
+          target instanceof HTMLTextAreaElement ||
+          target instanceof HTMLSelectElement ||
+          (target && target.isContentEditable);
+
+        if (isEditingInput && target !== cmdInput) return;
+
+        // Command mode handling
+        if (mode === "COMMAND") {
+          if (e.key === "Escape") {
+            e.preventDefault();
+            exitCommandMode();
+          }
+          return;
+        }
+
+        // Close help modal on 'q' or 'Escape'
+        const modal = getEl("vimHelpModal");
+        if (modal && modal.style.display !== "none") {
+          if (e.key === "q" || e.key === "Escape") {
+            e.preventDefault();
+            toggleHelpModal(false);
+            return;
+          }
+        }
+
+        // VISUAL mode handling
+        if (mode === "VISUAL") {
+          if (e.key === "Escape") {
+            e.preventDefault();
+            updateModeBadge("NORMAL");
+            showStatusMsg("", "info", 100);
+            return;
+          }
+          if (e.key === "y") {
+            e.preventDefault();
+            const sel = window.getSelection()?.toString();
+            if (sel) {
+              copyToClipboard(sel, `Selection (${sel.length} chars)`);
+            } else {
+              showStatusMsg("No text selected to yank", "warning");
+            }
+            updateModeBadge("NORMAL");
+            return;
+          }
+        }
+
+        // NORMAL MODE MOTIONS & ACTIONS
+
+        // Multi-key: pending 'g' (e.g. gg)
+        if (pendingG) {
+          pendingG = false;
+          if (e.key === "g") {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            showStatusMsg("Top of buffer (gg)", "info", 1500);
+            return;
+          }
+        }
+
+        // Multi-key: pending 'y' (e.g. ye)
+        if (pendingY) {
+          pendingY = false;
+          if (e.key === "e") {
+            e.preventDefault();
+            copyToClipboard(developerEmail, developerEmail);
+            return;
+          }
+        }
+
+        // Multi-key: pending ']' (e.g. ]])
+        if (pendingBracketClose) {
+          pendingBracketClose = false;
+          if (e.key === "]") {
+            e.preventDefault();
+            jumpSection("next");
+            return;
+          }
+        }
+
+        // Multi-key: pending '[' (e.g. [[)
+        if (pendingBracketOpen) {
+          pendingBracketOpen = false;
+          if (e.key === "[") {
+            e.preventDefault();
+            jumpSection("prev");
+            return;
+          }
+        }
+
+        // Single key triggers:
+        if (e.key === "g" && !e.ctrlKey && !e.metaKey) {
+          pendingG = true;
+          setTimeout(() => (pendingG = false), 600);
+          return;
+        }
+
+        if (e.key === "y" && !e.ctrlKey && !e.metaKey) {
+          pendingY = true;
+          setTimeout(() => (pendingY = false), 600);
+          return;
+        }
+
+        if (e.key === "]" && !e.ctrlKey && !e.metaKey) {
+          pendingBracketClose = true;
+          setTimeout(() => (pendingBracketClose = false), 600);
+          return;
+        }
+
+        if (e.key === "[" && !e.ctrlKey && !e.metaKey) {
+          pendingBracketOpen = true;
+          setTimeout(() => (pendingBracketOpen = false), 600);
+          return;
+        }
+
+        // Snappy Motions (j/k: 110px auto step)
+        if (e.key === "j") {
+          e.preventDefault();
+          window.scrollBy({ top: 110, behavior: "auto" });
+          return;
+        }
+        if (e.key === "k") {
+          e.preventDefault();
+          window.scrollBy({ top: -110, behavior: "auto" });
+          return;
+        }
+
+        // Half-page jump (d/u: instant auto)
+        if (e.key === "d" && (e.ctrlKey || !e.metaKey)) {
+          e.preventDefault();
+          window.scrollBy({ top: window.innerHeight * 0.5, behavior: "auto" });
+          return;
+        }
+        if (e.key === "u" && (e.ctrlKey || !e.metaKey)) {
+          e.preventDefault();
+          window.scrollBy({ top: -window.innerHeight * 0.5, behavior: "auto" });
+          return;
+        }
+
+        // Top & Bottom buffer jumps
+        if (e.key === "G") {
+          e.preventDefault();
+          window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: "smooth",
+          });
+          showStatusMsg("End of buffer (G)", "info", 1500);
+          return;
+        }
+        if (e.key === "H") {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          return;
+        }
+        if (e.key === "M") {
+          e.preventDefault();
+          window.scrollTo({
+            top: document.documentElement.scrollHeight / 2,
+            behavior: "smooth",
+          });
+          return;
+        }
+        if (e.key === "L") {
+          e.preventDefault();
+          window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: "smooth",
+          });
+          return;
+        }
+
+        // Visual Mode Toggle
+        if (e.key === "v" || e.key === "V") {
+          e.preventDefault();
+          updateModeBadge("VISUAL");
+          showStatusMsg("-- VISUAL -- (press 'Esc' to exit)", "info", 3000);
+          return;
+        }
+
+        // Help Modal Toggle
+        if (e.key === "?") {
+          e.preventDefault();
+          toggleHelpModal();
+          return;
+        }
+
+        // Enter Floating Command Line Palette
+        if (e.key === ":") {
+          e.preventDefault();
+          enterCommandMode();
+          return;
+        }
+
+        // Readonly Mutation Warnings
+        const readonlyEditKeys = ["i", "I", "a", "A", "o", "O", "c", "C", "s", "S", "r", "R", "x", "X", "p", "P"];
+        if (readonlyEditKeys.includes(e.key) && !e.ctrlKey && !e.metaKey) {
+          e.preventDefault();
+          showStatusMsg(
+            "W10: Warning: Changing a readonly file ('modifiable' is off)",
+            "warning",
+            3000
+          );
+          flashRoBadge();
+          return;
+        }
+      });
+    }
+
+    // Initialize when DOM ready
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initVim);
+    } else {
+      initVim();
+    }
+  })();
+</script>
+
+<style>
+  .vim-cmd-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(10px);
+    z-index: 9990;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0 16px;
+    box-sizing: border-box;
+    font-family: var(--font-mono);
+  }
+
+  .vim-cmd-float {
+    position: fixed;
+    top: 26vh;
+    width: 100%;
+    max-width: 580px;
+    background: var(--crust);
+    border: 1px solid var(--mauve);
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(var(--mauve-rgb), 0.35), 0 0 24px rgba(var(--mauve-rgb), 0.15);
+    overflow: hidden;
+    font-family: var(--font-mono);
+    animation: vimCmdPop 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  :global(html[data-theme="latte"]) .vim-cmd-float {
+    background: var(--base);
+    border-color: #8839ef;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(136, 57, 239, 0.35);
+  }
+
+  @keyframes vimCmdPop {
+    from {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .vim-cmd-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px;
+    background: var(--surface0);
+    border-bottom: 1px solid rgba(var(--overlay0-rgb), 0.25);
+    font-size: 0.75rem;
+  }
+
+  .vim-cmd-title-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .vim-cmd-icon {
+    color: var(--green);
+    font-weight: 800;
+  }
+
+  .vim-cmd-title-text {
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.04em;
+  }
+
+  .vim-cmd-ro-tag {
+    color: var(--yellow);
+    font-weight: 700;
+    font-size: 0.7rem;
+    padding: 0 4px;
+    background: rgba(var(--yellow-rgb), 0.12);
+    border-radius: 2px;
+  }
+
+  .vim-cmd-hint {
+    color: var(--subtext0);
+    font-size: 0.7rem;
+  }
+
+  .vim-cmd-input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: var(--crust);
+  }
+
+  :global(html[data-theme="latte"]) .vim-cmd-input-row {
+    background: var(--base);
+  }
+
+  .vim-cmd-prompt-sym {
+    color: var(--green);
+    font-weight: 800;
+    font-size: 1.15rem;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .vim-cmd-input-field {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .vim-cmd-input-field::placeholder {
+    color: var(--overlay0);
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+
+  .vim-cmd-chips {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 10px 14px;
+    background: var(--surface0);
+    border-top: 1px solid rgba(var(--overlay0-rgb), 0.2);
+  }
+
+  .vim-chip {
+    background: rgba(var(--surface1-rgb), 0.6);
+    border: 1px solid rgba(var(--overlay0-rgb), 0.35);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text);
+    transition: all 0.15s ease;
+  }
+
+  .vim-chip:hover {
+    background: rgba(var(--mauve-rgb), 0.18);
+    border-color: var(--mauve);
+    color: var(--mauve);
+    transform: translateY(-1px);
+  }
+
+  .chip-cmd {
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  .chip-label {
+    color: var(--subtext0);
+    font-size: 0.68rem;
+  }
+</style>
