@@ -199,13 +199,16 @@ const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSA
         showStatusMsg("Opening WhatsApp...", "success");
         window.open(whatsappUrl, "_blank", "noopener,noreferrer");
       } else if (cmd === "theme") {
-        const themeBtn = getEl("themeToggle");
-        if (themeBtn) {
-          themeBtn.click();
-          showStatusMsg("Theme toggled", "success");
-        } else {
-          showStatusMsg("Theme toggle not available", "warning");
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme") === "latte" ? "latte" : "noir";
+        const nextTheme = currentTheme === "noir" ? "latte" : "noir";
+        document.documentElement.setAttribute("data-theme", nextTheme);
+        try {
+          localStorage.setItem("theme", nextTheme);
+        } catch {
+          // ignore storage error
         }
+        showStatusMsg(`Theme toggled to: ${nextTheme}`, "success");
       } else if (cmd === "1") {
         window.location.href = "/";
       } else if (cmd === "2") {
@@ -510,7 +513,7 @@ const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSA
         if (e.key === "v" || e.key === "V") {
           e.preventDefault();
           updateModeBadge("VISUAL");
-          showStatusMsg("-- VISUAL -- (press 'y' to yank selection, 'Esc' to exit)", "info", 4000);
+          showStatusMsg("-- VISUAL -- (press 'Esc' to exit)", "info", 3000);
           return;
         }
 
