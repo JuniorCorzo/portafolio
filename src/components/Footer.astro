@@ -1,5 +1,7 @@
 ---
 import { DEVELOPER_NAME } from "../data/site";
+import VimHelpModal from "./VimHelpModal.astro";
+import VimMode from "./VimMode.astro";
 
 const today = new Date();
 const brand = DEVELOPER_NAME.toLowerCase().replace(/\s+/g, "");
@@ -10,20 +12,54 @@ const footerJson = `{
   "license": "MIT",
   "year": "${today.getFullYear()}"
 }`;
+
+const pathname = Astro.url.pathname;
+let currentBuffer = "src/pages/index.astro";
+if (pathname === "/servicios" || pathname === "/servicios/") {
+  currentBuffer = "src/pages/servicios/index.astro";
+} else if (pathname.startsWith("/servicios/")) {
+  currentBuffer = "src/pages/servicios/[slug].astro";
+} else if (pathname === "/sobre-mi" || pathname === "/sobre-mi/") {
+  currentBuffer = "src/pages/sobre-mi.astro";
+} else if (pathname === "/blog" || pathname === "/blog/") {
+  currentBuffer = "src/pages/blog/index.astro";
+} else if (pathname.startsWith("/blog/")) {
+  currentBuffer = "src/pages/blog/[slug].astro";
+} else if (pathname === "/contacto" || pathname === "/contacto/") {
+  currentBuffer = "src/pages/contacto.astro";
+}
 ---
 
 <footer class="footer">
   <div class="terminal-statusbar">
     <div class="statusbar-container">
       <div class="statusbar-left">
-        <span class="sb-mode">NORMAL</span>
+        <span class="sb-mode" id="vimModeBadge">NORMAL</span>
         <span class="sb-branch"><span class="branch-sym" aria-hidden="true"></span> main*</span>
-        <span class="sb-file">src/pages/index.astro</span>
+        <span class="sb-file" id="vimFileBuffer" title={currentBuffer}>{currentBuffer}</span>
+        <span class="sb-ro" id="vimRoBadge" title="Modo lectura activo (nomodifiable)">[RO]</span>
+      </div>
+      <div class="statusbar-center" id="vimCmdContainer">
+        <span class="statusbar-msg" id="vimStatusMsg" aria-live="polite"></span>
+        <div class="vim-cmd-box" id="vimCmdBox" style="display: none;">
+          <span class="vim-cmd-prompt">:</span>
+          <input
+            type="text"
+            id="vimCmdInput"
+            class="vim-cmd-input"
+            spellcheck="false"
+            autocomplete="off"
+            aria-label="Vim command line"
+          />
+        </div>
       </div>
       <div class="statusbar-right">
-        <span class="sb-item">utf-8</span>
-        <span class="sb-item">astro</span>
-        <span class="sb-item">Ln 100%</span>
+        <button type="button" class="sb-hint-btn" id="vimHelpToggle" aria-label="Abrir ayuda de Vim">
+          <kbd class="vim-kbd">?</kbd> vim help
+        </button>
+        <span class="sb-item sb-desktop-only">utf-8</span>
+        <span class="sb-item sb-desktop-only">astro</span>
+        <span class="sb-item" id="vimScrollLine">Ln 0%</span>
       </div>
     </div>
   </div>
@@ -47,39 +83,50 @@ const footerJson = `{
 
     <div class="footer-bottom">© {today.getFullYear()} {DEVELOPER_NAME}. Hecho con café y código.</div>
   </div>
+
+  <VimHelpModal />
+  <VimMode />
 </footer>
 
 <style>
   .footer {
     background: var(--crust);
     border-top: 1px solid rgba(var(--overlay0-rgb), 0.25);
-    padding: 0 0 28px;
+    padding: 36px 0 calc(28px + 44px);
   }
 
   .terminal-statusbar {
-    background: var(--surface0);
-    border-bottom: 1px solid rgba(var(--overlay0-rgb), 0.2);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 80;
+    background: rgba(var(--crust-rgb), 0.95);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(var(--overlay0-rgb), 0.25);
     font-family: var(--font-mono);
     font-size: 0.76rem;
     font-weight: 600;
-    margin-bottom: 36px;
   }
 
   .statusbar-container {
-    max-width: 1200px;
+    max-width: 1600px;
+    width: 100%;
     margin: 0 auto;
-    padding: 6px 24px;
+    padding: 6px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
+    gap: 12px;
+    height: 34px;
+    box-sizing: border-box;
   }
 
   .statusbar-left {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
+    flex-shrink: 0;
   }
 
   .sb-mode {
@@ -89,10 +136,32 @@ const footerJson = `{
     border-radius: 3px;
     font-weight: 800;
     letter-spacing: 0.04em;
+    font-size: 0.72rem;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .sb-mode.mode-visual {
+    background: var(--yellow);
+    color: #000000;
+  }
+
+  .sb-mode.mode-command {
+    background: var(--green);
+    color: #000000;
   }
 
   :global(html[data-theme="latte"]) .sb-mode {
     background: #8839ef;
+    color: #ffffff;
+  }
+
+  :global(html[data-theme="latte"]) .sb-mode.mode-visual {
+    background: #df8e1d;
+    color: #ffffff;
+  }
+
+  :global(html[data-theme="latte"]) .sb-mode.mode-command {
+    background: #40a02b;
     color: #ffffff;
   }
 
@@ -110,21 +179,124 @@ const footerJson = `{
 
   .sb-file {
     color: var(--subtext1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 220px;
+  }
+
+  .sb-ro {
+    color: var(--yellow);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 1px 4px;
+    border-radius: 2px;
+    background: rgba(var(--yellow-rgb), 0.12);
+  }
+
+  .statusbar-center {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 0;
+    padding: 0 8px;
+    font-family: var(--font-mono);
+  }
+
+  .statusbar-msg {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .statusbar-msg.msg-warning {
+    color: var(--yellow);
+  }
+
+  .statusbar-msg.msg-error {
+    color: var(--red);
+  }
+
+  .statusbar-msg.msg-success {
+    color: var(--green);
+  }
+
+  .statusbar-msg.msg-info {
+    color: var(--sky);
+  }
+
+  .vim-cmd-box {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 4px;
+  }
+
+  .vim-cmd-prompt {
+    color: var(--green);
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .vim-cmd-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    padding: 0;
+    margin: 0;
   }
 
   .statusbar-right {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
     color: var(--overlay1);
     font-size: 0.72rem;
+    flex-shrink: 0;
+  }
+
+  .sb-hint-btn {
+    background: transparent;
+    border: none;
+    color: var(--subtext0);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 3px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .sb-hint-btn:hover {
+    background: rgba(var(--surface0-rgb), 0.8);
+    color: var(--text);
+  }
+
+  .vim-kbd {
+    background: var(--surface1);
+    color: var(--mauve);
+    border: 1px solid rgba(var(--overlay0-rgb), 0.4);
+    border-radius: 3px;
+    padding: 0 4px;
+    font-size: 0.7rem;
+    font-family: inherit;
   }
 
   .footer-container {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 16px;
   }
 
   .footer-top {
@@ -207,10 +379,6 @@ const footerJson = `{
     margin-bottom: 8px;
   }
 
-  .str {
-    color: var(--green);
-  }
-
   .footer-bottom {
     margin-top: 28px;
     padding-top: 20px;
@@ -221,9 +389,21 @@ const footerJson = `{
     font-family: var(--font-mono);
   }
 
+  @media (max-width: 768px) {
+    .sb-desktop-only {
+      display: none;
+    }
+    .sb-file {
+      max-width: 120px;
+    }
+    .sb-hint-btn {
+      display: none;
+    }
+  }
+
   @media (max-width: 640px) {
     .footer {
-      padding: 40px 0 24px;
+      padding: 30px 0 calc(24px + 44px);
     }
 
     .footer-links {

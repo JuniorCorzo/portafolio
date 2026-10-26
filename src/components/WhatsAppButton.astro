@@ -49,7 +49,7 @@ const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(messag
 <style>
   .whatsapp-float {
     position: fixed;
-    bottom: 24px;
+    bottom: calc(24px + 36px);
     right: 24px;
     z-index: 90;
     width: 60px;
@@ -107,7 +107,7 @@ const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(messag
 
   @media (max-width: 640px) {
     .whatsapp-float {
-      bottom: 16px;
+      bottom: calc(16px + 36px);
       right: 16px;
       width: 56px;
       height: 56px;

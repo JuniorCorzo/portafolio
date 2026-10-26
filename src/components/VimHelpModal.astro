@@ -1,0 +1,279 @@
+---
+// src/components/VimHelpModal.astro
+---
+
+<div class="vim-help-backdrop" id="vimHelpModal" role="dialog" aria-modal="true" aria-label="Ayuda del modo Vim" style="display: none;">
+  <div class="vim-help-window">
+    <div class="vim-help-header">
+      <span class="vim-help-title">╭─ [HELP: vim-mode.txt] ─────────────────────────── [RO] ─╮</span>
+      <button type="button" class="vim-help-close-btn" id="vimHelpClose" aria-label="Cerrar ayuda de Vim">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="vim-help-body">
+      <div class="vim-help-banner">
+        <span class="hl-accent">NEOVIM READONLY BUFFER</span> — Navegá este portafolio como en tu editor.
+        <br />
+        <span class="hl-subtext">Desktop only. Las teclas de edición (i, a, o, c, s, r) emitirán alertas de solo lectura.</span>
+      </div>
+
+      <div class="vim-help-grid">
+        <div class="vim-help-col">
+          <div class="vim-section-title">NAVIGATION / MOTIONS</div>
+          <dl class="vim-dl">
+            <div class="vim-row"><dt><kbd class="vk">j</kbd> / <kbd class="vk">k</kbd></dt><dd>Scroll suave 60px abajo / arriba</dd></div>
+            <div class="vim-row"><dt><kbd class="vk">d</kbd> / <kbd class="vk">u</kbd></dt><dd>Media página abajo / arriba (50vh)</dd></div>
+            <div class="vim-row"><dt><kbd class="vk">gg</kbd> / <kbd class="vk">G</kbd></dt><dd>Ir al inicio / fondo de la página</dd></div>
+            <div class="vim-row"><dt><kbd class="vk">]]</kbd> / <kbd class="vk">[[</kbd></dt><dd>Saltar a la siguiente / anterior sección</dd></div>
+            <div class="vim-row"><dt><kbd class="vk">H</kbd> / <kbd class="vk">M</kbd> / <kbd class="vk">L</kbd></dt><dd>Top / Middle / Bottom del viewport</dd></div>
+          </dl>
+        </div>
+
+        <div class="vim-help-col">
+          <div class="vim-section-title">YANK (COPIAR)</div>
+          <dl class="vim-dl">
+            <div class="vim-row"><dt><kbd class="vk">ye</kbd></dt><dd>Yank email (<span class="hl-green">angelcorzo.me@gmail.com</span>)</dd></div>
+            <div class="vim-row"><dt><kbd class="vk">yy</kbd></dt><dd>Yank texto de la sección visible</dd></div>
+            <div class="vim-row"><dt><kbd class="vk">v</kbd> / <kbd class="vk">V</kbd></dt><dd>Modo VISUAL (presioná <kbd class="vk">y</kbd> para copiar)</dd></div>
+            <div class="vim-row"><dt><kbd class="vk">?</kbd></dt><dd>Abrir / cerrar este buffer de ayuda</dd></div>
+            <div class="vim-row"><dt><kbd class="vk">Esc</kbd></dt><dd>Volver siempre a modo NORMAL</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="vim-help-section">
+        <div class="vim-section-title">COMMAND LINE MODE (<kbd class="vk">:</kbd>)</div>
+        <div class="vim-cmd-grid">
+          <div class="vim-cmd-item"><span class="cmd-code">:cv</span><span class="cmd-desc">Descargar / abrir currículum</span></div>
+          <div class="vim-cmd-item"><span class="cmd-code">:wa</span><span class="cmd-desc">Abrir chat directo de WhatsApp</span></div>
+          <div class="vim-cmd-item"><span class="cmd-code">:theme</span><span class="cmd-desc">Alternar paleta Noir / Latte</span></div>
+          <div class="vim-cmd-item"><span class="cmd-code">:1 .. :5</span><span class="cmd-desc">Navegar pestañas tmux (Inicio, Servicios, etc.)</span></div>
+          <div class="vim-cmd-item"><span class="cmd-code">:w</span><span class="cmd-desc">W10/E45: Advertencia de archivo en solo lectura</span></div>
+          <div class="vim-cmd-item"><span class="cmd-code">:q</span><span class="cmd-desc">Cerrar buffer de ayuda o modal</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vim-help-footer">
+      <span>╰─ [Modo: nomodifiable] ────────── Presioná <kbd class="vk">q</kbd> o <kbd class="vk">Esc</kbd> para cerrar ─╯</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .vim-help-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(6px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: var(--font-mono);
+  }
+
+  .vim-help-window {
+    width: 100%;
+    max-width: 680px;
+    background: var(--crust);
+    border: 1px solid var(--mauve);
+    border-radius: 8px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(var(--mauve-rgb), 0.25);
+    overflow: hidden;
+    animation: vimModalPop 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  :global(html[data-theme="latte"]) .vim-help-window {
+    background: var(--base);
+    border-color: #8839ef;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+  }
+
+  @keyframes vimModalPop {
+    from {
+      opacity: 0;
+      transform: scale(0.96) translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .vim-help-header {
+    background: var(--surface0);
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(var(--overlay0-rgb), 0.25);
+  }
+
+  .vim-help-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--mauve);
+    letter-spacing: 0.03em;
+  }
+
+  .vim-help-close-btn {
+    background: none;
+    border: none;
+    color: var(--subtext0);
+    font-size: 1.25rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+  }
+
+  .vim-help-close-btn:hover {
+    color: var(--red);
+    background: rgba(var(--red-rgb), 0.12);
+  }
+
+  .vim-help-body {
+    padding: 18px 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+
+  .vim-help-banner {
+    padding: 10px 14px;
+    background: rgba(var(--surface0-rgb), 0.6);
+    border-left: 3px solid var(--yellow);
+    border-radius: 4px;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .hl-accent {
+    color: var(--yellow);
+    font-weight: 700;
+  }
+
+  .hl-subtext {
+    color: var(--subtext0);
+    font-size: 0.75rem;
+  }
+
+  .hl-green {
+    color: var(--green);
+  }
+
+  .vim-help-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 640px) {
+    .vim-help-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .vim-section-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--peach);
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .vim-dl {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .vim-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 0.78rem;
+    border-bottom: 1px dashed rgba(var(--overlay0-rgb), 0.18);
+    padding-bottom: 4px;
+  }
+
+  .vim-row dt {
+    flex-shrink: 0;
+  }
+
+  .vim-row dd {
+    margin: 0;
+    color: var(--subtext0);
+    font-size: 0.74rem;
+    text-align: right;
+  }
+
+  .vk {
+    background: var(--surface1);
+    color: var(--mauve);
+    border: 1px solid rgba(var(--overlay0-rgb), 0.4);
+    border-radius: 3px;
+    padding: 1px 5px;
+    font-size: 0.72rem;
+    font-family: inherit;
+    font-weight: 700;
+  }
+
+  .vim-cmd-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  @media (max-width: 640px) {
+    .vim-cmd-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .vim-cmd-item {
+    background: rgba(var(--surface0-rgb), 0.5);
+    padding: 6px 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    border: 1px solid rgba(var(--overlay0-rgb), 0.15);
+  }
+
+  .cmd-code {
+    color: var(--green);
+    font-weight: 700;
+    flex-shrink: 0;
+    min-width: 44px;
+  }
+
+  .cmd-desc {
+    color: var(--subtext0);
+    font-size: 0.72rem;
+    text-align: right;
+  }
+
+  .vim-help-footer {
+    background: var(--surface0);
+    padding: 8px 14px;
+    border-top: 1px solid rgba(var(--overlay0-rgb), 0.25);
+    font-size: 0.72rem;
+    color: var(--overlay1);
+    text-align: center;
+  }
+</style>

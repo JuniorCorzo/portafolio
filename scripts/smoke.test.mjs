@@ -349,6 +349,35 @@ check(
   "Footer copy preserved: navigation links, footer.json buffer, and copyright notice"
 );
 
+// 14.7 Readonly Vim Mode & Fixed Bottom Statusbar Integration
+const vimModePath = resolve(SRC, "components", "VimMode.astro");
+const vimHelpModalPath = resolve(SRC, "components", "VimHelpModal.astro");
+const vimModeContent = existsSync(vimModePath) ? read("components", "VimMode.astro") : "";
+const vimHelpContent = existsSync(vimHelpModalPath) ? read("components", "VimHelpModal.astro") : "";
+
+check(
+  footerComponent.includes("position: fixed;") &&
+    footerComponent.includes("bottom: 0;") &&
+    footerComponent.includes('id="vimRoBadge"') &&
+    footerComponent.includes("[RO]") &&
+    footerComponent.includes('id="vimModeBadge"') &&
+    footerComponent.includes('id="vimScrollLine"') &&
+    footerComponent.includes("<VimMode") &&
+    footerComponent.includes("<VimHelpModal"),
+  "Footer.astro implements always-visible fixed bottom statusline with [RO] readonly badge and Vim mode integration"
+);
+
+check(
+  existsSync(vimModePath) &&
+    vimModeContent.includes("isDesktop") &&
+    vimModeContent.includes("Changing a readonly file") &&
+    vimModeContent.includes("copyToClipboard") &&
+    existsSync(vimHelpModalPath) &&
+    vimHelpContent.includes("vim-mode.txt"),
+  "VimMode and VimHelpModal implement desktop-only readonly guards, motions, yanks, and help window"
+);
+
+
 // 15. Brand Assets: public/favicon.svg contains Noir monogram & public/images/og.png is valid PNG (> 10KB) referenced in BaseHead
 const faviconPath = resolve(import.meta.dirname, "../public/favicon.svg");
 const faviconExists = existsSync(faviconPath);

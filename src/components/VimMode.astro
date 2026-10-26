@@ -1,0 +1,508 @@
+---
+// src/components/VimMode.astro
+import { DEVELOPER_CV, DEVELOPER_EMAIL } from "../data/site";
+import { WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from "../data/contact";
+
+const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+---
+
+<script
+  is:inline
+  define:vars={{
+    developerCv: DEVELOPER_CV,
+    developerEmail: DEVELOPER_EMAIL,
+    whatsappUrl: waUrl,
+  }}
+>
+  (() => {
+    // Only run on desktop with fine pointer / no touch
+    const isDesktop = () =>
+      window.innerWidth >= 1024 &&
+      !window.matchMedia("(pointer: coarse)").matches &&
+      !("ontouchstart" in window);
+
+    let mode = "NORMAL"; // 'NORMAL' | 'VISUAL' | 'COMMAND'
+    let pendingG = false;
+    let pendingY = false;
+    let pendingBracketClose = false;
+    let pendingBracketOpen = false;
+    let clearMsgTimer = null;
+
+    // Cache DOM nodes
+    const getEl = (id) => document.getElementById(id);
+
+    function updateModeBadge(newMode) {
+      mode = newMode;
+      const badge = getEl("vimModeBadge");
+      if (!badge) return;
+
+      badge.textContent = mode;
+      badge.classList.remove("mode-visual", "mode-command");
+      if (mode === "VISUAL") badge.classList.add("mode-visual");
+      if (mode === "COMMAND") badge.classList.add("mode-command");
+    }
+
+    function showStatusMsg(text, type = "info", duration = 3500) {
+      const msgEl = getEl("vimStatusMsg");
+      if (!msgEl) return;
+
+      if (clearMsgTimer) clearTimeout(clearMsgTimer);
+      msgEl.textContent = text;
+      msgEl.className = "statusbar-msg";
+
+      if (type === "warning") msgEl.classList.add("msg-warning");
+      else if (type === "error") msgEl.classList.add("msg-error");
+      else if (type === "success") msgEl.classList.add("msg-success");
+      else if (type === "info") msgEl.classList.add("msg-info");
+
+      clearMsgTimer = setTimeout(() => {
+        if (msgEl) {
+          msgEl.textContent = "";
+          msgEl.className = "statusbar-msg";
+        }
+      }, duration);
+    }
+
+    function flashRoBadge() {
+      const roBadge = getEl("vimRoBadge");
+      if (!roBadge) return;
+      roBadge.style.transition = "transform 0.1s ease, color 0.1s ease";
+      roBadge.style.transform = "scale(1.2)";
+      roBadge.style.color = "var(--red)";
+      setTimeout(() => {
+        roBadge.style.transform = "scale(1)";
+        roBadge.style.color = "";
+      }, 300);
+    }
+
+    function toggleHelpModal(force) {
+      const modal = getEl("vimHelpModal");
+      if (!modal) return;
+      const isVisible = modal.style.display !== "none";
+      const next = typeof force === "boolean" ? force : !isVisible;
+      modal.style.display = next ? "flex" : "none";
+      if (!next && mode === "COMMAND") {
+        exitCommandMode();
+      }
+    }
+
+    function enterCommandMode() {
+      updateModeBadge("COMMAND");
+      const msgEl = getEl("vimStatusMsg");
+      const cmdBox = getEl("vimCmdBox");
+      const cmdInput = getEl("vimCmdInput");
+
+      if (msgEl) msgEl.style.display = "none";
+      if (cmdBox) cmdBox.style.display = "flex";
+      if (cmdInput) {
+        cmdInput.value = "";
+        cmdInput.focus();
+      }
+    }
+
+    function exitCommandMode() {
+      updateModeBadge("NORMAL");
+      const msgEl = getEl("vimStatusMsg");
+      const cmdBox = getEl("vimCmdBox");
+      const cmdInput = getEl("vimCmdInput");
+
+      if (cmdBox) cmdBox.style.display = "none";
+      if (cmdInput) {
+        cmdInput.value = "";
+        cmdInput.blur();
+      }
+      if (msgEl) msgEl.style.display = "";
+    }
+
+    function executeCommand(rawCmd) {
+      const cmd = rawCmd.trim();
+      exitCommandMode();
+
+      if (!cmd) return;
+
+      if (cmd === "w" || cmd === "write") {
+        showStatusMsg("E45: 'readonly' option is set (add ! to override)", "error");
+        flashRoBadge();
+      } else if (cmd === "w!" || cmd === "write!") {
+        showStatusMsg("E21: Cannot make changes, 'modifiable' is off", "error");
+        flashRoBadge();
+      } else if (cmd === "q" || cmd === "quit" || cmd === "q!") {
+        const modal = getEl("vimHelpModal");
+        if (modal && modal.style.display !== "none") {
+          toggleHelpModal(false);
+          showStatusMsg("Buffer closed: help.txt", "info");
+        } else {
+          showStatusMsg("E37: No write since last change (use :wa or :cv)", "warning");
+        }
+      } else if (cmd === "cv") {
+        showStatusMsg("Opening CV...", "success");
+        window.open(developerCv, "_blank", "noopener,noreferrer");
+      } else if (cmd === "wa" || cmd === "whatsapp") {
+        showStatusMsg("Opening WhatsApp...", "success");
+        window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+      } else if (cmd === "theme") {
+        const themeBtn = getEl("themeToggle");
+        if (themeBtn) {
+          themeBtn.click();
+          showStatusMsg("Theme toggled", "success");
+        } else {
+          showStatusMsg("Theme toggle not available", "warning");
+        }
+      } else if (cmd === "1") {
+        window.location.href = "/";
+      } else if (cmd === "2") {
+        window.location.href = "/servicios";
+      } else if (cmd === "3") {
+        window.location.href = "/sobre-mi";
+      } else if (cmd === "4") {
+        window.location.href = "/blog";
+      } else if (cmd === "5") {
+        window.location.href = "/contacto";
+      } else if (cmd === "help" || cmd === "h") {
+        toggleHelpModal(true);
+      } else {
+        showStatusMsg(`E492: Not an editor command: :${cmd}`, "error");
+      }
+    }
+
+    function copyToClipboard(text, label) {
+      if (!text) return;
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          showStatusMsg(`YANKED: ${label}`, "success");
+        })
+        .catch(() => {
+          showStatusMsg(`Failed to yank: ${label}`, "error");
+        });
+    }
+
+    function yankVisibleSection() {
+      const sections = Array.from(
+        document.querySelectorAll("section, article, main > div, .card-item")
+      );
+      let targetSec = null;
+      for (const sec of sections) {
+        const rect = sec.getBoundingClientRect();
+        if (rect.top >= -100 && rect.top <= window.innerHeight * 0.6) {
+          targetSec = sec;
+          break;
+        }
+      }
+      if (!targetSec && sections.length > 0) targetSec = sections[0];
+
+      if (targetSec) {
+        const title =
+          targetSec.querySelector("h1, h2, h3")?.textContent?.trim() ||
+          targetSec.id ||
+          "section";
+        const content = targetSec.innerText.trim();
+        copyToClipboard(content, `"${title}" (${content.length} chars)`);
+      } else {
+        showStatusMsg("No section found to yank", "warning");
+      }
+    }
+
+    function jumpSection(direction) {
+      const sections = Array.from(
+        document.querySelectorAll("section, article, main > div")
+      ).filter((s) => s.offsetHeight > 50);
+
+      if (sections.length === 0) return;
+
+      const currentY = window.scrollY + 100;
+      if (direction === "next") {
+        const next = sections.find((s) => s.offsetTop > currentY);
+        if (next) {
+          window.scrollTo({ top: next.offsetTop - 70, behavior: "smooth" });
+          const title = next.querySelector("h1, h2, h3")?.textContent?.trim();
+          if (title) showStatusMsg(`Jump: ${title}`, "info", 1500);
+        } else {
+          window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: "smooth",
+          });
+        }
+      } else {
+        const prev = [...sections].reverse().find((s) => s.offsetTop < currentY - 120);
+        if (prev) {
+          window.scrollTo({ top: prev.offsetTop - 70, behavior: "smooth" });
+          const title = prev.querySelector("h1, h2, h3")?.textContent?.trim();
+          if (title) showStatusMsg(`Jump: ${title}`, "info", 1500);
+        } else {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }
+    }
+
+    function updateScrollLine() {
+      const lineEl = getEl("vimScrollLine");
+      if (!lineEl) return;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? Math.round((window.scrollY / docHeight) * 100) : 0;
+      lineEl.textContent = `Ln ${pct}%`;
+    }
+
+    function initVim() {
+      if (!isDesktop()) return;
+
+      // Attach scroll tracker
+      window.addEventListener("scroll", updateScrollLine, { passive: true });
+      document.addEventListener("scroll", updateScrollLine, { passive: true });
+      updateScrollLine();
+
+      // Help modal close button and click-outside
+      const closeBtn = getEl("vimHelpClose");
+      if (closeBtn) closeBtn.addEventListener("click", () => toggleHelpModal(false));
+
+      const helpToggle = getEl("vimHelpToggle");
+      if (helpToggle) helpToggle.addEventListener("click", () => toggleHelpModal());
+
+      const helpModal = getEl("vimHelpModal");
+      if (helpModal) {
+        helpModal.addEventListener("click", (e) => {
+          if (e.target === helpModal) toggleHelpModal(false);
+        });
+      }
+
+      // Command input listeners
+      const cmdInput = getEl("vimCmdInput");
+      if (cmdInput) {
+        cmdInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            executeCommand(cmdInput.value);
+          } else if (e.key === "Escape") {
+            e.preventDefault();
+            exitCommandMode();
+          }
+        });
+      }
+
+      // Global Keydown Handler
+      window.addEventListener("keydown", (e) => {
+        if (!isDesktop()) return;
+
+        // Skip when inside form inputs unless in command mode handling Escape
+        const target = e.target;
+        const isEditingInput =
+          target instanceof HTMLInputElement ||
+          target instanceof HTMLTextAreaElement ||
+          target instanceof HTMLSelectElement ||
+          (target && target.isContentEditable);
+
+        if (isEditingInput && target !== cmdInput) return;
+
+        // Command mode handling
+        if (mode === "COMMAND") {
+          if (e.key === "Escape") {
+            e.preventDefault();
+            exitCommandMode();
+          }
+          return;
+        }
+
+        // Close help modal on 'q' or 'Escape'
+        const modal = getEl("vimHelpModal");
+        if (modal && modal.style.display !== "none") {
+          if (e.key === "q" || e.key === "Escape") {
+            e.preventDefault();
+            toggleHelpModal(false);
+            return;
+          }
+        }
+
+        // VISUAL mode handling
+        if (mode === "VISUAL") {
+          if (e.key === "Escape") {
+            e.preventDefault();
+            updateModeBadge("NORMAL");
+            showStatusMsg("", "info", 100);
+            return;
+          }
+          if (e.key === "y") {
+            e.preventDefault();
+            const sel = window.getSelection()?.toString();
+            if (sel) {
+              copyToClipboard(sel, `Selection (${sel.length} chars)`);
+            } else {
+              showStatusMsg("No text selected to yank", "warning");
+            }
+            updateModeBadge("NORMAL");
+            return;
+          }
+        }
+
+        // NORMAL MODE MOTIONS & ACTIONS
+
+        // Multi-key: pending 'g' (e.g. gg)
+        if (pendingG) {
+          pendingG = false;
+          if (e.key === "g") {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            showStatusMsg("Top of buffer (gg)", "info", 1500);
+            return;
+          }
+        }
+
+        // Multi-key: pending 'y' (e.g. ye, yy)
+        if (pendingY) {
+          pendingY = false;
+          if (e.key === "e") {
+            e.preventDefault();
+            copyToClipboard(developerEmail, developerEmail);
+            return;
+          }
+          if (e.key === "y") {
+            e.preventDefault();
+            yankVisibleSection();
+            return;
+          }
+        }
+
+        // Multi-key: pending ']' (e.g. ]])
+        if (pendingBracketClose) {
+          pendingBracketClose = false;
+          if (e.key === "]") {
+            e.preventDefault();
+            jumpSection("next");
+            return;
+          }
+        }
+
+        // Multi-key: pending '[' (e.g. [[)
+        if (pendingBracketOpen) {
+          pendingBracketOpen = false;
+          if (e.key === "[") {
+            e.preventDefault();
+            jumpSection("prev");
+            return;
+          }
+        }
+
+        // Single key triggers:
+        if (e.key === "g" && !e.ctrlKey && !e.metaKey) {
+          pendingG = true;
+          setTimeout(() => (pendingG = false), 600);
+          return;
+        }
+
+        if (e.key === "y" && !e.ctrlKey && !e.metaKey) {
+          pendingY = true;
+          setTimeout(() => (pendingY = false), 600);
+          return;
+        }
+
+        if (e.key === "]" && !e.ctrlKey && !e.metaKey) {
+          pendingBracketClose = true;
+          setTimeout(() => (pendingBracketClose = false), 600);
+          return;
+        }
+
+        if (e.key === "[" && !e.ctrlKey && !e.metaKey) {
+          pendingBracketOpen = true;
+          setTimeout(() => (pendingBracketOpen = false), 600);
+          return;
+        }
+
+        // Motions
+        if (e.key === "j") {
+          e.preventDefault();
+          window.scrollBy({ top: 60, behavior: "smooth" });
+          return;
+        }
+        if (e.key === "k") {
+          e.preventDefault();
+          window.scrollBy({ top: -60, behavior: "smooth" });
+          return;
+        }
+        if (e.key === "d" && (e.ctrlKey || !e.metaKey)) {
+          // Half-page down
+          e.preventDefault();
+          window.scrollBy({ top: window.innerHeight * 0.5, behavior: "smooth" });
+          return;
+        }
+        if (e.key === "u" && (e.ctrlKey || !e.metaKey)) {
+          // Half-page up
+          e.preventDefault();
+          window.scrollBy({ top: -window.innerHeight * 0.5, behavior: "smooth" });
+          return;
+        }
+        if (e.key === "G") {
+          // Shift + G -> bottom
+          e.preventDefault();
+          window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: "smooth",
+          });
+          showStatusMsg("End of buffer (G)", "info", 1500);
+          return;
+        }
+        if (e.key === "H") {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          return;
+        }
+        if (e.key === "M") {
+          e.preventDefault();
+          window.scrollTo({
+            top: document.documentElement.scrollHeight / 2,
+            behavior: "smooth",
+          });
+          return;
+        }
+        if (e.key === "L") {
+          e.preventDefault();
+          window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: "smooth",
+          });
+          return;
+        }
+
+        // Visual Mode Toggle
+        if (e.key === "v" || e.key === "V") {
+          e.preventDefault();
+          updateModeBadge("VISUAL");
+          showStatusMsg("-- VISUAL -- (press 'y' to yank, 'Esc' to exit)", "info", 4000);
+          return;
+        }
+
+        // Help Modal
+        if (e.key === "?") {
+          e.preventDefault();
+          toggleHelpModal();
+          return;
+        }
+
+        // Enter Command Line
+        if (e.key === ":") {
+          e.preventDefault();
+          enterCommandMode();
+          return;
+        }
+
+        // Readonly Mutation Warnings
+        const readonlyEditKeys = ["i", "I", "a", "A", "o", "O", "c", "C", "s", "S", "r", "R", "x", "X", "p", "P"];
+        if (readonlyEditKeys.includes(e.key) && !e.ctrlKey && !e.metaKey) {
+          e.preventDefault();
+          showStatusMsg(
+            "W10: Warning: Changing a readonly file ('modifiable' is off)",
+            "warning",
+            3000
+          );
+          flashRoBadge();
+          return;
+        }
+      });
+    }
+
+    // Initialize when DOM ready
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initVim);
+    } else {
+      initVim();
+    }
+  })();
+</script>
