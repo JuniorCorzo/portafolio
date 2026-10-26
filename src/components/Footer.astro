@@ -41,17 +41,6 @@ if (pathname === "/servicios" || pathname === "/servicios/") {
       </div>
       <div class="statusbar-center" id="vimCmdContainer">
         <span class="statusbar-msg" id="vimStatusMsg" aria-live="polite"></span>
-        <div class="vim-cmd-box" id="vimCmdBox" style="display: none;">
-          <span class="vim-cmd-prompt">:</span>
-          <input
-            type="text"
-            id="vimCmdInput"
-            class="vim-cmd-input"
-            spellcheck="false"
-            autocomplete="off"
-            aria-label="Vim command line"
-          />
-        </div>
       </div>
       <div class="statusbar-right">
         <button type="button" class="sb-hint-btn" id="vimHelpToggle" aria-label="Abrir ayuda de Vim">
@@ -228,30 +217,7 @@ if (pathname === "/servicios" || pathname === "/servicios/") {
     color: var(--sky);
   }
 
-  .vim-cmd-box {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    gap: 4px;
-  }
 
-  .vim-cmd-prompt {
-    color: var(--green);
-    font-weight: 700;
-    font-size: 0.85rem;
-  }
-
-  .vim-cmd-input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: var(--text);
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    padding: 0;
-    margin: 0;
-  }
 
   .statusbar-right {
     display: flex;

@@ -11,13 +11,7 @@ function read(...segments) {
   return readFileSync(resolve(SRC, ...segments), "utf-8");
 }
 
-function assert(condition, message) {
-  if (!condition) {
-    console.error("❌ FAIL:", message);
-    process.exit(1);
-  }
-  console.log("✅ PASS:", message);
-}
+
 
 let passed = 0;
 let failed = 0;
@@ -372,9 +366,13 @@ check(
     vimModeContent.includes("isDesktop") &&
     vimModeContent.includes("Changing a readonly file") &&
     vimModeContent.includes("copyToClipboard") &&
+    vimModeContent.includes("vimCmdPalette") &&
+    vimModeContent.includes("vim-cmd-float") &&
     existsSync(vimHelpModalPath) &&
-    vimHelpContent.includes("vim-mode.txt"),
-  "VimMode and VimHelpModal implement desktop-only readonly guards, motions, yanks, and help window"
+    vimHelpContent.includes("vim-mode.txt") &&
+    vimHelpContent.includes("[nomodifiable]") &&
+    !vimHelpContent.includes("╭─"),
+  "VimMode and VimHelpModal implement floating command palette (noice.nvim), readonly guards, snappy motions, and modern Neovim float window without ASCII borders"
 );
 
 
