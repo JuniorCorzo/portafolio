@@ -18,6 +18,7 @@
 - [Desarrollo de Agentes de IA en Colombia](https://angelcorzo.dev/servicios/agentes-ia/): Soluciones con LLMs, arquitecturas RAG y automatización para empresas.
 
 ## Casos de Estudio Técnicos
+- [Nivo: Arquitectura Limpia en Java 21 y Plataforma SaaS Multi-Tenant](https://angelcorzo.dev/study-case/nivo/): Plataforma cloud-native en producción con Spring Boot 3.5, Angular 20+, telemetría SSE y arquitectura limpia.
 - [Facturación Electrónica DIAN Colombia: API Java y Factus](https://angelcorzo.dev/study-case/factus-dependency/): Integración API REST, OAuth, generación XML/UBL y emisión asíncrona.
 - [Arquitectura Hexagonal en Java 21: E-Commerce y Microservicios](https://angelcorzo.dev/study-case/urban-style/): Arquitectura limpia Ports & Adapters, caché con Redis y backend resiliente.
 - [Sistema de Trazabilidad Agroindustrial y Gestión en Colombia](https://angelcorzo.dev/study-case/dayen/): Control de cultivos de arroz, insumos y analítica de procesos.

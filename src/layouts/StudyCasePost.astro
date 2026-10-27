@@ -10,12 +10,19 @@ type Props = CollectionEntry<"study-case">["data"];
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://angelcorzo.dev");
+const imageUrl = heroImage ? new URL(heroImage, canonicalURL).toString() : new URL("/images/og.png", canonicalURL).toString();
+
 const techArticleSchema = {
   "@context": "https://schema.org",
   "@type": "TechArticle",
   headline: title,
   description: description,
+  image: [imageUrl],
   url: canonicalURL.toString(),
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": canonicalURL.toString(),
+  },
   datePublished: pubDate,
   dateModified: updatedDate || pubDate,
   author: {
