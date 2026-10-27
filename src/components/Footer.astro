@@ -356,6 +356,12 @@ if (pathname === "/servicios" || pathname === "/servicios/") {
   }
 
   @media (max-width: 768px) {
+    .terminal-statusbar {
+      display: none;
+    }
+    .footer {
+      padding-bottom: 28px;
+    }
     .sb-desktop-only {
       display: none;
     }
@@ -369,7 +375,7 @@ if (pathname === "/servicios" || pathname === "/servicios/") {
 
   @media (max-width: 640px) {
     .footer {
-      padding: 30px 0 calc(24px + 44px);
+      padding: 30px 0 24px;
     }
 
     .footer-links {

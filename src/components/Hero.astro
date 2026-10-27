@@ -22,10 +22,10 @@ const waUrl = WHATSAPP_NUMBER
 <section class="hero-section">
   <div class="hero-container">
     <div class="hero-chips">
-      {HERO_CHIPS.map(({ title, color, background, icon }) => (
+      {HERO_CHIPS.map(({ title, color, background, icon }, index) => (
         <span
-          class="chip"
-          style={`color: var(${color}); background: rgba(var(${background}), 0.08); border-color: var(${color});`}
+          class={`chip ${index === 0 ? "chip-status" : "chip-desktop-only"}`}
+          style={`color: var(${color}); border: 1px solid; border-color: rgba(var(${background}), 0.35); background: rgba(var(${background}), 0.06);`}
         >
           {icon ? <Icon name={icon} size={14} class="chip-icon" /> : <span class="chip-dot">●</span>}
           {title}
@@ -40,7 +40,33 @@ const waUrl = WHATSAPP_NUMBER
           <span class="headline-accent">{HERO_HEADLINE_2}</span>
         </h1>
 
-        <p class="hero-subtitle">Hola, soy {DEVELOPER_NAME}</p>
+        <div class="hero-greeting-group">
+          <button
+            type="button"
+            id="heroAvatarBtn"
+            class="hero-avatar-btn"
+            aria-label="Ver foto de perfil de Angel Corzo ampliada"
+            aria-haspopup="dialog"
+            aria-expanded="false"
+            aria-controls="heroImageContainer"
+          >
+            <span class="hero-avatar-wrapper">
+              <Image
+                src={HERO_IMAGE}
+                class="hero-avatar-img"
+                alt="Angel Corzo - Foto de perfil"
+                loading="eager"
+                width={72}
+                height={72}
+              />
+              <span class="avatar-expand-icon-wrap" aria-hidden="true">
+                <Icon name="lucide:maximize-2" size={12} class="avatar-expand-icon" />
+              </span>
+            </span>
+          </button>
+          <p class="hero-subtitle">Hola, soy {DEVELOPER_NAME}</p>
+        </div>
+
         <p class="hero-description">{HERO_DESCRIPTION}</p>
 
         <div class="hero-cta">
@@ -56,8 +82,22 @@ const waUrl = WHATSAPP_NUMBER
         </div>
       </div>
 
-      <div class="hero-image-container">
+      <div
+        class="hero-image-container"
+        id="heroImageContainer"
+        role="region"
+        aria-label="Foto de perfil de Angel Corzo ampliada"
+      >
         <div class="photo-pane-wrap">
+          <button
+            type="button"
+            id="heroModalClose"
+            class="hero-modal-close"
+            aria-label="Cerrar vista ampliada"
+          >
+            <Icon name="lucide:x" size={20} />
+          </button>
+
           <div class="photo-top-hud">
             <span class="hud-filename">BUFFER: img/angel_corzo.webp</span>
             <span class="hud-status-badge">[CALIBRATED · 380x350]</span>
@@ -188,7 +228,7 @@ const waUrl = WHATSAPP_NUMBER
   .hero-subtitle {
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--green);
+    color: var(--subtext1);
     margin-top: 14px;
     margin-bottom: 0;
     font-family: var(--font-mono);
@@ -276,6 +316,21 @@ const waUrl = WHATSAPP_NUMBER
     flex-direction: column;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
     transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+    position: relative;
+  }
+
+  .hero-greeting-group {
+    display: contents;
+  }
+
+  .hero-avatar-btn,
+  #heroAvatarBtn {
+    display: none;
+  }
+
+  .hero-modal-close,
+  #heroModalClose {
+    display: none;
   }
 
   .photo-pane-wrap:hover {
@@ -394,10 +449,161 @@ const waUrl = WHATSAPP_NUMBER
       gap: 36px;
     }
 
-    .hero-image-container {
-      margin: 16px auto 0;
-      max-width: 380px;
-      width: 100%;
+    .hero-greeting-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .hero-greeting-group .hero-subtitle {
+      margin-top: 0;
+    }
+
+    .hero-avatar-btn,
+    #heroAvatarBtn {
+      display: inline-flex;
+      position: relative;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      flex-shrink: 0;
+      border-radius: 50%;
+      outline: none;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-avatar-btn:hover {
+      transform: scale(1.04);
+    }
+
+    .hero-avatar-btn:focus-visible {
+      outline: 2px solid var(--mauve);
+      outline-offset: 3px;
+    }
+
+    .hero-avatar-wrapper {
+      position: relative;
+      width: 72px;
+      height: 72px;
+      display: block;
+      border-radius: 50%;
+    }
+
+    .hero-avatar-img {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 2px solid var(--mauve);
+      object-fit: cover;
+      object-position: center 18%;
+      display: block;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+      background: var(--surface0);
+    }
+
+    .avatar-expand-icon-wrap {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--surface0);
+      border: 1.5px solid var(--mauve);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--mauve);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .hero-avatar-btn:hover .avatar-expand-icon-wrap {
+      background: var(--mauve);
+      color: var(--crust);
+      transform: scale(1.1);
+    }
+
+    .hero-image-container,
+    #heroImageContainer {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      margin: 0;
+      max-width: none;
+    }
+
+    .hero-image-container.open,
+    #heroImageContainer.open {
+      display: flex;
+      animation: heroModalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-image-container.open .photo-pane-wrap {
+      animation: heroModalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-modal-close,
+    #heroModalClose {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      z-index: 20;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: rgba(var(--mantle-rgb, 24, 24, 38), 0.8);
+      border: 1px solid rgba(var(--mauve-rgb), 0.4);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 0;
+    }
+
+    .hero-modal-close:hover {
+      background: var(--mauve);
+      color: var(--crust);
+    }
+
+    .hero-modal-close:focus-visible {
+      outline: 2px solid var(--mauve);
+      outline-offset: 2px;
+    }
+
+    .photo-top-hud {
+      padding-right: 48px;
+    }
+  }
+
+  @keyframes heroModalFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes heroModalPop {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
     }
   }
 
@@ -408,8 +614,17 @@ const waUrl = WHATSAPP_NUMBER
   }
 
   @media (max-width: 640px) {
+    .hero-section {
+      padding: 32px 16px 48px;
+    }
+
     .hero-chips {
       gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .chip-desktop-only {
+      display: none !important;
     }
 
     .hero-subtitle {
@@ -429,3 +644,63 @@ const waUrl = WHATSAPP_NUMBER
     }
   }
 </style>
+
+<script>
+  function setupHeroAvatarModal() {
+    const avatarBtn = document.getElementById("heroAvatarBtn") as HTMLButtonElement | null;
+    const container = document.getElementById("heroImageContainer");
+    const closeBtn = document.getElementById("heroModalClose") as HTMLButtonElement | null;
+    const paneWrap = container?.querySelector(".photo-pane-wrap");
+
+    if (!avatarBtn || !container) return;
+    const btn = avatarBtn;
+    const modal = container;
+
+    if (btn.dataset.modalBound === "true") return;
+    btn.dataset.modalBound = "true";
+
+    function openModal() {
+      modal.classList.add("open");
+      modal.setAttribute("role", "dialog");
+      modal.setAttribute("aria-modal", "true");
+      btn.setAttribute("aria-expanded", "true");
+      document.body.style.overflow = "hidden";
+      closeBtn?.focus();
+    }
+
+    function closeModal() {
+      if (!modal.classList.contains("open")) return;
+      modal.classList.remove("open");
+      modal.setAttribute("role", "region");
+      modal.removeAttribute("aria-modal");
+      btn.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+      btn.focus();
+    }
+
+    btn.addEventListener("click", openModal);
+    closeBtn?.addEventListener("click", closeModal);
+
+    modal.addEventListener("click", (e) => {
+      if (e.target instanceof Node && paneWrap && !paneWrap.contains(e.target)) {
+        closeModal();
+      }
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("open")) {
+        closeModal();
+      }
+    });
+
+    const mql = window.matchMedia("(min-width: 1024px)");
+    mql.addEventListener("change", (e) => {
+      if (e.matches && modal.classList.contains("open")) {
+        closeModal();
+      }
+    });
+  }
+
+  setupHeroAvatarModal();
+  document.addEventListener("astro:after-swap", setupHeroAvatarModal);
+</script>

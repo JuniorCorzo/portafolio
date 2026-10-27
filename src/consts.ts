@@ -138,6 +138,38 @@ export const EXPERIENCE = [
 // Portfolio Projects - Optimized with LSI Keywords
 export const PROJECTS = [
   {
+    title: "Nivo - Plataforma SaaS Multi-Tenant para Gestión de Estacionamientos",
+    description:
+      "Plataforma cloud-native multi-tenant en producción para modernizar la operativa de estacionamientos comerciales (de talonario de papel a control digital en 2 minutos). Arquitectura limpia con backend Spring Boot 3.5 en Java 21, frontend Angular 20+, motor de tarifas en tiempo real (PricingEngine), telemetría de ocupación vía SSE y tickets digitales públicos con QR.",
+    challenge:
+      "Digitalizar la operativa de parqueaderos independientes sin inversión en hardware dedicado ni servidores locales, garantizando aislamiento estricto multi-tenant y cálculo dinámico de tarifas en milisegundos",
+    solution:
+      "Monorepo con Clean Architecture en Java 21/Spring Boot, persistencia PostgreSQL con aislamiento tenant_id, frontend Angular 20+ con ChangeDetection OnPush, Server-Sent Events (SSE) para ocupación en vivo y simulador público de tarifas",
+    learning: [
+      "Diseño de Clean Architecture en Spring Boot 3: desacoplamiento estricto de Domain (model/usecase) frente a Infrastructure (driven-adapters/entry-points)",
+      "Aislamiento multi-tenant a nivel de base de datos y application context con validación estricta de invariantes de seguridad",
+      "Transmisión reactiva de eventos con Server-Sent Events (SSE) para sincronizar estado de ocupación de celdas en tiempo real sin polling",
+      "Desarrollo de un Design System propio (@nivo-sass/design-system) en Angular con componentes accesibles WCAG 2.1 AA y tokens CSS centralizados",
+      "Landing page con simulador de tarifas en vivo conectado directamente a los endpoints del core de pricing en producción",
+    ],
+    results: "En producción | Multi-tenant SaaS | <2 min onboarding | Cero hardware propietario",
+    tech: [
+      "Java 21",
+      "Spring Boot 3",
+      "Angular 20",
+      "PostgreSQL",
+      "Clean Architecture",
+      "Docker",
+      "SSE",
+      "Tailwind CSS",
+    ],
+    githubUrl: "https://github.com/juniorcorzo/nivo",
+    caseStudyUrl: "/study-case/nivo",
+    liveUrl: "https://nivo.angelcorzo.dev",
+    sector: "SaaS / Movilidad Urbana",
+    badge: "En Producción",
+  },
+  {
     title: "Urban Style - Plataforma E-Commerce Escalable",
     description:
       "Sistema completo de comercio electrónico con arquitectura hexagonal backend en Spring Boot, frontend Astro/React, autenticación JWT, gestión de inventario, carrito de compras persistente y optimización de imágenes con CDN Cloudflare R2.",

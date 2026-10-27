@@ -105,9 +105,16 @@ const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(messag
     flex-shrink: 0;
   }
 
+  @media (max-width: 768px) {
+    .whatsapp-float {
+      bottom: 20px;
+      right: 20px;
+    }
+  }
+
   @media (max-width: 640px) {
     .whatsapp-float {
-      bottom: calc(16px + 36px);
+      bottom: 16px;
       right: 16px;
       width: 56px;
       height: 56px;

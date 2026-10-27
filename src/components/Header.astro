@@ -405,10 +405,12 @@ const isActive = (path: string) => {
       left: 0;
       transform: none;
       align-items: start;
-      top: 60px;
+      top: 100%;
       flex-direction: column;
       padding: 16px 20px;
       gap: 8px;
+      border-top: 1px solid rgba(var(--overlay0-rgb), 0.2);
+      border-bottom: 1px solid rgba(var(--overlay0-rgb), 0.3);
       border-radius: 0 0 8px 8px;
       box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
       z-index: 9999;
@@ -449,7 +451,8 @@ const isActive = (path: string) => {
     }
 
     .nav-links {
-      gap: 12px;
+      padding: 16px;
+      gap: 10px;
     }
   }
 </style>

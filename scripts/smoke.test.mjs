@@ -514,6 +514,7 @@ const EXPECTED_ROUTES = [
   "/study-case/dayen/",
   "/study-case/factus-dependency/",
   "/study-case/instruments-manage/",
+  "/study-case/nivo/",
   "/study-case/urban-style/",
 ];
 
@@ -725,6 +726,163 @@ check(
   `All internal links across prerendered HTML resolve to valid static assets or pages (0 broken links)${
     brokenLinks.length ? `: broken [${brokenLinks.join(", ")}]` : ""
   }`
+);
+
+// 21. Mobile button layout & Hero chip color harmony
+const projectsSource = read("components", "Projects.astro");
+const heroSource = read("data", "hero.ts");
+
+const mobileQueryIdx = projectsSource.indexOf("@media (max-width: 640px)");
+const mobileQueryContent = mobileQueryIdx !== -1 ? projectsSource.slice(mobileQueryIdx) : "";
+
+check(
+  mobileQueryContent.includes("flex-direction: column") &&
+    mobileQueryContent.includes("width: 100%"),
+  "Projects.astro includes flex-direction: column and width: 100% inside mobile media query"
+);
+
+const heroChipsMatch = heroSource.match(/export const HERO_CHIPS\s*=\s*(\[[\s\S]*?\]);/);
+const heroChipsContent = heroChipsMatch ? heroChipsMatch[1] : "";
+
+check(
+  !heroChipsContent.includes("--sky"),
+  "HERO_CHIPS does not use --sky (harmonized visual hierarchy)"
+);
+
+// 22. Mobile Statusbar & WhatsApp Ergonomic Layout
+const footerSource = read("components", "Footer.astro");
+const footer768Idx = footerSource.indexOf("@media (max-width: 768px)");
+const footer768Content = footer768Idx !== -1 ? footerSource.slice(footer768Idx) : "";
+
+check(
+  footer768Content.includes(".terminal-statusbar") &&
+    footer768Content.includes("display: none"),
+  "Footer.astro hides .terminal-statusbar on mobile (<= 768px)"
+);
+
+const waSource = read("components", "WhatsAppButton.astro");
+const wa640Idx = waSource.indexOf("@media (max-width: 640px)");
+const wa640Content = wa640Idx !== -1 ? waSource.slice(wa640Idx) : "";
+
+check(
+  wa640Idx !== -1 && !wa640Content.includes("+ 36px"),
+  "WhatsAppButton.astro does not use + 36px bottom offset inside mobile media query"
+);
+
+// 23. Mobile Gutter Normalization & Double-Padding Elimination
+const indexSource = read("pages", "index.astro");
+const index640Idx = indexSource.indexOf("@media (max-width: 640px)");
+const index640Content = index640Idx !== -1 ? indexSource.slice(index640Idx) : "";
+
+check(
+  indexSource.includes("padding: 80px 0;") &&
+    index640Content.includes(".container") &&
+    index640Content.includes("padding: 0 16px;") &&
+    index640Content.includes("padding: 48px 0;"),
+  "index.astro eliminates nested double padding with 80px 0 / 48px 0 on sections and 16px container gutter on mobile"
+);
+
+const heroComponentSource = read("components", "Hero.astro");
+const hero640Idx = heroComponentSource.indexOf("@media (max-width: 640px)");
+const hero640Content = hero640Idx !== -1 ? heroComponentSource.slice(hero640Idx) : "";
+
+check(
+  hero640Content.includes(".hero-section") &&
+    hero640Content.includes("padding: 32px 16px 48px;"),
+  "Hero.astro standardizes mobile padding to 32px 16px 48px"
+);
+
+const servicesComponentSource = read("components", "ServicesTeaser.astro");
+const services640Idx = servicesComponentSource.indexOf("@media (max-width: 640px)");
+const services640Content = services640Idx !== -1 ? servicesComponentSource.slice(services640Idx) : "";
+
+check(
+  services640Content.includes(".services-section") &&
+    services640Content.includes("padding: 48px 16px;"),
+  "ServicesTeaser.astro standardizes mobile padding to 48px 16px"
+);
+
+const projectsComponentSource = read("components", "Projects.astro");
+const projects640Idx = projectsComponentSource.indexOf("@media (max-width: 640px)");
+const projects640ContentProjects = projects640Idx !== -1 ? projectsComponentSource.slice(projects640Idx) : "";
+
+check(
+  projects640ContentProjects.includes(".projects-section") &&
+    projects640ContentProjects.includes("padding: 48px 16px;"),
+  "Projects.astro standardizes mobile padding to 48px 16px"
+);
+
+const githubSource = read("components", "GithubActivity.astro");
+const github640Idx = githubSource.indexOf("@media (max-width: 640px)");
+const github640Content = github640Idx !== -1 ? githubSource.slice(github640Idx) : "";
+
+check(
+  github640Content.includes(".github-activity-terminal") &&
+    github640Content.includes("margin-top: 24px;") &&
+    github640Content.includes(".terminal-body") &&
+    github640Content.includes("padding: 12px 10px 8px;"),
+  "GithubActivity.astro standardizes mobile spacing and compact padding"
+);
+
+// 24. Hero Mobile Expandable Avatar & Modal Overlay
+const heroAvatarContent = read("components", "Hero.astro");
+check(
+  (heroAvatarContent.includes('id="heroAvatarBtn"') || heroAvatarContent.includes("#heroAvatarBtn")) &&
+    (heroAvatarContent.includes('id="heroImageContainer"') || heroAvatarContent.includes("#heroImageContainer")),
+  "Hero.astro includes #heroAvatarBtn and #heroImageContainer"
+);
+check(
+  (heroAvatarContent.includes('id="heroModalClose"') || heroAvatarContent.includes("#heroModalClose")) &&
+    heroAvatarContent.includes("hero-avatar-btn"),
+  "Hero.astro includes #heroModalClose and hero-avatar-btn"
+);
+
+// 25. Hero Responsive Chips Hierarchy
+const heroSourceForChips = read("components", "Hero.astro");
+const hero640IdxForChips = heroSourceForChips.indexOf("@media (max-width: 640px)");
+const hero640ContentForChips = hero640IdxForChips !== -1 ? heroSourceForChips.slice(hero640IdxForChips) : "";
+
+check(
+  heroSourceForChips.includes("chip-desktop-only") &&
+    heroSourceForChips.includes("chip-status") &&
+    hero640ContentForChips.includes(".chip-desktop-only") &&
+    hero640ContentForChips.includes("display: none"),
+  "Hero.astro renders responsive chips with .chip-desktop-only hidden on mobile (display: none)"
+);
+
+// 26. Header Mobile Menu Position & Border
+const headerSource = read("components", "Header.astro");
+const header1024Idx = headerSource.indexOf("@media (max-width: 1024px)");
+const header1024Content = header1024Idx !== -1 ? headerSource.slice(header1024Idx) : "";
+check(
+  header1024Content.includes("top: 100%") &&
+    header1024Content.includes("border-top: 1px solid"),
+  "Header.astro positions mobile menu at top: 100% with border boundary"
+);
+
+// 27. Nivo Project & Case Study Integration
+const constsSource = read("consts.ts");
+check(
+  constsSource.includes("https://nivo.angelcorzo.dev") &&
+    constsSource.includes("En Producción") &&
+    constsSource.includes("/study-case/nivo"),
+  "consts.ts includes Nivo project with liveUrl and En Producción badge"
+);
+
+const projectsAstro = read("components", "Projects.astro");
+check(
+  projectsAstro.includes("live-link") &&
+    projectsAstro.includes("project.liveUrl") &&
+    projectsAstro.includes("project.badge"),
+  "Projects.astro supports liveUrl and status badge"
+);
+
+const nivoStudyCase = read("content", "study-case", "nivo.md");
+check(
+  nivoStudyCase.includes("https://nivo.angelcorzo.dev") &&
+    nivoStudyCase.includes("Clean Architecture") &&
+    nivoStudyCase.includes("PricingEngine"),
+  "nivo.md technical case study exists with architecture and live production details"
 );
 
 console.log("\n--------------------------");

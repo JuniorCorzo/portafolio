@@ -200,3 +200,5 @@ dist
 
 ### Astro ###
 .astro/
+# Local AI runtime state
+.atl/

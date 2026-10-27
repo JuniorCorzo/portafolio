@@ -9,14 +9,14 @@ export const HERO_CHIPS = [
   {
     title: "Disponible para proyectos",
     icon: "lucide:check-circle-2",
-    background: "--sky-rgb",
-    color: "--sky",
+    background: "--green-rgb",
+    color: "--green",
   },
   {
     title: "3+ años de experiencia",
     icon: "lucide:badge-check",
-    background: "--green-rgb",
-    color: "--green",
+    background: "--mauve-rgb",
+    color: "--mauve",
   },
   {
     title: "Full-Stack Developer",

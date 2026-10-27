@@ -17,7 +17,14 @@ import { PROJECTS } from "../consts";
         PROJECTS.length > 0 ? (
           PROJECTS.map((project, index) => (
             <article class="project-card">
-              <div class="project-header">// case-study-{index + 1}.md</div>
+              <div class="project-header">
+                <span class="project-header-file">// case-study-{index + 1}.md</span>
+                {project.badge && (
+                  <span class="project-badge">
+                    <span class="badge-dot" aria-hidden="true">●</span> {project.badge}
+                  </span>
+                )}
+              </div>
               <div class="project-body">
                 <h3 class="project-title">{project.title}</h3>
                 <p class="project-description">{project.description}</p>
@@ -30,6 +37,11 @@ import { PROJECTS } from "../consts";
                 </div>
 
                 <div class="project-links">
+                  {project.liveUrl && (
+                    <a href={project.liveUrl} class="project-link live-link" target="_blank" rel="noopener noreferrer">
+                      <Icon name="lucide:external-link" size={16} /> Ver Landing
+                    </a>
+                  )}
                   <a href={project.githubUrl} class="project-link github-link" target="_blank" rel="noopener noreferrer">
                     <Icon name="lucide:github" size={16} /> GitHub
                   </a>
@@ -137,6 +149,44 @@ import { PROJECTS } from "../consts";
     margin: 0;
     padding: 1.25rem 1.5rem 0;
     user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .project-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    background: rgba(var(--green-rgb), 0.12);
+    color: var(--green);
+    border: 1px solid rgba(var(--green-rgb), 0.3);
+    letter-spacing: 0.02em;
+  }
+
+  :global(html[data-theme="latte"]) .project-badge {
+    background: rgba(64, 160, 43, 0.12);
+    color: #40a02b;
+    border-color: rgba(64, 160, 43, 0.3);
+  }
+
+  .badge-dot {
+    font-size: 0.65rem;
+    color: var(--green);
+    animation: pulse-node 2s infinite ease-in-out;
+  }
+
+  :global(html[data-theme="latte"]) .badge-dot {
+    color: #40a02b;
+  }
+
+  @keyframes pulse-node {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
   }
 
   .project-body {
@@ -182,21 +232,22 @@ import { PROJECTS } from "../consts";
 
   .tech-chip {
     display: inline-block;
-    background: rgba(var(--sky-rgb), 0.08);
-    color: var(--sky);
+    background: var(--surface1);
+    color: var(--subtext1);
     padding: 4px 10px;
     border-radius: 9999px;
     font-size: 0.75rem;
     font-weight: 600;
     font-family: var(--font-mono);
-    border: 1px solid rgba(var(--sky-rgb), 0.35);
+    border: 1px solid rgba(var(--overlay0-rgb), 0.4);
   }
 
   .project-links {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     align-items: center;
     margin-top: auto;
+    flex-wrap: wrap;
   }
 
   .project-empty {
@@ -276,9 +327,31 @@ import { PROJECTS } from "../consts";
   }
 
   .case-study-link:hover {
-    border-color: var(--sky);
-    color: var(--sky);
+    border-color: var(--mauve);
+    color: var(--mauve);
     transform: translateY(-2px);
+  }
+
+  .live-link {
+    background: var(--green);
+    color: var(--crust);
+    border: 2px solid var(--green);
+    box-shadow: 0 4px 12px rgba(var(--green-rgb), 0.2);
+    width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .live-link:hover {
+    background: #85d58f;
+    border-color: #85d58f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(var(--green-rgb), 0.35);
+  }
+
+  :global(html[data-theme="latte"]) .live-link {
+    background: #40a02b;
+    border-color: #40a02b;
+    color: #ffffff;
   }
 
   @media (max-width: 1024px) {
@@ -299,7 +372,7 @@ import { PROJECTS } from "../consts";
 
   @media (max-width: 640px) {
     .projects-section {
-      padding: 40px 20px;
+      padding: 48px 16px;
     }
 
     .section-title {
@@ -312,6 +385,20 @@ import { PROJECTS } from "../consts";
 
     .projects-grid {
       grid-template-columns: 1fr;
+    }
+
+    .project-body {
+      padding: 12px 16px 20px;
+    }
+
+    .project-links {
+      flex-direction: column;
+      width: 100%;
+      gap: 10px;
+    }
+
+    .project-link {
+      width: 100%;
     }
   }
 </style>
