@@ -244,10 +244,10 @@ import { PROJECTS } from "../consts";
 
   .project-links {
     display: flex;
+    flex-direction: column;
     gap: 10px;
-    align-items: center;
+    width: 100%;
     margin-top: auto;
-    flex-wrap: wrap;
   }
 
   .project-empty {
@@ -292,7 +292,7 @@ import { PROJECTS } from "../consts";
     align-items: center;
     justify-content: center;
     gap: 8px;
-    flex: 1;
+    width: 100%;
     padding: 8px 14px;
     min-height: 44px;
     border-radius: 6px;
@@ -304,6 +304,11 @@ import { PROJECTS } from "../consts";
     transition: all 0.25s ease-in-out;
     line-height: 1.2;
     white-space: nowrap;
+  }
+
+  .project-empty-actions .project-link {
+    width: auto;
+    flex: 1;
   }
 
   .github-link {
