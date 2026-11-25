@@ -5,7 +5,7 @@ import Footer from "../components/Footer.astro";
 import Experience from "../components/Experience.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
 import { HERO_IMAGE, SKILLS } from "../consts";
-import { SITE_TITLE, DEVELOPER_NAME } from "../data/site";
+import { DEVELOPER_NAME } from "../data/site";
 import { Image } from "astro:assets";
 
 const skillCategories = [
@@ -20,7 +20,7 @@ const skillCategories = [
 <html lang="es">
   <head>
     <BaseHead
-      title={`Sobre mí — ${SITE_TITLE}`}
+      title={`Sobre mí — Arquitecto de Software | ${DEVELOPER_NAME}`}
       description={`Conoce a ${DEVELOPER_NAME}: desarrollador Full Stack, creador de Nivo SaaS en producción y experiencia en Ecopetrol con arquitectura limpia y microservicios.`}
     />
     <meta name="theme-color" content="#1e1e2e" />

@@ -6,7 +6,7 @@ import { Icon } from "astro-icon/components";
 import WhatsAppButton from "../../components/WhatsAppButton.astro";
 import { LINKEDIN_SERVICES_URL } from "../../data/contact";
 import { SERVICES } from "../../data/services";
-import { SITE_TITLE, DEVELOPER_NAME } from "../../data/site";
+import { DEVELOPER_NAME } from "../../data/site";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
@@ -31,7 +31,7 @@ if (!service) {
 const rendered = entry ? await render(entry) : null;
 const Content = rendered?.Content;
 
-const canonicalURL = new URL(`/servicios/${service.slug}`, Astro.site || "https://angelcorzo.dev");
+const canonicalURL = new URL(`/servicios/${service.slug}/`, Astro.site || "https://angelcorzo.dev");
 
 const serviceSchema = {
   "@context": "https://schema.org",
@@ -61,10 +61,9 @@ const serviceSchema = {
 <html lang="es">
   <head>
     <BaseHead
-      title={`${service.title} — Servicios | ${SITE_TITLE}`}
+      title={`${service.title} | ${DEVELOPER_NAME}`}
       description={service.description}
     />
-    <meta name="theme-color" content="#1e1e2e" />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
   </head>
   <body>

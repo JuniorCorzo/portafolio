@@ -9,7 +9,7 @@ import {
   WHATSAPP_MESSAGE,
   SOCIAL_LINKS,
 } from "../data/contact";
-import { SITE_TITLE } from "../data/site";
+import { DEVELOPER_NAME } from "../data/site";
 
 const waUrl = WHATSAPP_NUMBER
   ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`
@@ -20,7 +20,7 @@ const waUrl = WHATSAPP_NUMBER
 <html lang="es">
   <head>
     <BaseHead
-      title={`Contacto — ${SITE_TITLE}`}
+      title={`Contacto — Cotiza tu Proyecto | ${DEVELOPER_NAME}`}
       description="Contacta a Angel Corzo para proyectos de desarrollo Full Stack, consultoría técnica o freelance remoto. Respuesta en menos de 24h."
     />
     <meta name="theme-color" content="#1e1e2e" />

@@ -1,4 +1,23 @@
 User-agent: *
 Allow: /
 
+# AI Search & Discovery Crawlers
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
 Sitemap: https://angelcorzo.dev/sitemap-index.xml

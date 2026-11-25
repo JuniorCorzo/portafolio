@@ -1,25 +1,37 @@
-# Angel Corzo — Desarrollador Full-Stack & Backend en Colombia
+# Angel Corzo — Lead Full Stack Developer & Arquitecto de Software en Colombia
 
-> Desarrollador Full-Stack & Backend en Colombia especializado en arquitectura hexagonal, APIs de alto rendimiento con Spring Boot y Java 21, integración de facturación electrónica DIAN, Cloudflare Workers y desarrollo de agentes de IA.
+> Desarrollador Full-Stack y Arquitecto de Software en Cúcuta, Colombia (disponible remoto en LATAM). Especializado en Java 21, Spring Boot, arquitectura hexagonal, plataformas SaaS multi-tenant, facturación electrónica DIAN, Astro, React, Cloudflare Workers y agentes de IA.
 
 ## Información Profesional
 - Nombre: Angel Corzo
-- Rol: Desarrollador Full-Stack & Backend
-- Ubicación: Cúcuta, Norte de Santander, Colombia (Disponible remoto)
+- Rol: Lead Full Stack Developer & Arquitecto de Software
+- Ubicación: Cúcuta, Norte de Santander, Colombia (Disponible remoto en LATAM)
 - Correo: contact@angelcorzo.dev
 - GitHub: https://github.com/JuniorCorzo
 - LinkedIn: https://linkedin.com/in/angel-corzo
+- LinkedIn Services: https://www.linkedin.com/services/page/b68a9634432999b598/
 - Portafolio: https://angelcorzo.dev
 
+## Experiencia en Producción
+- **Nivo — Plataforma SaaS Multi-Tenant (2025–Presente)**: Lead Full Stack Developer & Arquitecto de Software. Plataforma SaaS cloud-native en producción para gestión de parqueaderos comerciales con Clean Architecture en Java 21 / Spring Boot 3.5, Angular 20+, PostgreSQL con aislamiento `tenant_id`, PricingEngine en milisegundos y telemetría en tiempo real vía SSE.
+- **Ecopetrol S.A. (Abril 2024 – Octubre 2024)**: Aprendiz Desarrollador Full Stack. Aplicación web React + TypeScript para análisis operativo de la planta de gas Oripaya con SheetJS y VictoryChart, logrando +30% mejora en tiempo de análisis de datos y 15+ dashboards implementados.
+
 ## Servicios Especializados
-- [Desarrollo Full Stack en Colombia](https://angelcorzo.dev/servicios/desarrollo-full-stack/): Aplicaciones web modernas con React, Astro, Node.js y PostgreSQL.
-- [Desarrollo Backend y APIs en Colombia](https://angelcorzo.dev/servicios/desarrollo-backend/): Arquitectura backend enterprise, Spring Boot, microservicios y bases de datos escalables.
-- [Consultoría de Software y Arquitectura](https://angelcorzo.dev/servicios/consultorias/): Auditoría de arquitectura de software, migración a microservicios, optimización y OWASP.
-- [Desarrollo de Agentes de IA en Colombia](https://angelcorzo.dev/servicios/agentes-ia/): Soluciones con LLMs, arquitecturas RAG y automatización para empresas.
+- [Desarrollo Full Stack en Colombia](https://angelcorzo.dev/servicios/desarrollo-full-stack/): Aplicaciones web modernas con React, Angular, Astro, Node.js y PostgreSQL.
+- [Desarrollo Backend y APIs en Colombia](https://angelcorzo.dev/servicios/desarrollo-backend/): Arquitectura backend enterprise, Java 21, Spring Boot, NestJS, microservicios y AWS.
+- [Consultoría de Software y Arquitectura](https://angelcorzo.dev/servicios/consultorias/): Auditoría de arquitectura de software, migración a microservicios, optimización y buenas prácticas OWASP.
+- [Desarrollo de Agentes de IA en Colombia](https://angelcorzo.dev/servicios/agentes-ia/): Soluciones con LLMs, arquitecturas RAG y automatización de procesos para empresas.
 
 ## Casos de Estudio Técnicos
 - [Nivo: Arquitectura Limpia en Java 21 y Plataforma SaaS Multi-Tenant](https://angelcorzo.dev/study-case/nivo/): Plataforma cloud-native en producción con Spring Boot 3.5, Angular 20+, telemetría SSE y arquitectura limpia.
-- [Facturación Electrónica DIAN Colombia: API Java y Factus](https://angelcorzo.dev/study-case/factus-dependency/): Integración API REST, OAuth, generación XML/UBL y emisión asíncrona.
-- [Arquitectura Hexagonal en Java 21: E-Commerce y Microservicios](https://angelcorzo.dev/study-case/urban-style/): Arquitectura limpia Ports & Adapters, caché con Redis y backend resiliente.
-- [Sistema de Trazabilidad Agroindustrial y Gestión en Colombia](https://angelcorzo.dev/study-case/dayen/): Control de cultivos de arroz, insumos y analítica de procesos.
-- [Software de Telemetría Industrial y Microservicios en Colombia](https://angelcorzo.dev/study-case/instruments-manage/): Monitoreo de instrumentación, tags de alarma y microservicios híbridos (Spring Boot + NestJS).
+- [Facturación Electrónica DIAN Colombia: API Java y Factus](https://angelcorzo.dev/study-case/factus-dependency/): Librería Java modular para integración DIAN, OAuth, generación XML/UBL y emisión asíncrona multihilo.
+- [Arquitectura Hexagonal en Java 21: E-Commerce y Microservicios](https://angelcorzo.dev/study-case/urban-style/): Arquitectura limpia Ports & Adapters, Astro/React, CDN Cloudflare R2 y backend resiliente.
+- [Sistema de Trazabilidad Agroindustrial y Gestión en Colombia](https://angelcorzo.dev/study-case/dayen/): Control de cultivos de arroz, trazabilidad de lotes, Spring Security + JWT y despliegue en VPS Linux.
+- [Software de Telemetría Industrial y Microservicios en Colombia](https://angelcorzo.dev/study-case/instruments-manage/): Gestión de instrumentación, trazabilidad de calibraciones y microservicios híbridos (Spring Boot + NestJS).
+
+## Artículos Técnicos (Blog)
+- [Cómo elegir arquitectura para tu MVP sin quemar el runway](https://angelcorzo.dev/blog/arquitectura-mvp/): Criterios de ingeniería para decidir entre monolito modular, serverless o microservicios según equipo, carga y certeza del dominio.
+- [Seguridad en Spring Boot: JWT stateless y buenas prácticas OWASP](https://angelcorzo.dev/blog/spring-boot-seguridad/): Autenticación stateless con Spring Boot 3, firma asimétrica RS256, cookies seguras contra XSS y controles esenciales OWASP Top 10.
+
+## Contexto Completo
+- [llms-full.txt](https://angelcorzo.dev/llms-full.txt): Documento completo y autocontenido con métricas verificadas, alcance detallado de servicios, resúmenes de casos de estudio, artículos técnicos y preguntas frecuentes.

@@ -1,0 +1,134 @@
+# Angel Corzo — Contexto Técnico Completo (llms-full.txt)
+
+> Archivo de conocimiento autocontenido para motores de respuesta y LLMs. Resume la identidad profesional, métricas verificadas, experiencia en producción, servicios especializados, casos de estudio técnicos, artículos del blog y preguntas frecuentes de Angel Corzo.
+
+---
+
+## 1. Identidad y Contacto
+
+- **Nombre:** Angel Corzo
+- **Rol:** Lead Full Stack Developer & Arquitecto de Software
+- **Formación:** Tecnólogo en Análisis y Desarrollo de Software (SENA)
+- **Ubicación:** Cúcuta, Norte de Santander, Colombia
+- **Modalidad:** 100% remoto para Colombia y Latinoamérica (LATAM)
+- **Tiempo de respuesta:** Menor a 24 horas
+- **Sitio web:** https://angelcorzo.dev
+- **Correo:** contact@angelcorzo.dev
+- **GitHub:** https://github.com/JuniorCorzo
+- **LinkedIn:** https://linkedin.com/in/angel-corzo
+- **LinkedIn Services:** https://www.linkedin.com/services/page/b68a9634432999b598/
+- **CV (PDF):** https://files.angelcorzo.dev/CV_Angel_Corzo.pdf
+
+### Especialidades Principales
+Java 21, Spring Boot 3, Spring Security, Arquitectura Hexagonal / Clean Architecture, SaaS Multi-Tenant, Facturación Electrónica DIAN (XML/UBL), Microservicios, TypeScript, React, Angular 20+, Astro, Node.js, NestJS, PostgreSQL, MySQL, MongoDB, Docker, Cloudflare Workers / R2 y Agentes de IA (LLMs, RAG).
+
+---
+
+## 2. Métricas y Experiencia Verificada
+
+- **3+ años de experiencia** construyendo productos digitales de punta a punta (arquitectura backend, frontend y despliegue en producción).
+- **10+ proyectos** desarrollados entre plataformas SaaS, librerías open source, e-commerce, agroindustria y telemetría industrial.
+- **Nivo — Plataforma SaaS Multi-Tenant (2025–Presente, 1 año de operación continua en producción):**
+  - Rol: Lead Full Stack Developer & Arquitecto de Software.
+  - Impacto: Plataforma cloud-native en producción para digitalización operativa y tarifaria de parqueaderos comerciales, sin hardware propietario y con onboarding menor a 2 minutos.
+  - Stack: Java 21, Spring Boot 3.5, Clean Architecture, PostgreSQL con aislamiento `tenant_id`, Angular 20+ (ChangeDetection OnPush), design system propio (`@nivo-sass/design-system`), Server-Sent Events (SSE) y Docker.
+- **Ecopetrol S.A. (Abril 2024 – Octubre 2024, Práctica Profesional SENA):**
+  - Rol: Aprendiz Desarrollador Full Stack.
+  - Impacto: **30% de mejora en rendimiento y rapidez de análisis de datos operativos** en la planta de gas Oripaya, con 15+ dashboards interactivos implementados.
+  - Stack: React, TypeScript, SheetJS, VictoryChart.
+
+---
+
+## 3. Servicios Especializados
+
+### 3.1 Desarrollo Full Stack en Colombia
+- **URL:** https://angelcorzo.dev/servicios/desarrollo-full-stack/
+- **Alcance:** Diseño y desarrollo de aplicaciones web y plataformas a medida de punta a punta: frontend moderno y accesible, APIs backend robustas, modelado de bases de datos relacionales/NoSQL y despliegue en la nube optimizado para negocio y Core Web Vitals.
+- **Stack:** Angular, React, Astro, Node.js, PostgreSQL, TypeScript.
+
+### 3.2 Desarrollo Backend y APIs en Colombia
+- **URL:** https://angelcorzo.dev/servicios/desarrollo-backend/
+- **Alcance:** Arquitectura backend empresarial y APIs de alto rendimiento diseñadas para escalar: Java 21 con Spring Boot, NestJS, microservicios, integración de pasarelas/normativas (incluida facturación electrónica DIAN), autenticación JWT y bases de datos de alta disponibilidad.
+- **Stack:** Java 21, Spring Boot, NestJS, PostgreSQL, MongoDB, AWS, Docker.
+
+### 3.3 Consultoría de Software y Arquitectura
+- **URL:** https://angelcorzo.dev/servicios/consultorias/
+- **Alcance:** Auditoría de arquitectura de software existente, definición de fronteras de dominio (monolito modular vs. microservicios), planes de migración sin interrupción, optimización de rendimiento web/backend y endurecimiento de seguridad bajo estándares OWASP Top 10.
+- **Stack:** Arquitectura Hexagonal / Clean Architecture, Performance, Auditoría OWASP.
+
+### 3.4 Desarrollo de Agentes de IA en Colombia
+- **URL:** https://angelcorzo.dev/servicios/agentes-ia/
+- **Alcance:** Diseño e implementación de agentes de inteligencia artificial y flujos automatizados integrados con sistemas empresariales reales: pipelines de datos, arquitecturas RAG (Retrieval-Augmented Generation) y orquestación con LLMs orientada a reducir trabajo manual repetitivo.
+- **Stack:** LLMs, RAG, Python/TypeScript, APIs e integraciones empresariales.
+
+---
+
+## 4. Casos de Estudio Técnicos
+
+### 4.1 Nivo — Plataforma SaaS Multi-Tenant para Gestión de Estacionamientos
+- **URL:** https://angelcorzo.dev/study-case/nivo/
+- **Demo / Producción:** https://nivo.angelcorzo.dev | **Repo:** https://github.com/juniorcorzo/nivo
+- **Problema:** Digitalizar la operación de parqueaderos comerciales independientes sin exigir hardware propietario ni servidores locales, manteniendo aislamiento estricto entre inquilinos y cálculo de tarifas en milisegundos.
+- **Solución:** Monorepo con Clean Architecture en Java 21 / Spring Boot 3.5 desacoplando dominio (`model`/`usecase`) e infraestructura, aislamiento multi-tenant por `tenant_id` y contexto de aplicación en PostgreSQL, motor de tarifas `PricingEngine`, telemetría de ocupación en tiempo real vía Server-Sent Events (SSE), tickets digitales con QR y frontend Angular 20+ con design system accesible WCAG 2.1 AA.
+- **Resultados:** En producción continua, onboarding < 2 minutos, cero hardware propietario.
+
+### 4.2 Factus Dependency — Librería Java para Facturación Electrónica DIAN
+- **URL:** https://angelcorzo.dev/study-case/factus-dependency/
+- **Repo:** https://github.com/JuniorCorzo/FactusDependency
+- **Problema:** Integrar emisión masiva de facturas electrónicas (lotes de 1000+ documentos) contra la normativa DIAN Colombia sin bloquear los hilos principales de la aplicación cliente.
+- **Solución:** Librería Java modular construida con Gradle y arquitectura extensible basada en SPI (Service Provider Interface), procesamiento multihilo asíncrono con `ExecutorService`, integración OAuth/REST y validación estricta de esquemas XML/UBL contra XSD de la DIAN.
+- **Resultados:** 60% de reducción en tiempo de procesamiento de lotes; empaquetada para distribución vía Maven.
+
+### 4.3 Urban Style — E-Commerce con Arquitectura Hexagonal y CDN Cloudflare R2
+- **URL:** https://angelcorzo.dev/study-case/urban-style/
+- **Repo:** https://github.com/JuniorCorzo/UrbanStyle
+- **Problema:** Mantener tiempos de carga rápidos y checkout confiable en un catálogo de 500+ productos con alto volumen de imágenes.
+- **Solución:** Backend en Spring Boot con arquitectura hexagonal (Ports & Adapters), autenticación JWT, MongoDB y testing de integración con JUnit; frontend en Astro + React con conversión batch a WebP, lazy loading y distribución de activos vía Cloudflare R2.
+- **Resultados:** Reducción del 70% en peso de imágenes, latencias CDN < 100ms, tiempo de carga < 1.8s y PageSpeed 95+.
+
+### 4.4 DAYEN — Sistema de Trazabilidad Agroindustrial
+- **URL:** https://angelcorzo.dev/study-case/dayen/
+- **Repo:** https://github.com/JuniorCorzo/Dayen
+- **Problema:** Trazar de forma auditable lotes de cultivos de arroz desde la siembra y control de insumos hasta la cosecha.
+- **Solución:** API REST versionada en Spring Boot con Spring Security + JWT (roles, permisos y refresh tokens), base de datos relacional normalizada en MySQL, paginación server-side con DataTables y despliegue productivo en VPS Linux con Nginx y certificados Let's Encrypt.
+- **Resultados:** 100% trazabilidad de lotes y 0 downtime registrado en 6 meses de operación.
+
+### 4.5 Instruments Management — Telemetría Industrial y Microservicios Híbridos
+- **URL:** https://angelcorzo.dev/study-case/instruments-manage/
+- **Repo:** https://github.com/JuniorCorzo/InstrumentsManage
+- **Problema:** Gestionar instrumentación médica e industrial y su historial de calibraciones con módulos capaces de escalar de forma independiente.
+- **Solución:** Arquitectura híbrida de 3 microservicios independientes (Spring Boot + NestJS) comunicados vía REST, persistencia en MongoDB para historiales y logs de auditoría con consultas agregadas, contenedores Docker y frontend React con Redux Thunk.
+- **Resultados:** 3 microservicios desacoplados con 99.5% de uptime.
+
+---
+
+## 5. Artículos Técnicos (Blog)
+
+### 5.1 Cómo elegir arquitectura para tu MVP sin quemar el runway
+- **URL:** https://angelcorzo.dev/blog/arquitectura-mvp/
+- **Fecha:** 2025-01-15 | **Lectura:** 7 min | **Tags:** arquitectura, mvp, startups, backend
+- **Resumen:** Guía práctica para startups y equipos pequeños sobre cómo elegir entre monolito modular, serverless o microservicios usando tres criterios objetivos: tamaño del equipo (6–12 meses), certeza de las fronteras del dominio y perfil real de tráfico. Defiende el monolito modular bien estructurado como opción por defecto para la mayoría de MVPs por velocidad de despliegue y transacciones locales.
+
+### 5.2 Seguridad en Spring Boot: JWT stateless y buenas prácticas OWASP
+- **URL:** https://angelcorzo.dev/blog/spring-boot-seguridad/
+- **Fecha:** 2025-02-20 | **Lectura:** 9 min | **Tags:** spring-boot, seguridad, jwt, java
+- **Resumen:** Arquitectura de autenticación stateless en Spring Boot 3 utilizando criptografía asimétrica RS256 (clave privada en emisor, clave pública en verificadores) en lugar de HS256 compartido, almacenamiento seguro en cookies contra XSS y controles esenciales del OWASP Top 10 para entornos en producción.
+
+---
+
+## 6. Preguntas Frecuentes (FAQ)
+
+### ¿Trabajas con empresas fuera de Cúcuta o fuera de Colombia?
+Sí. Trabajo 100% remoto con empresas, startups y equipos técnicos en toda Colombia y Latinoamérica (LATAM), con respuesta garantizada en menos de 24 horas vía correo, WhatsApp o LinkedIn Services.
+
+### ¿Qué stack principal utilizas para proyectos empresariales y SaaS?
+Para backend y sistemas críticos utilizo Java 21 con Spring Boot 3, PostgreSQL, Docker y Arquitectura Hexagonal / Clean Architecture; también NestJS y Node.js cuando el ecosistema lo requiere. En frontend trabajo con Angular 20+, React, Astro y TypeScript, complementado con Cloudflare Workers/R2 para edge y distribución estática.
+
+### ¿Por qué recomiendas Arquitectura Hexagonal o Clean Architecture en backends empresariales?
+Porque separa la lógica de negocio y los casos de uso de los frameworks, bases de datos y proveedores externos. Esto permite escribir pruebas unitarias rápidas, cambiar adaptadores sin reescribir el dominio y escalar plataformas multi-tenant con deuda técnica controlada.
+
+### ¿Tienes experiencia integrando facturación electrónica DIAN en Colombia?
+Sí. Desarrollé `Factus Dependency`, una librería Java modular orientada a integración con la DIAN colombiana con validación de esquemas XML/UBL, OAuth y procesamiento multihilo asíncrono capaz de reducir hasta un 60% el tiempo de emisión de lotes masivos.
+
+### ¿Cuánto tiempo toma desarrollar un MVP o plataforma a medida?
+Un MVP funcional (con autenticación, lógica de negocio central, panel administrativo y despliegue productivo) suele tomar entre 6 y 8 semanas. Plataformas SaaS multi-tenant más complejas o ecosistemas de microservicios se planifican en fases iterativas de 3 a 4 meses con entregas verificables en producción.

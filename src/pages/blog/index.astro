@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
-import { SITE_TITLE, DEVELOPER_NAME } from "../../data/site";
+import { DEVELOPER_NAME } from "../../data/site";
 import { getReadingTime } from "../../utils/readingTime";
 
 const allPosts = await getCollection("blog");
@@ -36,7 +36,7 @@ const avgRead = posts.length > 0
 <html lang="es">
   <head>
     <BaseHead
-      title={`Blog — ${SITE_TITLE}`}
+      title={`Blog de Arquitectura y Backend | ${DEVELOPER_NAME}`}
       description="Artículos técnicos sobre desarrollo Full Stack, arquitectura de software, Spring Boot, React, agentes de IA y mejores prácticas."
     />
     <meta name="theme-color" content="#000000" />
