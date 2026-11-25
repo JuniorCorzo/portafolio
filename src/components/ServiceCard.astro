@@ -33,17 +33,23 @@ const { service } = Astro.props;
     border: 1px solid rgba(var(--overlay0-rgb), 0.3);
     border-radius: 8px;
     padding: 1.5rem;
-    transition: all 0.3s ease-in-out;
+    transition: background 160ms var(--ease-out), border-color 160ms var(--ease-out), transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
     display: flex;
     flex-direction: column;
     height: 100%;
   }
 
-  .service-card:hover {
-    background: var(--surface1);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--mauve);
+  .service-card:active {
+    transform: scale(0.99);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .service-card:hover {
+      background: var(--surface1);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--mauve);
+    }
   }
 
   .service-header {
@@ -106,12 +112,19 @@ const { service } = Astro.props;
     font-weight: 600;
     font-size: 0.95rem;
     text-decoration: none;
-    transition: color 0.3s ease-in-out;
+    transition: color 140ms var(--ease-out), transform 140ms var(--ease-out);
     margin-top: auto;
   }
 
-  .service-link:hover {
-    color: var(--sapphire);
+  .service-link:active {
+    transform: scale(0.97);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .service-link:hover {
+      color: var(--sapphire);
+      transform: translateX(2px);
+    }
   }
 
   .link-prompt {

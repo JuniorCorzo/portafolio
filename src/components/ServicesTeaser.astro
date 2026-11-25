@@ -1,16 +1,24 @@
 ---
 import { SERVICES } from "../data/services";
 import ServiceCard from "./ServiceCard.astro";
+
+interface Props {
+  hideHeader?: boolean;
+}
+
+const { hideHeader = false } = Astro.props;
 ---
 
 <section class="services-section" id="servicios">
   <div class="services-container">
-    <header class="services-header">
-      <h2 class="section-title">
-        <span class="terminal-prefix">$</span> ls servicios/
-      </h2>
-      <p class="section-subtitle">// soluciones que ofrezco</p>
-    </header>
+    {!hideHeader && (
+      <header class="services-header">
+        <h2 class="section-title">
+          <span class="terminal-prefix">$</span> ls servicios/
+        </h2>
+        <p class="section-subtitle">// soluciones que ofrezco</p>
+      </header>
+    )}
 
     <div class="services-grid">
       {SERVICES.map((service) => <ServiceCard service={service} />)}

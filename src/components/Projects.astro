@@ -130,16 +130,18 @@ import { PROJECTS } from "../consts";
     overflow: hidden;
     border: 1px solid rgba(var(--overlay0-rgb), 0.3);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    transition: all 0.25s ease-in-out;
+    transition: transform 180ms var(--ease-out), box-shadow 180ms var(--ease-out), background 180ms var(--ease-out), border-color 180ms var(--ease-out);
     display: flex;
     flex-direction: column;
   }
 
-  .project-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 20px rgba(var(--mauve-rgb), 0.15);
-    background: var(--surface1);
-    border-color: var(--mauve);
+  @media (hover: hover) and (pointer: fine) {
+    .project-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 20px rgba(var(--mauve-rgb), 0.15);
+      background: var(--surface1);
+      border-color: var(--mauve);
+    }
   }
 
   .project-header {
@@ -301,9 +303,13 @@ import { PROJECTS } from "../consts";
     font-family: var(--font-mono);
     text-align: center;
     text-decoration: none;
-    transition: all 0.25s ease-in-out;
+    transition: transform 140ms var(--ease-out), background 140ms var(--ease-out), border-color 140ms var(--ease-out), box-shadow 140ms var(--ease-out), color 140ms var(--ease-out);
     line-height: 1.2;
     white-space: nowrap;
+  }
+
+  .project-link:active {
+    transform: scale(0.97);
   }
 
   .project-empty-actions .project-link {
@@ -318,11 +324,13 @@ import { PROJECTS } from "../consts";
     box-shadow: 0 4px 12px rgba(var(--mauve-rgb), 0.2);
   }
 
-  .github-link:hover {
-    background: var(--mauve-dark);
-    border-color: var(--mauve-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(var(--mauve-rgb), 0.3);
+  @media (hover: hover) and (pointer: fine) {
+    .github-link:hover {
+      background: var(--mauve-dark);
+      border-color: var(--mauve-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(var(--mauve-rgb), 0.3);
+    }
   }
 
   .case-study-link {
@@ -331,10 +339,13 @@ import { PROJECTS } from "../consts";
     border: 2px solid rgba(var(--overlay0-rgb), 0.4);
   }
 
-  .case-study-link:hover {
-    border-color: var(--mauve);
-    color: var(--mauve);
-    transform: translateY(-2px);
+  @media (hover: hover) and (pointer: fine) {
+    .case-study-link:hover {
+      border-color: var(--mauve);
+      color: var(--mauve);
+      transform: translateY(-2px);
+      background: rgba(var(--mauve-rgb), 0.05);
+    }
   }
 
   .live-link {
@@ -346,11 +357,13 @@ import { PROJECTS } from "../consts";
     flex: 1 1 100%;
   }
 
-  .live-link:hover {
-    background: #85d58f;
-    border-color: #85d58f;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(var(--green-rgb), 0.35);
+  @media (hover: hover) and (pointer: fine) {
+    .live-link:hover {
+      background: #85d58f;
+      border-color: #85d58f;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(var(--green-rgb), 0.35);
+    }
   }
 
   :global(html[data-theme="latte"]) .live-link {

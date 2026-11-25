@@ -66,15 +66,21 @@ const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(messag
     font-size: 0.95rem;
     text-decoration: none;
     box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
-    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+    transition: transform 140ms var(--ease-out), box-shadow 140ms var(--ease-out), background-color 140ms var(--ease-out);
     border: none;
   }
 
-  .whatsapp-float:hover {
-    background: #128c7e;
-    transform: scale(1.08) translateY(-2px);
-    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
-    color: #fff;
+  .whatsapp-float:active {
+    transform: scale(0.94);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .whatsapp-float:hover {
+      background: #128c7e;
+      transform: scale(1.08) translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+      color: #fff;
+    }
   }
 
   .whatsapp-inline {
@@ -91,14 +97,20 @@ const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(messag
     font-weight: 600;
     font-size: 1rem;
     text-decoration: none;
-    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, color 0.2s ease;
+    transition: transform 140ms var(--ease-out), box-shadow 140ms var(--ease-out), background-color 140ms var(--ease-out), color 140ms var(--ease-out);
   }
 
-  .whatsapp-inline:hover {
-    background: var(--green);
-    color: #1e1e2e;
-    font-weight: 700;
-    transform: translateY(-2px);
+  .whatsapp-inline:active {
+    transform: scale(0.97);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .whatsapp-inline:hover {
+      background: var(--green);
+      color: #1e1e2e;
+      font-weight: 700;
+      transform: translateY(-2px);
+    }
   }
 
   .whatsapp-icon {
