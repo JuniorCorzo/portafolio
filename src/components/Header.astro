@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import { DEVELOPER_CV } from "../consts";
+import BrandMark from "./BrandMark.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 
 const currentPath = Astro.url.pathname.replace(/\/$/, "");
@@ -11,26 +12,13 @@ const isActive = (path: string) => {
 };
 ---
 
-<header class="header">
-  <div class="header-titlebar">
-    <div class="titlebar-container">
-      <div class="titlebar-controls">
-        <span class="control-dot dot-close" aria-hidden="true"></span>
-        <span class="control-dot dot-minimize" aria-hidden="true"></span>
-        <span class="control-dot dot-maximize" aria-hidden="true"></span>
-        <span class="titlebar-session">angelcorzo.dev — tmux: portafolio</span>
-      </div>
-      <div class="titlebar-node">
-        <span class="node-indicator" aria-hidden="true">●</span> NODE: CLOUDFLARE EDGE
-      </div>
-    </div>
-  </div>
-
+<header class="header" id="siteHeader">
   <nav class="navbar">
     <div class="logo">
-      <a href="/">
-        <span class="prompt">&gt;_</span>
-        <span class="monogram">AC</span>
+      <a href="/" aria-label="Inicio - Angel Corzo">
+        <BrandMark size={24} class="logo-symbol" />
+        <span class="sr-only prompt">&gt;_</span>
+        <span class="sr-only monogram">AC</span>
         <span class="brand">angelcorzo</span>
       </a>
     </div>
@@ -89,6 +77,24 @@ const isActive = (path: string) => {
     background: rgba(var(--crust-rgb), 0.96);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid rgba(108, 112, 134, 0.2);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+  }
+
+  .header.header--hidden {
+    transform: translateY(-100%);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .header-titlebar {
@@ -182,15 +188,36 @@ const isActive = (path: string) => {
   .logo a {
     color: var(--text);
     text-decoration: none;
-    transition: color 0.3s ease-in-out;
+    transition: color 160ms var(--ease-out), transform 160ms var(--ease-out);
     font-family: var(--font-mono);
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
   }
 
-  .logo a:hover {
-    color: var(--mauve);
+  .logo a:active {
+    transform: scale(0.97);
+  }
+
+  .logo-symbol {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    transition: transform 200ms var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .logo a:hover {
+      color: var(--mauve);
+    }
+
+    .logo a:hover .logo-symbol {
+      transform: translateY(-1px) scale(1.05);
+    }
+
+    .logo a:hover .brand {
+      color: var(--mauve);
+    }
   }
 
   .logo .prompt {
@@ -450,6 +477,11 @@ const isActive = (path: string) => {
       font-size: 1.1rem;
     }
 
+    .logo-symbol {
+      width: 22px;
+      height: 22px;
+    }
+
     .nav-links {
       padding: 16px;
       gap: 10px;
@@ -458,8 +490,40 @@ const isActive = (path: string) => {
 </style>
 
 <script>
+  const header = document.getElementById("siteHeader");
   const button = document.getElementById("menuToggle");
   const nav = document.getElementById("navLinks");
+
+  // Auto-hide header on scroll down, show on scroll up
+  let lastScrollY = window.scrollY;
+  const scrollThreshold = 10;
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!header) return;
+      const currentScrollY = window.scrollY;
+
+      // Never hide if mobile menu is open
+      if (nav?.classList.contains("open")) {
+        header.classList.remove("header--hidden");
+        return;
+      }
+
+      if (currentScrollY <= 60) {
+        header.classList.remove("header--hidden");
+      } else if (currentScrollY > lastScrollY + scrollThreshold) {
+        // Scrolling down
+        header.classList.add("header--hidden");
+      } else if (currentScrollY < lastScrollY - scrollThreshold) {
+        // Scrolling up
+        header.classList.remove("header--hidden");
+      }
+
+      lastScrollY = currentScrollY;
+    },
+    { passive: true }
+  );
 
   if (button && nav) {
     button.addEventListener("click", () => {

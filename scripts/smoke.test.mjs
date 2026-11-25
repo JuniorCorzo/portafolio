@@ -386,11 +386,11 @@ if (faviconExists) {
 check(
   faviconExists &&
     faviconContent.includes("<svg") &&
-    (faviconContent.includes(">_") || faviconContent.includes("&gt;_")) &&
-    faviconContent.includes("AC") &&
+    faviconContent.includes("<path") &&
+    !faviconContent.includes("<text") &&
     faviconContent.includes("#000000") &&
     faviconContent.includes("#cba6f7"),
-  "public/favicon.svg exists and contains valid Catppuccin Noir monogram (>_ AC, #000000, #cba6f7)"
+  "public/favicon.svg exists and contains pure vector Catppuccin Noir A_ monogram (<path>, no <text>, #000000, #cba6f7)"
 );
 
 const ogPath = resolve(import.meta.dirname, "../public/images/og.png");

@@ -1,17 +1,12 @@
 ---
 import { DEVELOPER_NAME } from "../data/site";
+import BrandMark from "./BrandMark.astro";
 import VimHelpModal from "./VimHelpModal.astro";
 import VimMode from "./VimMode.astro";
 
 const today = new Date();
 const brand = DEVELOPER_NAME.toLowerCase().replace(/\s+/g, "");
-const footerJson = `{
-  "built_with": ["Astro", "Tailwind", "☕"],
-  "deployed_on": "Cloudflare Pages",
-  "source": "github.com/angelcorzo/portafolio",
-  "license": "MIT",
-  "year": "${today.getFullYear()}"
-}`;
+// footer.json metadata buffer (deprecated visual display)
 
 const pathname = Astro.url.pathname;
 let currentBuffer = "src/pages/index.astro";
@@ -55,7 +50,10 @@ if (pathname === "/servicios" || pathname === "/servicios/") {
 
   <div class="footer-container">
     <div class="footer-top">
-      <div class="footer-brand"><span class="brand-prompt">$</span> {brand}</div>
+      <a href="/" class="footer-brand" aria-label="Inicio - Angel Corzo">
+        <BrandMark size={20} class="footer-logo-mark" />
+        <span>{brand}</span>
+      </a>
       <div class="footer-links">
         <a href="/"><span class="tab-idx">1:</span>Inicio</a>
         <a href="/servicios"><span class="tab-idx">2:</span>Servicios</a>
@@ -65,10 +63,7 @@ if (pathname === "/servicios" || pathname === "/servicios/") {
       </div>
     </div>
 
-    <div class="footer-json">
-      <span class="key">// footer.json</span>
-      <pre><code>{footerJson}</code></pre>
-    </div>
+    <!-- footer.json buffer (hidden from view) -->
 
     <div class="footer-bottom">© {today.getFullYear()} {DEVELOPER_NAME}. Hecho con café y código.</div>
   </div>
@@ -275,10 +270,25 @@ if (pathname === "/servicios" || pathname === "/servicios/") {
   }
 
   .footer-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     font-weight: 700;
     font-size: 1.05rem;
     color: var(--text);
+    text-decoration: none;
     font-family: var(--font-mono);
+    transition: color 160ms var(--ease-out), transform 160ms var(--ease-out);
+  }
+
+  .footer-brand:active {
+    transform: scale(0.97);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .footer-brand:hover {
+      color: var(--mauve);
+    }
   }
 
   .brand-prompt {
