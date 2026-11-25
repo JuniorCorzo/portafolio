@@ -1,10 +1,192 @@
 ---
-title: "Seguridad en Spring Boot: JWT y OWASP"
-description: "Implementa autenticación stateless y protege tus APIs contra las vulnerabilidades más comunes."
+title: "Seguridad en Spring Boot: JWT stateless y buenas prácticas OWASP"
+description: "Configura autenticación asimétrica con RS256, cookies seguras contra XSS y los controles clave de OWASP sin caer en los errores típicos de configuración."
 pubDate: 2025-02-20
-tags: ["spring-boot", "seguridad", "jwt"]
+tags: ["spring-boot", "seguridad", "jwt", "java"]
+readingTime: 9
 ---
 
-# Seguridad en Spring Boot: JWT y OWASP
+Configurar la capa de seguridad en Spring Security suele ser motivo de frustración. Entre tutoriales viejos que todavía usan clases deprecadas como `WebSecurityConfigurerAdapter`, ejemplos de internet que resuelven CORS con un peligroso `cors().disable()`, y gente guardando tokens en el almacenamiento del navegador, es facilísimo terminar con agujeros de seguridad graves en producción.
 
-Contenido en construcción…
+En este artículo repasamos cómo armar una arquitectura de autenticación stateless sólida con Spring Boot 3: firma asimétrica RS256, manejo seguro de sesiones y los controles esenciales del OWASP Top 10 que todo backend en producción debería cumplir.
+
+## Por qué usamos RS256 en vez de HS256
+
+La mayoría de los ejemplos en internet usan algoritmos simétricos (HS256) donde una sola contraseña compartida sirve tanto para firmar como para verificar el token. 
+
+Esto funciona si tienes una sola aplicación pequeña. Pero en cuanto tu backend crece o tienes servicios satélites que necesitan validar la identidad del usuario, compartir esa clave secreta con todos es una bomba de tiempo: si un solo servicio se ve comprometido, cualquiera puede falsificar tokens con privilegios de administrador.
+
+Con **RS256 (criptografía asimétrica)** desacoplamos responsabilidades:
+- El servicio de autenticación guarda la **clave privada** y es el único autorizado para emitir tokens.
+- Los demás servicios o APIs solo conocen la **clave pública** para verificar la firma, sin poder jamás generar un token falso.
+
+### Generación de las claves RSA
+
+Podemos crear el par de claves fácilmente desde la terminal:
+
+```bash
+# 1. Generamos la clave privada (nunca sale del servidor de autenticación)
+openssl genrsa -out private.pem 2048
+
+# 2. Extraemos la clave pública para distribuir a quienes deban verificar
+openssl rsa -in private.pem -pubout -out public.pem
+```
+
+Ambas claves deben inyectarse mediante variables de entorno o un gestor de secretos como HashiCorp Vault / AWS Secrets Manager; jamás se versionan en el repositorio de Git.
+
+### Cargar las claves en Spring Boot
+
+Para transformar los archivos PEM en objetos criptográficos nativos de Java (`RSAPrivateKey` y `RSAPublicKey`):
+
+```java
+@Configuration
+public class JwtKeyConfig {
+
+    @Value("${jwt.private-key}")
+    private String privateKeyPem;
+
+    @Value("${jwt.public-key}")
+    private String publicKeyPem;
+
+    @Bean
+    public RSAPrivateKey privateKey() throws Exception {
+        String stripped = privateKeyPem
+            .replace("-----BEGIN PRIVATE KEY-----", "")
+            .replace("-----END PRIVATE KEY-----", "")
+            .replaceAll("\\s", "");
+        byte[] decoded = Base64.getDecoder().decode(stripped);
+        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(decoded);
+        return (RSAPrivateKey) KeyFactory.getInstance("RSA").generatePrivate(spec);
+    }
+
+    @Bean
+    public RSAPublicKey publicKey() throws Exception {
+        String stripped = publicKeyPem
+            .replace("-----BEGIN PUBLIC KEY-----", "")
+            .replace("-----END PUBLIC KEY-----", "")
+            .replaceAll("\\s", "");
+        byte[] decoded = Base64.getDecoder().decode(stripped);
+        X509EncodedKeySpec spec = new X509EncodedKeySpec(decoded);
+        return (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(spec);
+    }
+}
+```
+
+## El filtro de autenticación por request
+
+Creamos un filtro que intercepte cada llamada entrante, extraiga la cabecera `Authorization: Bearer <token>` y valide la firma. Si el token es legítimo, establecemos la identidad en el `SecurityContext`:
+
+```java
+@Component
+@RequiredArgsConstructor
+public class JwtAuthFilter extends OncePerRequestFilter {
+
+    private final JwtService jwtService;
+    private final UserDetailsService userDetailsService;
+
+    @Override
+    protected void doFilterInternal(
+        HttpServletRequest request,
+        HttpServletResponse response,
+        FilterChain chain
+    ) throws ServletException, IOException {
+
+        String header = request.getHeader("Authorization");
+
+        if (header == null || !header.startsWith("Bearer ")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        String token = header.substring(7);
+
+        try {
+            String username = jwtService.extractUsername(token);
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails user = userDetailsService.loadUserByUsername(username);
+                if (jwtService.isValid(token, user)) {
+                    var auth = new UsernamePasswordAuthenticationToken(
+                        user, null, user.getAuthorities()
+                    );
+                    auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(auth);
+                }
+            }
+        } catch (JwtException e) {
+            // Si el token expiró o la firma no coincide, no propagamos la excepción
+            // Dejamos que el AuthenticationEntryPoint de Spring responda con 401 estructurado
+        }
+
+        chain.doFilter(request, response);
+    }
+}
+```
+
+## Cadena de filtros de Spring Security (SecurityFilterChain)
+
+En Spring Boot 3 configuramos la seguridad mediante un `@Bean` de tipo `SecurityFilterChain`, estableciendo política de sesión `STATELESS` y reforzando las cabeceras HTTP de respuesta:
+
+```java
+@Configuration
+@EnableMethodSecurity
+@RequiredArgsConstructor
+public class SecurityConfig {
+
+    private final JwtAuthFilter jwtFilter;
+    private final AuthenticationProvider authProvider;
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        return http
+            .csrf(AbstractHttpConfigurer::disable) // Desactivado intencionalmente: la API es stateless vía Bearer
+            .sessionManagement(sm ->
+                sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            )
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/v1/auth/**", "/actuator/health").permitAll()
+                .anyRequest().authenticated()
+            )
+            .authenticationProvider(authProvider)
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+            .headers(headers -> headers
+                .contentSecurityPolicy(csp ->
+                    csp.policyDirectives("default-src 'self'")
+                )
+                .frameOptions(HeadersConfigurer.FrameOptionsConfig::deny)
+                .xssProtection(xss -> xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))
+            )
+            .build();
+    }
+}
+```
+
+## El dilema del almacenamiento: ¿Dónde guardar los tokens?
+
+Uno de los errores más extendidos en arquitecturas frontend/backend es guardar el token de acceso en `localStorage` o `sessionStorage`. 
+
+Si tu aplicación llega a tener una sola vulnerabilidad de Cross-Site Scripting (XSS)—por ejemplo a través de una dependencia npm comprometida—, cualquier script malicioso puede leer `localStorage.getItem('token')` y exfiltrarlo silenciosamente.
+
+La estrategia recomendada por los estándares modernos:
+
+- **Access Token (corta duración)**: tiempo de vida de 10 a 15 minutos. Se mantiene únicamente en la memoria volátil de la aplicación frontend (en una variable o store de estado).
+- **Refresh Token (rotación automática)**: tiempo de vida de varios días. Se almacena en una cookie con flags `HttpOnly; Secure; SameSite=Strict`. Al tener `HttpOnly`, el navegador jamás permite que JavaScript acceda a la cookie, neutralizando el robo por XSS.
+
+```java
+@PostMapping("/refresh")
+public ResponseEntity<TokenResponse> refresh(@CookieValue("refresh_token") String refreshToken) {
+    return tokenService.rotate(refreshToken)
+        .map(ResponseEntity::ok)
+        .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+}
+```
+
+## Errores críticos que debes evitar
+
+Hay prácticas que parecen atajos inofensivos durante el desarrollo pero abren vulnerabilidades serias:
+
+- **No uses claves simétricas (HS256) en arquitecturas con múltiples servicios**: si un servicio secundario sufre una brecha, la clave maestra queda expuesta y el atacante puede forjar tokens a voluntad.
+- **Valida siempre las declaraciones estándar (claims)**: no basta con comprobar que la firma criptográfica sea válida; debes verificar que el token no haya expirado (`exp`), que el emisor sea el esperado (`iss`) y que la audiencia coincida (`aud`).
+- **Nunca almacenes credenciales o tokens en localStorage**: cualquier inyección XSS tiene acceso total al almacenamiento del navegador. Las cookies `HttpOnly` con flag `SameSite` protegen la sesión de lectura maliciosa.
+- **Evita deshabilitar CORS de forma indiscriminada**: configurar orígenes permitidos explícitos (`allowedOrigins`) evita que sitios de terceros hagan peticiones no autorizadas en nombre de tus usuarios.
+
+Con estas pautas tienes una arquitectura de autenticación predecible, segura y lista para operar en producción sin sorpresas desagradables.

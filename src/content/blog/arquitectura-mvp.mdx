@@ -1,10 +1,92 @@
 ---
-title: "Cómo elegir arquitectura para tu MVP"
-description: "Guía práctica para decidir entre monolito, microservicios y serverless según el contexto de tu startup."
+title: "Cómo elegir arquitectura para tu MVP sin quemar el runway"
+description: "Monolito, serverless o microservicios: criterios reales de ingeniería para decidir según tu equipo, carga y certeza del dominio, sin caer en modas."
 pubDate: 2025-01-15
-tags: ["arquitectura", "mvp", "startups"]
+tags: ["arquitectura", "mvp", "startups", "backend"]
+readingTime: 7
 ---
 
-# Cómo elegir arquitectura para tu MVP
+Cada vez que arranca un proyecto nuevo veo repetirse la misma escena: dos o tres desarrolladores debatiendo durante semanas si montar Kubernetes, gRPC y una docena de microservicios para un producto que todavía no tiene su primer usuario de pago.
 
-Contenido en construcción…
+He visto equipos quemar meses de presupuesto resolviendo problemas de sincronización de datos y tracing distribuido en lugar de validar si a alguien le importa lo que están construyendo.
+
+La arquitectura de un MVP no compite en un concurso de elegancia en Twitter ni en conferencias. Su único trabajo es darte **la mayor velocidad de aprendizaje posible con el menor costo operativo**.
+
+## Las tres preguntas que importan antes de tocar código
+
+Antes de dibujar diagramas en Excalidraw, hay tres realidades que definen tu margen de maniobra:
+
+1. **¿Cuántas personas van a mantener esto en los próximos 6 a 12 meses?** Si el equipo tiene menos de 5 ingenieros, cualquier arquitectura distribuida te va a cobrar un peaje altísimo en tiempo de operaciones.
+2. **¿Conocés realmente las fronteras del dominio?** En un producto nuevo, los modelos de datos y los flujos de negocio cambian todas las semanas. Cambiar una frontera en un monolito es hacer un refactor de paquetes; en microservicios significa migrar bases de datos separadas, renegociar contratos de API y desplegar en cascada.
+3. **¿El tráfico es predecible o tiene picos brutales?** No necesitas planear para "millones de requests por segundo" si tu cuello de botella actual es conseguir diez clientes que usen la app a diario.
+
+## El monolito modular: la decisión correcta por defecto
+
+Para el 85% de las startups y productos nuevos, un **monolito bien estructurado** sigue siendo imbatible. Y digo "bien estructurado" porque la alternativa no es un espagueti sin control, sino separar la lógica de negocio por módulos claros desde el día uno.
+
+Las ventajas prácticas son demoledoras:
+
+- **Un solo pipeline de CI/CD**: un commit pasa los tests y sale a producción en minutos.
+- **Transacciones locales**: no necesitas implementar Sagas ni lidiar con consistencia eventual para guardar un pedido y actualizar un stock.
+- **Refactors indoloros**: si descubres que la lógica de facturación pertenece al módulo de usuarios, mueves clases o funciones con el soporte del compilador y tu IDE.
+- **Costo de infraestructura cercano a cero**: un VPS o un contenedor único corre sin dramas mientras validas.
+
+### Estructura de paquetes por funcionalidad (Feature-driven)
+
+En lugar de separar por capas genéricas (`controllers/`, `services/`, `models/`), organiza el código alrededor de las capacidades del negocio:
+
+```
+src/
+├── billing/
+│   ├── domain/        # Entidades, reglas de negocio puras
+│   ├── application/   # Casos de uso (CobrarSuscripcion, EmitirFactura)
+│   ├── infra/         # Adaptador Stripe, repositorios SQL
+│   └── api/           # Endpoints HTTP
+├── identity/
+│   ├── domain/
+│   ├── application/
+│   └── api/
+└── shared/            # Tipos utilitarios comunes, sin lógica de negocio
+```
+
+La regla de oro es simple: **ningún módulo puede tocar la base de datos de otro módulo directamente**. Toda interacción entre módulos pasa por interfaces o eventos en memoria. Si sigues esta disciplina, extraer un módulo a un servicio independiente el día de mañana es un paso mecánico, no una reescritura desde cero.
+
+## Cuándo sí tiene sentido evaluar Serverless
+
+Serverless (Cloudflare Workers, AWS Lambda) es una alternativa fantástica en un MVP bajo condiciones muy puntuales:
+
+- **Tareas guiadas por eventos**: procesamiento asíncrono de webhooks de terceros, subida de archivos o generación de reportes.
+- **Tráfico extremadamente esporádico**: pagar exactamente cero dólares cuando nadie usa el servicio en la madrugada, y escalar instantáneamente si una campaña se viraliza.
+- **Lógica en el edge**: autenticación liviana, redirecciones dinámicas o caching geográfico cerca del usuario.
+
+¿Dónde suele doler serverless en un MVP? Cuando tienes consultas relacionales complejas que requieren conexiones persistentes de baja latencia a la base de datos, o flujos de larga duración donde el timeout de ejecución te obliga a diseñar sistemas de colas antes de tiempo.
+
+## Las señales de alarma de los microservicios prematuros
+
+Si notas alguno de estos síntomas en tu proyecto temprano, estás pagando impuestos de complejidad innecesarios:
+
+- **Cada microservicio lo mantiene la misma persona**: no hay división de equipos que justifique la separación de repositorios.
+- **Llamadas HTTP síncronas en cadena**: para resolver un request del usuario, el servicio A llama al B, que llama al C, que consulta al D. Tienes un monolito distribuido con toda la latencia de la red y sin ninguna de las ventajas del monolito.
+- **Base de datos compartida entre servicios**: el peor escenario posible. Varios servicios acoplados al mismo esquema relacional, arruinando la independencia de despliegue.
+
+Los microservicios no nacieron para hacer que el software corra más rápido. Nacieron para permitir que **organizaciones de cientos de ingenieros puedan desplegar código sin pisarse los unos a los otros** (Ley de Conway). Si tu equipo cabe en una sola mesa de café, no tienes ese problema.
+
+## Comparativa pragmática
+
+| Aspecto | Monolito Modular | Serverless (Edge / Lambda) | Microservicios |
+| :--- | :--- | :--- | :--- |
+| **Velocidad de iteración inicial** | Muy alta | Alta | Baja (overhead de setup) |
+| **Complejidad operativa** | Mínima (1 proceso / 1 DB) | Baja a media | Muy alta (tracing, service mesh) |
+| **Facilidad para cambiar el modelo** | Inmediata (refactor local) | Media | Compleja (contratos de API) |
+| **Costo base en reposo** | Muy bajo ($5–$20/mes) | Prácticamente $0 | Alto (múltiples instancias/nodos) |
+| **Tamaño ideal de equipo** | 1 a 8 ingenieros | 1 a 5 ingenieros | Múltiples equipos autónomos |
+
+## Las tres decisiones que sí debes tomar desde el día uno
+
+Hay cosas que son baratísimas de hacer al principio y carísimas de arreglar tarde:
+
+1. **Mantén tu lógica de negocio aislada del framework**: que tus reglas centrales no dependan directamente de anotaciones o librerías de infraestructura. Así, si mañana cambias de motor de base de datos o de framework HTTP, el núcleo de tu producto sigue intacto.
+2. **Correlation IDs en cada petición**: asigna un identificador único a cada request entrante y propágalo en los logs. Aunque tengas un solo servidor, saber qué logs pertenecen a qué usuario cuando ocurre un error te ahorra horas de frustración.
+3. **Migraciones de base de datos automatizadas**: herramientas como Flyway o Prisma Migrations controladas en el repositorio. Jamás toques esquemas de producción a mano.
+
+Empieza simple, valida con clientes reales y deja que las verdaderas restricciones de escala guíen la evolución de tu arquitectura, no las modas del momento.
