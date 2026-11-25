@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+import { LINKEDIN_SERVICES_URL } from "../data/contact";
 import type { Service } from "../data/services";
 
 interface Props {
@@ -22,9 +23,20 @@ const { service } = Astro.props;
     {service.tech.map((t) => <span class="tech-chip">{t}</span>)}
   </div>
 
-  <a href={`/servicios/${service.slug}`} class="service-link">
-    <span class="link-prompt">&gt;</span> Ver servicio <Icon name="lucide:arrow-right" size={15} />
-  </a>
+  <div class="service-actions">
+    <a href={`/servicios/${service.slug}`} class="service-link">
+      <span class="link-prompt">&gt;</span> Ver servicio <Icon name="lucide:arrow-right" size={15} />
+    </a>
+    <a
+      href={LINKEDIN_SERVICES_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="service-linkedin-link"
+      aria-label={`Solicitar ${service.title} en LinkedIn`}
+    >
+      <Icon name="lucide:linkedin" size={14} /> LinkedIn <Icon name="lucide:external-link" size={12} />
+    </a>
+  </div>
 </article>
 
 <style>
@@ -104,6 +116,16 @@ const { service } = Astro.props;
     border: 1px solid var(--sky);
   }
 
+  .service-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: auto;
+    padding-top: 8px;
+  }
+
   .service-link {
     display: inline-flex;
     align-items: center;
@@ -113,10 +135,26 @@ const { service } = Astro.props;
     font-size: 0.95rem;
     text-decoration: none;
     transition: color 140ms var(--ease-out), transform 140ms var(--ease-out);
-    margin-top: auto;
   }
 
-  .service-link:active {
+  .service-linkedin-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--mauve);
+    background: rgba(var(--mauve-rgb), 0.1);
+    border: 1px solid rgba(var(--mauve-rgb), 0.3);
+    text-decoration: none;
+    transition: background-color 140ms var(--ease-out), border-color 140ms var(--ease-out), color 140ms var(--ease-out), transform 140ms var(--ease-out);
+  }
+
+  .service-link:active,
+  .service-linkedin-link:active {
     transform: scale(0.97);
   }
 
@@ -124,6 +162,13 @@ const { service } = Astro.props;
     .service-link:hover {
       color: var(--sapphire);
       transform: translateX(2px);
+    }
+
+    .service-linkedin-link:hover {
+      background: rgba(var(--mauve-rgb), 0.2);
+      border-color: var(--mauve);
+      color: var(--text);
+      transform: translateY(-1px);
     }
   }
 

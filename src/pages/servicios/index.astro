@@ -2,8 +2,10 @@
 import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
+import { Icon } from "astro-icon/components";
 import ServicesTeaser from "../../components/ServicesTeaser.astro";
 import WhatsAppButton from "../../components/WhatsAppButton.astro";
+import { LINKEDIN_SERVICES_URL } from "../../data/contact";
 import { SITE_TITLE } from "../../data/site";
 ---
 
@@ -38,7 +40,19 @@ import { SITE_TITLE } from "../../data/site";
             <span class="terminal-prefix">$</span> ¿no sabés qué necesitás?
           </h2>
           <p>Agendemos una llamada gratuita de 15 minutos para entender tu proyecto y recomendarte la mejor solución.</p>
-          <WhatsAppButton variant="inline" text="Hablemos por WhatsApp" />
+          <div class="cta-actions">
+            <WhatsAppButton variant="inline" text="Hablemos por WhatsApp" />
+            <a
+              href={LINKEDIN_SERVICES_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="linkedin-cta"
+            >
+              <Icon name="lucide:linkedin" size={18} />
+              Solicitar en LinkedIn
+              <Icon name="lucide:external-link" size={14} />
+            </a>
+          </div>
         </div>
       </section>
     </main>
@@ -115,6 +129,44 @@ import { SITE_TITLE } from "../../data/site";
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .cta-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .linkedin-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    min-height: 44px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    color: var(--mauve);
+    background: rgba(var(--mauve-rgb), 0.1);
+    border: 1px solid rgba(var(--mauve-rgb), 0.35);
+    transition: background-color 160ms var(--ease-out), border-color 160ms var(--ease-out), color 160ms var(--ease-out), transform 160ms var(--ease-out);
+  }
+
+  .linkedin-cta:active {
+    transform: scale(0.97);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .linkedin-cta:hover {
+      background: var(--mauve);
+      border-color: var(--mauve);
+      color: var(--crust);
+      transform: translateY(-2px);
+    }
   }
 
   @media (max-width: 640px) {

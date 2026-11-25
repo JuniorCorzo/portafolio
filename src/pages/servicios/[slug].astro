@@ -2,7 +2,9 @@
 import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
+import { Icon } from "astro-icon/components";
 import WhatsAppButton from "../../components/WhatsAppButton.astro";
+import { LINKEDIN_SERVICES_URL } from "../../data/contact";
 import { SERVICES } from "../../data/services";
 import { SITE_TITLE, DEVELOPER_NAME } from "../../data/site";
 import { getCollection, render } from "astro:content";
@@ -96,6 +98,16 @@ const serviceSchema = {
               text="Solicitar este servicio"
               message={`Hola Angel, me interesa contratar el servicio de ${service.title}.`}
             />
+            <a
+              href={LINKEDIN_SERVICES_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="linkedin-service-cta"
+            >
+              <Icon name="lucide:linkedin" size={18} />
+              Solicitar en LinkedIn
+              <Icon name="lucide:external-link" size={14} />
+            </a>
             <a href="/servicios" class="back-link">
               <span class="prompt">&gt;</span> Volver a servicios
             </a>
@@ -200,6 +212,36 @@ const serviceSchema = {
   .prompt {
     font-family: var(--font-mono);
     user-select: none;
+  }
+
+  .linkedin-service-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    min-height: 44px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    color: var(--mauve);
+    background: rgba(var(--mauve-rgb), 0.1);
+    border: 1px solid rgba(var(--mauve-rgb), 0.35);
+    transition: background-color 160ms var(--ease-out), border-color 160ms var(--ease-out), color 160ms var(--ease-out), transform 160ms var(--ease-out);
+  }
+
+  .linkedin-service-cta:active {
+    transform: scale(0.97);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .linkedin-service-cta:hover {
+      background: var(--mauve);
+      border-color: var(--mauve);
+      color: var(--crust);
+      transform: translateY(-2px);
+    }
   }
 
   @media (max-width: 640px) {

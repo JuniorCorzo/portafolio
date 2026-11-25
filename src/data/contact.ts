@@ -11,6 +11,8 @@ export const WHATSAPP_MESSAGE =
   "Hola Angel, vi tu portafolio y me interesa contratar tus servicios de desarrollo.";
 
 export const CALENDLY_URL = import.meta.env.PUBLIC_CALENDLY_URL || ""; // TODO: add real Calendly URL when available
+export const LINKEDIN_SERVICES_URL =
+  "https://www.linkedin.com/services/page/b68a9634432999b598/";
 export const RESPONSE_TIME = "<24h";
 
 export const SOCIAL_LINKS = [
