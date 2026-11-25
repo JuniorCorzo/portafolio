@@ -111,6 +111,32 @@ export const SKILLS = {
 // Experience Timeline - Enhanced with SEO Keywords
 export const EXPERIENCE = [
   {
+    period: "2025 - Presente (1 año)",
+    title: "Lead Full Stack Developer & Arquitecto de Software",
+    company: "Nivo — Plataforma SaaS Multi-Tenant",
+    location: "Cúcuta, Colombia · Producción",
+    type: "Producto SaaS en Producción",
+    highlights: [
+      "Diseñé y construí de punta a punta una plataforma SaaS cloud-native multi-tenant para digitalización operativa y tarifaria de parqueaderos comerciales en producción",
+      "Implementé Clean Architecture en Java 21 con Spring Boot 3.5, desacoplando estrictamente dominio y casos de uso con aislamiento multi-inquilino a nivel de tenant_id y application context",
+      "Desarrollé frontend en Angular 20+ con ChangeDetection OnPush, design system accesible propio (@nivo-sass/design-system) y telemetría de ocupación en tiempo real con Server-Sent Events (SSE)",
+      "Diseñé motor de tarificación en tiempo real (PricingEngine) con cálculo en milisegundos, simulación pública en vivo y tickets digitales con código QR",
+    ],
+    metric:
+      "1 año de desarrollo activo | En producción continua | Cero hardware propietario | Onboarding < 2 min",
+    tech: [
+      "Java 21",
+      "Spring Boot 3",
+      "Angular 20",
+      "PostgreSQL",
+      "Clean Architecture",
+      "Docker",
+      "SSE",
+      "Tailwind CSS",
+    ],
+    sector: "SaaS / Movilidad Urbana",
+  },
+  {
     period: "Abril 2024 - Octubre 2024",
     title: "Aprendiz Desarrollador Full Stack",
     company: "Ecopetrol S.A.",

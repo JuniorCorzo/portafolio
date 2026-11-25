@@ -1,0 +1,303 @@
+---
+import { EXPERIENCE } from "../consts";
+
+interface Props {
+  id?: string;
+  class?: string;
+}
+
+const { id = "experiencia", class: className = "" } = Astro.props;
+---
+
+<section class={`section experience-section ${className}`} id={id}>
+  <div class="container">
+    <header class="section-header">
+      <h2 class="section-title">
+        <span class="terminal-prefix">$</span> cat experiencia.log
+      </h2>
+      <p class="section-subtitle">// trayectoria profesional y productos en producción</p>
+    </header>
+
+    <div class="timeline">
+      {
+        EXPERIENCE.map((exp) => (
+          <article class="timeline-item">
+            <div class="timeline-marker" aria-hidden="true" />
+            <div class="timeline-content">
+              <div class="timeline-meta">
+                <time class="timeline-date">{exp.period}</time>
+                {exp.type && <span class="timeline-badge">{exp.type}</span>}
+              </div>
+              <h3 class="timeline-title">$ {exp.title}</h3>
+              <div class="timeline-company">
+                <span class="company-name">{exp.company}</span>
+                <span class="company-sep">·</span>
+                <span class="company-loc">{exp.location}</span>
+              </div>
+              <ul class="timeline-highlights">
+                {exp.highlights.map((h) => (
+                  <li>{h}</li>
+                ))}
+              </ul>
+              {exp.metric && (
+                <div class="timeline-metric">{exp.metric}</div>
+              )}
+              {exp.tech && (
+                <div class="timeline-tech">
+                  {exp.tech.map((t) => (
+                    <span class="tech-chip">{t}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .experience-section {
+    padding: 80px 24px;
+    background: var(--base);
+    border-top: 1px solid rgba(var(--overlay0-rgb), 0.25);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .section-title {
+    color: var(--text);
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0 0 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    letter-spacing: -0.02em;
+  }
+
+  .terminal-prefix {
+    color: var(--mauve);
+    font-family: var(--font-mono);
+  }
+
+  .section-subtitle {
+    color: var(--subtext0);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  /* ─── Timeline ──────────────────────────────────────────────── */
+
+  .timeline {
+    position: relative;
+    max-width: 860px;
+    margin: 0 auto;
+    padding-left: 36px;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 12px;
+    bottom: 24px;
+    width: 2px;
+    background: rgba(var(--overlay0-rgb), 0.3);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 44px;
+  }
+
+  .timeline-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -33px;
+    top: 8px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--mauve);
+    border: 3px solid var(--base);
+    box-shadow: 0 0 8px rgba(var(--mauve-rgb), 0.4);
+    z-index: 1;
+  }
+
+  .timeline-content {
+    background: var(--surface0);
+    border: 1px solid rgba(var(--overlay0-rgb), 0.28);
+    border-radius: 8px;
+    padding: 28px;
+    transition: transform 160ms var(--ease-out), background 160ms var(--ease-out), border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .timeline-content:hover {
+      background: var(--surface1);
+      border-color: rgba(var(--mauve-rgb), 0.45);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .timeline-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+
+  .timeline-date {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--mauve);
+  }
+
+  .timeline-badge {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--green);
+    background: rgba(var(--green-rgb), 0.1);
+    border: 1px solid rgba(var(--green-rgb), 0.3);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .timeline-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 6px 0;
+    font-family: var(--font-body);
+  }
+
+  .timeline-company {
+    font-size: 0.95rem;
+    color: var(--subtext0);
+    margin-bottom: 14px;
+    font-family: var(--font-mono);
+  }
+
+  .company-sep {
+    color: var(--overlay1);
+    margin: 0 4px;
+  }
+
+  .timeline-highlights {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px 0;
+  }
+
+  .timeline-highlights li {
+    color: var(--subtext1);
+    line-height: 1.65;
+    padding: 4px 0 4px 20px;
+    position: relative;
+    font-size: 0.95rem;
+  }
+
+  .timeline-highlights li::before {
+    content: "›";
+    position: absolute;
+    left: 0;
+    color: var(--mauve);
+    font-weight: 700;
+    font-size: 1.1rem;
+    line-height: 1.4;
+  }
+
+  .timeline-metric {
+    background: rgba(var(--mauve-rgb), 0.08);
+    color: var(--mauve);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    border: 1px solid rgba(var(--mauve-rgb), 0.25);
+    margin-bottom: 14px;
+    font-family: var(--font-mono);
+  }
+
+  .timeline-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tech-chip {
+    display: inline-block;
+    background: rgba(var(--sky-rgb), 0.08);
+    color: var(--sky);
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid rgba(var(--sky-rgb), 0.25);
+    font-family: var(--font-mono);
+  }
+
+  @media (max-width: 768px) {
+    .experience-section {
+      padding: 60px 24px;
+    }
+
+    .section-title {
+      font-size: 2rem;
+    }
+
+    .timeline {
+      padding-left: 28px;
+    }
+
+    .timeline-item::before {
+      left: -27px;
+    }
+
+    .timeline-content {
+      padding: 20px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .experience-section {
+      padding: 48px 16px;
+    }
+
+    .timeline {
+      padding-left: 22px;
+    }
+
+    .timeline-item::before {
+      left: -21px;
+      width: 10px;
+      height: 10px;
+    }
+
+    .timeline-title {
+      font-size: 1.1rem;
+    }
+  }
+</style>

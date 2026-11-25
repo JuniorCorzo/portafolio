@@ -2,9 +2,9 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import Experience from "../components/Experience.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
-import { EXPERIENCE, HERO_IMAGE } from "../consts";
-import { SKILLS } from "../consts";
+import { HERO_IMAGE, SKILLS } from "../consts";
 import { SITE_TITLE, DEVELOPER_NAME } from "../data/site";
 import { Image } from "astro:assets";
 
@@ -21,7 +21,7 @@ const skillCategories = [
   <head>
     <BaseHead
       title={`Sobre mí — ${SITE_TITLE}`}
-      description={`Conoce a ${DEVELOPER_NAME}: desarrollador Full Stack con experiencia en Ecopetrol, arquitectura hexagonal y microservicios.`}
+      description={`Conoce a ${DEVELOPER_NAME}: desarrollador Full Stack, creador de Nivo SaaS en producción y experiencia en Ecopetrol con arquitectura limpia y microservicios.`}
     />
     <meta name="theme-color" content="#1e1e2e" />
   </head>
@@ -65,9 +65,11 @@ const skillCategories = [
               <p>
                 Trabajo como full-stack developer, lo que significa que puedo
                 llevar un proyecto desde una idea en un papel hasta un producto
-                funcionando en producción. Me gusta la parte técnica, pero
-                también me interesa entender el negocio: para qué se construye,
-                qué problema resuelve, cómo se mide el éxito.
+                funcionando en producción. Actualmente lidero el desarrollo de
+                Nivo, una plataforma SaaS multi-tenant en producción construida con
+                Clean Architecture en Java 21 y Angular 20+. Me apasiona la solidez
+                técnica, pero también entender el negocio: qué problema resuelve,
+                cómo escala y cómo se mide el éxito.
               </p>
               <p>
                 Últimamente me volqué al mundo de la inteligencia artificial. No
@@ -90,47 +92,7 @@ const skillCategories = [
       </section>
 
       <!-- Experience Timeline -->
-      <section class="section" style="background: var(--mantle);">
-        <div class="container">
-          <div class="section-header">
-            <h2>
-              <span class="terminal-prefix">$</span> cat experiencia.log
-            </h2>
-            <p>// dónde estuve y qué hice</p>
-          </div>
-          <div class="timeline">
-            {
-              EXPERIENCE.map((exp) => (
-                <div class="timeline-item">
-                  <div class="timeline-marker" />
-                  <div class="timeline-content">
-                    <div class="timeline-date">{exp.period}</div>
-                    <h3 class="timeline-title">$ {exp.title}</h3>
-                    <div class="timeline-company">
-                      {exp.company} · {exp.location}
-                    </div>
-                    <ul class="timeline-highlights">
-                      {exp.highlights.map((h) => (
-                        <li>{h}</li>
-                      ))}
-                    </ul>
-                    {exp.metric && (
-                      <div class="timeline-metric">{exp.metric}</div>
-                    )}
-                    {exp.tech && (
-                      <div class="timeline-tech">
-                        {exp.tech.map((t) => (
-                          <span class="tech-chip">{t}</span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))
-            }
-          </div>
-        </div>
-      </section>
+      <Experience />
 
       <!-- Skills -->
       <section class="section">
@@ -281,7 +243,7 @@ const skillCategories = [
     border-radius: 6px;
     font-weight: 600;
     font-size: 1rem;
-    transition: all 0.3s ease-in-out;
+    transition: transform 140ms var(--ease-out), background 140ms var(--ease-out), color 140ms var(--ease-out), border-color 140ms var(--ease-out);
     cursor: pointer;
     border: 2px solid var(--mauve);
     background: transparent;
@@ -289,118 +251,16 @@ const skillCategories = [
     text-decoration: none;
   }
 
-  .btn-ghost:hover {
-    background: var(--mauve);
-    color: var(--crust);
-    font-weight: 700;
+  .btn-ghost:active {
+    transform: scale(0.97);
   }
 
-  /* Timeline */
-  .timeline {
-    position: relative;
-    padding-left: 32px;
-  }
-
-  .timeline::before {
-    content: "";
-    position: absolute;
-    left: 6px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: var(--surface1);
-  }
-
-  .timeline-item {
-    position: relative;
-    margin-bottom: 40px;
-  }
-
-  .timeline-item:last-child {
-    margin-bottom: 0;
-  }
-
-  .timeline-item::before {
-    content: "";
-    position: absolute;
-    left: -30px;
-    top: 6px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--mauve);
-    border: 2px solid var(--base);
-  }
-
-  .timeline-content {
-    background: var(--surface0);
-    border: 1px solid rgba(var(--overlay0-rgb), 0.3);
-    border-radius: 8px;
-    padding: 28px;
-    transition: all 0.3s ease-in-out;
-  }
-
-  .timeline-content:hover {
-    background: var(--surface1);
-    transform: translateY(-2px);
-  }
-
-  .timeline-date {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--overlay1);
-    margin-bottom: 6px;
-  }
-
-  .timeline-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text);
-    margin: 0 0 4px 0;
-  }
-
-  .timeline-company {
-    font-size: 0.95rem;
-    color: var(--subtext0);
-    margin-bottom: 10px;
-  }
-
-  .timeline-highlights {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 12px 0;
-  }
-
-  .timeline-highlights li {
-    color: var(--subtext0);
-    line-height: 1.6;
-    padding: 4px 0;
-    padding-left: 18px;
-    position: relative;
-  }
-
-  .timeline-highlights li::before {
-    content: "›";
-    position: absolute;
-    left: 0;
-    color: var(--mauve);
-  }
-
-  .timeline-metric {
-    background: rgba(var(--mauve-rgb), 0.08);
-    color: var(--mauve);
-    padding: 10px 14px;
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    border: 1px solid rgba(var(--mauve-rgb), 0.25);
-    margin-bottom: 12px;
-  }
-
-  .timeline-tech {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+  @media (hover: hover) and (pointer: fine) {
+    .btn-ghost:hover {
+      background: var(--mauve);
+      color: var(--crust);
+      font-weight: 700;
+    }
   }
 
   /* Skills Grid */
@@ -430,12 +290,18 @@ const skillCategories = [
     font-size: 0.9rem;
     font-weight: 600;
     border: 1px solid;
-    transition: all 0.2s;
+    transition: transform 140ms var(--ease-out), box-shadow 140ms var(--ease-out);
   }
 
-  .skill-chip:hover {
-    transform: scale(1.05);
-    box-shadow: var(--shadow-sm);
+  .skill-chip:active {
+    transform: scale(0.96);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .skill-chip:hover {
+      transform: scale(1.05);
+      box-shadow: var(--shadow-sm);
+    }
   }
 
   .skill-green {
@@ -474,14 +340,6 @@ const skillCategories = [
       margin: 0 auto;
     }
 
-    .timeline {
-      padding-left: 24px;
-    }
-
-    .timeline-item::before {
-      left: -24px;
-    }
-
     .section-header h2 {
       font-size: 1.875rem;
     }
@@ -494,10 +352,6 @@ const skillCategories = [
 
     .page-hero {
       padding: 48px 0 32px;
-    }
-
-    .timeline-content {
-      padding: 20px;
     }
   }
 </style>
